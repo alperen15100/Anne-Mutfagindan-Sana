@@ -1,571 +1,800 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Parisienne&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root{
-  --bg:#f7efe3;
-  --paper:#fffaf1;
-  --paper-soft:#fbf1e3;
-  --ink:#49382f;
-  --muted:#806d60;
-  --rose:#b94f61;
-  --rose-dark:#9f3f50;
-  --olive:#68734d;
-  --line:#e2cfb5;
-  --gold:#c79a4a;
-  --shadow:0 12px 28px rgba(87,61,42,.09);
-  --shadow-sm:0 6px 16px rgba(87,61,42,.08);
+  --cream:#fbf6ed;
+  --cream-2:#f4eadb;
+  --paper:#fffdf8;
+  --ink:#3f332d;
+  --muted:#7e6d62;
+  --rose:#b44f60;
+  --rose-deep:#963d4d;
+  --rose-pale:#f4dcdf;
+  --olive:#65714c;
+  --olive-pale:#edf0e5;
+  --line:#e5d7c4;
+  --gold:#c59a4f;
+  --shadow:0 14px 38px rgba(77,55,40,.08);
+  --shadow-soft:0 7px 20px rgba(77,55,40,.07);
+  --radius:22px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
   color:var(--ink);
-  font-family:"Source Sans 3",system-ui,sans-serif;
   background:
-    radial-gradient(circle at 10% 0%,rgba(255,255,255,.94),transparent 33%),
-    linear-gradient(180deg,#fffaf3 0%,var(--bg) 100%);
+    radial-gradient(circle at 85% 4%,rgba(181,79,96,.06),transparent 24%),
+    radial-gradient(circle at 8% 22%,rgba(101,113,76,.05),transparent 20%),
+    var(--cream);
+  font-family:"Source Sans 3",system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
 }
-a{text-decoration:none;color:inherit}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer}
 img{max-width:100%;display:block}
-button,input{font:inherit}
-button{touch-action:manipulation}
-.container{width:min(1120px,calc(100% - 28px));margin-inline:auto}
-.paper{
-  background:rgba(255,250,241,.96);
-  border:1px solid rgba(202,171,132,.42);
-  border-radius:20px;
-  box-shadow:var(--shadow);
+.container{width:min(1120px,calc(100% - 36px));margin-inline:auto}
+.eyebrow{
+  color:var(--olive);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
 }
-.serif{font-family:"Cormorant Garamond",serif}
-.script{font-family:Parisienne,cursive;color:var(--rose)}
-.stars{color:var(--gold);letter-spacing:1px}
+.section{padding:38px 0}
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:20px;
+}
+.section-head .kicker{
+  margin:0 0 4px;
+  color:var(--olive);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.section-head h2{
+  margin:0;
+  font:700 34px/1.05 "Cormorant Garamond",serif;
+  letter-spacing:-.02em;
+}
+.section-head>a{color:var(--rose);font-weight:700;font-size:14px}
+.section-copy{margin:6px 0 0;color:var(--muted);font:18px/1.45 "Cormorant Garamond",serif}
 
 /* Header */
 .site-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(255,250,242,.96);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(190,158,120,.25);
+  position:sticky;top:0;z-index:100;
+  background:rgba(251,246,237,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(205,184,156,.5);
 }
-.nav{height:74px;display:flex;align-items:center;gap:22px}
+.nav{height:72px;display:flex;align-items:center;gap:22px}
 .brand{
-  font-family:Parisienne,cursive;
-  font-size:29px;
-  line-height:.9;
+  min-width:max-content;
   color:var(--rose);
-  white-space:nowrap;
+  font:31px/.78 Parisienne,cursive;
 }
 .brand small{
   display:block;
-  margin-top:5px;
-  font:600 17px/1 "Cormorant Garamond",serif;
+  margin-top:7px;
   color:var(--olive);
-  text-align:center;
+  font:600 15px/1 "Cormorant Garamond",serif;
+  letter-spacing:.01em;
 }
-.brand span{font-family:inherit}
-.nav-links{
-  margin-left:auto;
+.main-nav{
   display:flex;
   align-items:center;
-  gap:19px;
-  font:600 16px/1 "Cormorant Garamond",serif;
+  gap:20px;
+  margin-left:auto;
+  font:600 15px/1 "Cormorant Garamond",serif;
 }
-.nav-links a{padding:9px 0;border-bottom:2px solid transparent}
-.nav-links a:hover,.nav-links a.active{color:var(--rose);border-color:var(--rose)}
-.search{position:relative;width:205px}
-.search input{
-  width:100%;border:1px solid var(--line);border-radius:999px;
-  background:#fffdf8;padding:10px 38px 10px 14px;outline:none;color:var(--ink)
+.main-nav a{
+  padding:9px 0 8px;
+  border-bottom:2px solid transparent;
 }
-.search span{position:absolute;right:13px;top:7px;font-size:21px;color:var(--muted)}
-.icon-btn{
-  border:0;background:transparent;color:var(--rose);font-size:25px;
-  padding:8px;cursor:pointer
+.main-nav a:hover,.main-nav a.active{color:var(--rose);border-color:var(--rose)}
+.header-search{position:relative;width:210px}
+.header-search input{
+  width:100%;
+  height:40px;
+  padding:0 40px 0 15px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  outline:none;
+  background:rgba(255,253,248,.95);
+  color:var(--ink);
 }
-.mobile-menu{display:none}
+.header-search span{position:absolute;right:14px;top:8px;color:var(--muted)}
+.header-heart{
+  position:relative;
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  color:var(--rose);
+  font-size:23px;
+  border-radius:50%;
+}
+.header-heart:hover{background:var(--rose-pale)}
+.header-heart b{
+  position:absolute;right:-2px;top:-2px;
+  min-width:18px;height:18px;padding:0 4px;
+  display:grid;place-items:center;
+  border-radius:999px;
+  background:var(--rose);color:#fff;
+  font:700 10px/1 "Source Sans 3",sans-serif;
+}
+.menu-btn{
+  display:none;
+  border:0;background:transparent;
+  color:var(--rose);
+  font-size:30px;
+  line-height:1;
+  padding:5px 3px;
+}
 
 /* Buttons */
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  border:1px solid var(--rose);border-radius:999px;
-  padding:11px 20px;background:#fffaf1;color:var(--rose);
-  font-weight:700;cursor:pointer;min-height:44px
+  min-height:44px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 18px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--paper);
+  color:var(--ink);
+  font-weight:700;
 }
-.btn.primary{background:var(--rose);color:#fff;box-shadow:0 7px 14px rgba(185,79,97,.2)}
-.btn.primary:hover{background:var(--rose-dark)}
-.btn.small{padding:8px 13px;min-height:36px;font-size:14px}
+.btn.primary{background:var(--rose);border-color:var(--rose);color:#fff;box-shadow:0 8px 18px rgba(180,79,96,.18)}
+.btn.primary:hover{background:var(--rose-deep)}
+.btn.ghost{color:var(--rose);border-color:#d7aeb6;background:#fffaf7}
+.btn.ghost.active{background:var(--rose-pale)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
 
-/* Generated watercolor artwork sprite: each tile is a portrait recipe card */
-.recipe-art{
-  --c:0;
-  --r:0;
-  display:block;
-  background-image:url("assets/recipe-sprite.jpg");
-  background-size:500% 200%;
-  background-position:calc(var(--c) * 25%) calc(var(--r) * 100%);
+/* Dish sprite. 5 columns x 3 rows, each tile is a dish-only watercolor crop. */
+.dish-art{
+  --c:0;--r:0;
+  flex:none;
+  background-image:url("assets/dish-sprite.jpg?v=1");
+  background-size:500% 300%;
+  background-position:calc(var(--c) * 25%) calc(var(--r) * 50%);
   background-repeat:no-repeat;
-  background-color:#f3e7d5;
-  border:1px solid rgba(198,166,126,.34);
-  box-shadow:var(--shadow-sm);
-}
-.recipe-art.food-crop{
-  background-size:1000% 400%;
-  background-position:
-    calc(5.556% + (var(--c) * 22.222%))
-    calc(16.667% + (var(--r) * 66.666%));
+  background-color:#eee2d0;
+  border-radius:16px;
+  overflow:hidden;
 }
 
 /* Hero */
-.hero{padding:22px 0 14px}
-.hero-card{
-  min-height:370px;
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  align-items:center;
-  overflow:hidden;
+.hero{padding:26px 0 8px}
+.hero-shell{
   position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  min-height:410px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:
+    linear-gradient(110deg,rgba(255,253,248,.98) 0 60%,rgba(244,230,214,.92) 60%),
+    var(--paper);
+  box-shadow:var(--shadow);
 }
-.hero-copy{padding:42px 48px}
-.hero-copy h1{
-  margin:0 0 8px;
-  font:54px/1.02 Parisienne,cursive;
+.hero-copy{padding:58px 54px 48px;position:relative;z-index:2}
+.hero-copy:before{
+  content:"❦";
+  display:block;
+  margin-bottom:11px;
   color:var(--rose);
+  font-size:24px;
 }
-.hero-copy>p:first-of-type{
-  margin:0 0 10px;
-  font:600 23px/1.35 "Cormorant Garamond",serif;
+.hero-copy h1{
+  max-width:650px;
+  margin:0;
+  font:700 58px/.98 "Cormorant Garamond",serif;
+  letter-spacing:-.035em;
 }
-.hero-copy p{font:19px/1.55 "Cormorant Garamond",serif}
-.hero-image{
-  min-height:370px;
+.hero-copy h1 em{
+  display:block;
+  margin-top:4px;
+  color:var(--rose);
+  font:normal 46px/.95 Parisienne,cursive;
+}
+.hero-copy p{
+  max-width:610px;
+  margin:20px 0 24px;
+  color:var(--muted);
+  font:19px/1.55 "Cormorant Garamond",serif;
+}
+.hero-trust{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-size:12px}
+.hero-trust span:before{content:"✓";margin-right:6px;color:var(--olive);font-weight:800}
+.hero-visual{
+  position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
-  padding:24px 34px;
-  background:
-    radial-gradient(circle at 70% 32%,rgba(203,107,121,.12),transparent 30%),
-    linear-gradient(135deg,#f5e6d3,#fff8ee);
+  min-height:410px;
+  padding:36px 26px;
 }
-.hero-art{
-  position:static;
-  width:240px;
-  height:240px;
-  border-radius:26px;
-  transform:rotate(1deg);
+.hero-visual:before,.hero-visual:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(180,79,96,.16);
 }
+.hero-visual:before{width:300px;height:300px}
+.hero-visual:after{width:230px;height:230px}
+.hero-stack{position:relative;width:300px;height:280px}
+.hero-tile{
+  position:absolute;
+  width:126px;height:95px;
+  border:7px solid rgba(255,253,248,.96);
+  box-shadow:0 14px 28px rgba(61,43,31,.13);
+}
+.hero-tile.one{left:20px;top:21px;transform:rotate(-5deg)}
+.hero-tile.two{right:10px;top:70px;transform:rotate(5deg)}
+.hero-tile.three{left:70px;bottom:18px;transform:rotate(1deg)}
 .hero-note{
   position:absolute;
-  right:18px;
-  bottom:34px;
-  width:205px;
-  padding:13px 15px;
+  right:18px;bottom:20px;
+  padding:10px 13px;
   border-radius:10px;
-  background:rgba(255,250,240,.96);
-  border:1px solid rgba(204,170,129,.45);
-  box-shadow:var(--shadow-sm);
-  font:18px/1.3 "Cormorant Garamond",serif;
-  transform:rotate(-2deg)
+  border:1px solid var(--line);
+  background:rgba(255,253,248,.96);
+  box-shadow:var(--shadow-soft);
+  color:var(--muted);
+  font:italic 15px/1.25 "Cormorant Garamond",serif;
 }
 
-/* Section headings */
-.section{padding:24px 0}
-.section-title{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:15px;margin-bottom:16px
+/* Category pills */
+.category-pills{
+  display:flex;gap:9px;overflow:auto;
+  padding:2px 0 5px;
+  scrollbar-width:none;
 }
-.section-title h2{
-  margin:0;
-  font:39px/1.05 Parisienne,cursive;
-  color:var(--rose)
+.category-pills::-webkit-scrollbar{display:none}
+.filter-pill,.category-chip{
+  flex:0 0 auto;
+  min-height:38px;
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:8px 15px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,253,248,.85);
+  color:var(--muted);
+  font-weight:700;
+  font-size:13px;
 }
-.section-title a{font-weight:700;color:var(--rose);font-size:15px}
+.filter-pill:hover,.category-chip:hover,.filter-pill.active{
+  color:var(--rose);
+  border-color:#d8abb3;
+  background:#fff8f7;
+}
+.category-row{padding:23px 0 3px}
+.category-row .category-pills{justify-content:center}
 
-/* Categories */
-.categories{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.category-card{
-  min-width:0;padding:13px 10px 12px;text-align:center;
-  transition:transform .18s ease
+/* Featured */
+.featured{
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:28px;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:var(--paper);
+  box-shadow:var(--shadow-soft);
 }
-.category-card:hover{transform:translateY(-3px)}
-.category-art{
-  width:92px;height:76px;margin:0 auto 9px;border-radius:13px
+.featured-media{position:relative;display:flex;align-items:center;justify-content:center;min-height:190px}
+.featured-art{width:180px;height:135px;box-shadow:0 12px 24px rgba(70,48,34,.12)}
+.featured-badge{
+  position:absolute;left:3px;top:3px;
+  padding:6px 10px;border-radius:999px;
+  background:var(--olive);color:#fff;
+  font-size:11px;font-weight:700;
 }
-.category-card strong{
-  display:block;
-  font:700 18px/1.1 "Cormorant Garamond",serif
+.featured-copy{align-self:center}
+.featured-copy h3{margin:3px 0 6px;font:700 40px/1 "Cormorant Garamond",serif}
+.featured-copy p{margin:0 0 13px;color:var(--muted);font:18px/1.4 "Cormorant Garamond",serif}
+.featured-meta{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+.featured-meta span{
+  padding:5px 9px;border-radius:999px;
+  background:var(--cream-2);color:var(--muted);font-size:12px
 }
-.category-card span{display:block;margin-top:3px;color:var(--muted);font-size:12px}
 
-/* Home recipe areas */
-.home-grid{display:grid;grid-template-columns:.78fr 1.42fr;gap:22px;align-items:start}
-.daily{padding:16px;text-align:center}
-.poster-art{width:180px;height:255px;margin:0 auto;border-radius:13px}
-.recipe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+/* Recipe cards */
+.recipe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .recipe-card{
   position:relative;
   display:grid;
-  grid-template-columns:104px 1fr;
-  align-items:center;
-  overflow:hidden;
-  min-height:158px;
-  transition:transform .18s ease
+  grid-template-columns:130px 1fr;
+  gap:13px;
+  min-width:0;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,253,248,.9);
+  transition:transform .18s ease,box-shadow .18s ease;
 }
-.recipe-card:hover{transform:translateY(-2px)}
-.recipe-card .recipe-art.thumb{
-  width:112px;height:96px;margin:12px;border-radius:14px;box-shadow:none
+.recipe-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+.recipe-card-media{align-self:center}
+.card-art{width:120px;height:90px;border-radius:13px}
+.recipe-card-copy{min-width:0;padding:3px 34px 3px 0}
+.recipe-card-title{
+  display:block;
+  margin-top:2px;
+  font:700 24px/1.06 "Cormorant Garamond",serif;
 }
-.recipe-body{padding:14px 14px 14px 2px}
-.recipe-title{font:29px/1.05 Parisienne,cursive;color:var(--rose)}
-.card-desc{
-  margin:5px 0 0;
+.recipe-card-title:hover{color:var(--rose)}
+.recipe-card-copy p{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  margin:6px 0 7px;
   color:var(--muted);
-  font:15px/1.32 "Cormorant Garamond",serif;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+  font:15px/1.3 "Cormorant Garamond",serif;
 }
-.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px;color:var(--muted);font-size:12px}
-.heart{
-  position:absolute;right:9px;top:9px;z-index:2;
-  width:35px;height:35px;border:0;border-radius:50%;
+.recipe-card-meta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:11px}
+.heart-btn{
+  position:absolute;right:10px;top:10px;
+  width:34px;height:34px;
   display:grid;place-items:center;
-  background:rgba(255,250,241,.95);color:var(--rose);
-  box-shadow:0 3px 10px rgba(0,0,0,.08);
-  font-size:19px;cursor:pointer
+  padding:0;
+  border:1px solid #edd5d9;
+  border-radius:50%;
+  background:#fff;
+  color:var(--rose);
+  font-size:18px;
 }
-.heart.active{background:var(--rose);color:#fff}
-.ribbon{display:flex;gap:10px;overflow:auto;padding:2px 1px 8px;scrollbar-width:none}
-.ribbon::-webkit-scrollbar{display:none}
-.ribbon .mini{
-  flex:0 0 190px;
-  display:flex;align-items:center;gap:9px;padding:9px
-}
-.mini-art{width:64px;height:52px;border-radius:10px;flex:0 0 64px;box-shadow:none}
-.ribbon strong{font:700 16px/1.1 "Cormorant Garamond",serif}
-.quote-bar{margin-top:18px;padding:17px 20px;text-align:center;font:italic 24px/1.25 "Cormorant Garamond",serif;color:#70594b}
+.heart-btn.active{background:var(--rose);border-color:var(--rose);color:#fff}
 
-/* Category listing */
-.page-hero{
-  margin-top:22px;
-  min-height:260px;
-  display:grid;grid-template-columns:1fr 260px;align-items:center;
-  overflow:hidden
+/* Latest strip */
+.latest-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.mini-recipe{
+  min-width:0;
+  display:flex;align-items:center;gap:9px;
+  padding:9px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,253,248,.85);
 }
-.page-hero .copy{padding:30px 34px}
-.page-hero h1{margin:3px 0 5px;font:51px/1 Parisienne,cursive;color:var(--rose)}
-.page-hero p{margin:6px 0;font:20px/1.45 "Cormorant Garamond",serif}
-.page-hero-art{width:205px;height:165px;margin:auto;border-radius:18px}
-.category-layout{display:grid;grid-template-columns:235px 1fr;gap:20px;padding-top:22px}
-.filters{padding:17px;align-self:start;position:sticky;top:94px}
-.filters h3{margin:0 0 13px;font:28px/1 Parisienne,cursive;color:var(--rose)}
-.filter-group{padding:13px 0;border-top:1px solid var(--line)}
-.filter-group strong{display:block;color:var(--rose);margin-bottom:7px}
-.filter-group label{display:block;margin:7px 0;font-size:14px;cursor:pointer}
-.filter-group input{margin-right:7px;accent-color:var(--rose)}
-.category-main .recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mini-dish{width:64px;height:48px;border-radius:9px}
+.mini-recipe div{min-width:0}
+.mini-recipe strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 15px "Cormorant Garamond",serif}
+.mini-recipe span{display:block;margin-top:2px;color:var(--muted);font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* Detail */
-.detail-hero{
-  margin-top:22px;
-  display:grid;grid-template-columns:310px 1fr;align-items:center;
-  overflow:hidden;padding:22px
+/* Notebook CTA */
+.notebook-cta{
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 270px;
+  align-items:center;
+  border-radius:24px;
+  background:var(--olive);
+  color:#fff;
+  box-shadow:var(--shadow);
 }
-#detailImg.recipe-art{
-  width:240px;height:205px;margin:auto;border-radius:20px
+.notebook-cta-copy{padding:36px 40px}
+.notebook-cta-copy span{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e8eddc}
+.notebook-cta-copy h2{margin:5px 0 9px;font:700 37px/1 "Cormorant Garamond",serif}
+.notebook-cta-copy p{max-width:590px;margin:0 0 18px;color:#edf0e5;font:18px/1.45 "Cormorant Garamond",serif}
+.notebook-cta .btn{background:#fff;color:var(--olive);border-color:#fff}
+.notebook-cta-art{
+  min-height:230px;
+  display:grid;place-items:center;
+  background:
+    radial-gradient(circle at 60% 50%,rgba(255,255,255,.14),transparent 30%),
+    rgba(255,255,255,.04);
 }
-.detail-copy{padding:12px 24px 12px 6px}
-.detail-copy h1{margin:2px 0 8px;font:52px/1 Parisienne,cursive;color:var(--rose)}
-.detail-copy p{margin:8px 0;font:20px/1.45 "Cormorant Garamond",serif}
-.quick{display:flex;gap:10px;flex-wrap:wrap;margin:17px 0}
-.quick .q{padding:9px 11px;border-radius:10px;background:#f6ead9;font-size:13px}
-.action-row{display:flex;gap:8px;flex-wrap:wrap}
-.detail-grid{display:grid;grid-template-columns:.82fr 1.12fr .9fr;gap:16px;padding-top:18px}
-.detail-panel{padding:19px}
-.detail-panel h2{margin:0 0 11px;font:34px/1 Parisienne,cursive;color:var(--rose)}
-.ingredients label{display:flex;gap:8px;align-items:flex-start;margin:9px 0;font-size:14px}
-.steps .step{display:grid;grid-template-columns:34px 1fr;gap:9px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.steps .num{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#f0c6c5;color:#8f3643;font-weight:700}
-.tip,.anne-note{padding:14px;border:1px dashed #d8b997;border-radius:12px;background:#fff7eb;margin-bottom:12px;font-size:14px}
-.tip h3,.anne-note h3{margin:0 0 5px;font:25px/1 Parisienne,cursive;color:var(--rose)}
-.related{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.related .mini-card{font-size:12px;text-align:center}
-.related-art{width:100%;height:82px;margin:0 auto 5px;border-radius:10px;box-shadow:none}
-#posterPreview.recipe-art{width:180px;height:255px;border-radius:13px;margin:auto}
+.notebook-cover{
+  width:150px;height:190px;
+  display:grid;place-items:center;text-align:center;
+  padding:15px;
+  border:7px double rgba(255,255,255,.55);
+  background:#f7ebd9;color:var(--rose);
+  transform:rotate(3deg);
+  box-shadow:0 15px 25px rgba(34,39,25,.2);
+  font:29px/1 Parisienne,cursive;
+}
 
-/* Notebook */
-.notebook-hero{
-  margin-top:22px;padding:24px 26px;
-  display:flex;align-items:center;justify-content:space-between;gap:18px
+/* Archive */
+.archive-hero{padding:38px 0 18px}
+.archive-top{
+  display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end
 }
-.notebook-hero h1{margin:0;font:50px/1 Parisienne,cursive;color:var(--rose)}
-.notebook-layout{display:grid;grid-template-columns:340px 1fr;gap:20px;margin-top:20px}
-.fav-list{padding:17px}
-.fav-list h2{margin:0 0 12px;font:31px/1 Parisienne,cursive;color:var(--rose)}
-.empty{padding:26px 12px;text-align:center;color:var(--muted)}
-.fav-item{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
-.fav-art{width:58px;height:50px;border-radius:9px;box-shadow:none}
-.fav-item strong{font:700 17px/1.1 "Cormorant Garamond",serif}
-.remove{border:0;background:#f9e9e7;color:var(--rose);width:32px;height:32px;border-radius:50%;cursor:pointer}
-.book-preview{padding:20px;display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
-.cover-preview{
-  min-height:440px;padding:30px;
-  border:8px solid #e2c8a7;
-  background:#f7ecd9;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  position:relative
+.archive-top h1{margin:0;font:700 48px/.98 "Cormorant Garamond",serif}
+.archive-top p{margin:7px 0 0;color:var(--muted);font:18px "Cormorant Garamond",serif}
+.archive-searchbar{
+  display:flex;gap:9px;align-items:center;
+  width:min(420px,100%);
+  padding:7px 8px 7px 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--paper);
 }
-.cover-preview:before,.cover-preview:after{content:"✿ ❧ ✿";position:absolute;color:#b96a76;font-size:24px}
-.cover-preview:before{top:14px;left:18px}.cover-preview:after{bottom:14px;right:18px}
-.cover-preview h3{margin:0;font:52px/1.04 Parisienne,cursive;color:var(--rose)}
-.book-controls{padding:4px}
-.book-controls label{display:block;margin-top:8px;font-weight:700}
-.book-controls input{width:100%;margin-top:5px;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fffdf8}
-.thumb-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
-.book-thumb{width:100%;aspect-ratio:12/17;border-radius:7px;box-shadow:none}
+.archive-searchbar input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink)}
+.archive-searchbar button{border:0;border-radius:999px;background:var(--rose);color:#fff;padding:8px 14px;font-weight:700}
+.archive-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  margin:22px 0 16px
+}
+.archive-toolbar .category-pills{flex:1}
+.archive-toolbar select{
+  flex:none;
+  height:40px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:0 34px 0 13px;
+  background:var(--paper);
+  color:var(--muted);
+}
+.archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding-bottom:35px}
+.empty-state{
+  grid-column:1/-1;
+  padding:48px 24px;
+  border:1px dashed #d9c7ae;border-radius:20px;
+  text-align:center;background:rgba(255,253,248,.7)
+}
+.empty-state>span{font-size:34px;color:var(--rose)}
+.empty-state h3{margin:6px 0;font:700 27px "Cormorant Garamond",serif}
+.empty-state p{color:var(--muted)}
+
+/* Recipe detail */
+.detail-main{padding:26px 0 36px}
+.detail-top{
+  display:grid;
+  grid-template-columns:310px 1fr;
+  gap:34px;
+  align-items:center;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:var(--paper);
+  box-shadow:var(--shadow-soft);
+}
+.detail-art-wrap{
+  min-height:245px;
+  display:grid;place-items:center;
+  border-radius:20px;
+  background:linear-gradient(145deg,#f1e4d2,#fff9f1);
+}
+.detail-art{width:240px;height:180px;box-shadow:0 12px 25px rgba(74,52,38,.12)}
+.detail-copy h1{margin:3px 0 7px;font:700 52px/.98 "Cormorant Garamond",serif;letter-spacing:-.025em}
+.detail-copy>p{margin:8px 0;color:var(--muted);font:19px/1.42 "Cormorant Garamond",serif}
+.detail-rating{display:flex;align-items:center;gap:7px;margin-top:11px;color:var(--muted);font-size:13px}
+.detail-rating b{color:var(--gold);letter-spacing:2px}
+.detail-facts{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0}
+.detail-facts span{padding:7px 10px;border-radius:999px;background:var(--cream-2);color:var(--muted);font-size:12px}
+.detail-heart.active{background:var(--rose-pale);color:var(--rose);border-color:#d8abb3}
+.recipe-layout{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:18px;
+  margin-top:18px
+}
+.recipe-panel{
+  padding:23px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(255,253,248,.9)
+}
+.recipe-panel h2{margin:0 0 15px;font:700 32px/1 "Cormorant Garamond",serif}
+.ingredient{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid #f0e5d6;font-size:14px}
+.ingredient:last-child{border-bottom:0}
+.ingredient input{margin-top:3px;accent-color:var(--olive)}
+.step-row{display:grid;grid-template-columns:34px 1fr;gap:11px;padding:9px 0;border-bottom:1px solid #f0e5d6}
+.step-row:last-child{border-bottom:0}
+.step-no{width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:var(--rose-pale);color:var(--rose);font-weight:800;font-size:13px}
+.step-row p{margin:4px 0 0;line-height:1.42;font-size:14px}
+.recipe-notes{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:1fr 1fr;gap:14px
+}
+.note-card{padding:18px 20px;border-radius:16px;background:#fff5e8;border:1px solid #ead5ba}
+.note-card.anne{background:var(--olive-pale);border-color:#d8dec9}
+.note-card strong{display:block;margin-bottom:4px;font:700 21px "Cormorant Garamond",serif}
+.note-card p{margin:0;color:var(--muted);font:16px/1.4 "Cormorant Garamond",serif}
+.related-section{padding-top:34px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.related-grid .recipe-card{grid-template-columns:105px 1fr}
+.related-grid .card-art{width:96px;height:72px}
+.related-grid .recipe-card-copy p{display:none}
+
+/* Notebook page */
+.notebook-page{padding:28px 0 38px}
+.notebook-header{
+  display:flex;align-items:end;justify-content:space-between;gap:20px;
+  margin-bottom:18px
+}
+.notebook-header h1{margin:0;font:700 48px/1 "Cormorant Garamond",serif}
+.notebook-header p{margin:6px 0 0;color:var(--muted);font:18px "Cormorant Garamond",serif}
+.notebook-layout{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
+.notebook-list{
+  display:grid;gap:10px;
+}
+.notebook-item{
+  position:relative;
+  display:grid;grid-template-columns:94px 1fr auto;gap:13px;align-items:center;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--paper)
+}
+.notebook-art{width:86px;height:65px;border-radius:11px}
+.notebook-item strong{display:block;font:700 21px "Cormorant Garamond",serif}
+.notebook-item span{display:block;color:var(--muted);font-size:11px}
+.remove-btn{
+  width:34px;height:34px;border:0;border-radius:50%;
+  background:#faecea;color:var(--rose);font-size:22px
+}
+.book-builder{
+  position:sticky;top:92px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--paper);
+  box-shadow:var(--shadow-soft)
+}
+.book-builder label{display:block;margin-bottom:5px;font-size:12px;font-weight:800;color:var(--olive);text-transform:uppercase;letter-spacing:.08em}
+.book-builder input{
+  width:100%;height:42px;padding:0 12px;
+  border:1px solid var(--line);border-radius:10px;outline:0;
+  background:#fff;
+}
+.book-cover-preview{
+  min-height:280px;
+  display:grid;place-items:center;text-align:center;
+  margin:14px 0;
+  padding:24px;
+  border:7px double #d8bd98;
+  background:#f6ead7;
+}
+.book-cover-preview span{color:var(--olive);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.book-cover-preview h2{margin:12px 0 7px;color:var(--rose);font:normal 42px/1 Parisienne,cursive}
+.book-cover-preview b{font-size:35px;color:var(--rose)}
+.book-cover-preview p{margin:7px 0;color:var(--muted);font:16px "Cormorant Garamond",serif}
+.notebook-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:13px}
+.preview-tile{width:100%;aspect-ratio:4/3;border-radius:7px}
+.book-builder .actions .btn{flex:1;padding-inline:10px}
 
 /* Footer */
-.footer{margin-top:32px;padding:26px 0;border-top:1px solid var(--line);background:#f2e5d2}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
-.footer-links{display:flex;gap:14px;flex-wrap:wrap;font-size:14px}
-.social{font-size:20px;letter-spacing:7px;color:var(--rose)}
+.footer{margin-top:32px;padding:31px 0;border-top:1px solid var(--line);background:#efe2d1}
+.footer-inner{display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center}
+.footer-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.footer-note{text-align:right;color:var(--muted);font:15px "Cormorant Garamond",serif}
 
-/* Toast / preview modal */
+/* Toast / modal */
 .toast{
-  position:fixed;right:15px;bottom:15px;z-index:300;
-  padding:11px 14px;border-radius:11px;background:#49382f;color:#fff;
+  position:fixed;right:16px;bottom:16px;z-index:300;
+  padding:11px 15px;border-radius:11px;
+  background:var(--ink);color:#fff;
   opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s
 }
 .toast.show{opacity:1;transform:none}
-.preview-modal{position:fixed;inset:0;z-index:200;background:rgba(51,37,29,.65);display:grid;place-items:center;padding:16px;backdrop-filter:blur(4px)}
-.preview-box{width:min(820px,100%);max-height:92vh;overflow:auto;background:#fffaf1;border-radius:19px;padding:23px;position:relative}
-.preview-close{position:absolute;right:12px;top:12px;border:0;background:#f5dfdc;color:var(--rose);width:37px;height:37px;border-radius:50%;font-size:25px}
-.preview-cover{min-height:300px;border:7px double #dbc19f;background:#f7ead5;display:grid;place-items:center;align-content:center;text-align:center;padding:28px}
-.preview-cover h2{margin:10px 0;font:52px/1 Parisienne,cursive;color:var(--rose)}
-.preview-cover b{font-size:42px;color:var(--rose)}
-.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0 20px}
-.preview-grid a{padding:8px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:center}
-.preview-art{width:100%;height:84px;margin:auto;border-radius:9px;box-shadow:none}
-.preview-grid strong{display:block;padding-top:5px;font:700 15px "Cormorant Garamond",serif}
+.preview-modal{
+  position:fixed;inset:0;z-index:250;
+  display:grid;place-items:center;padding:18px;
+  background:rgba(50,38,31,.62);backdrop-filter:blur(5px)
+}
+.preview-dialog{
+  position:relative;
+  width:min(760px,100%);
+  max-height:92vh;overflow:auto;
+  padding:20px;
+  border-radius:20px;
+  background:var(--paper)
+}
+.modal-close{position:absolute;right:10px;top:10px;width:36px;height:36px;border:0;border-radius:50%;background:#f7e6e5;color:var(--rose);font-size:23px}
+.preview-cover{
+  min-height:250px;display:grid;place-items:center;align-content:center;text-align:center;
+  padding:25px;border:7px double #d8bd98;background:#f6ead7
+}
+.preview-cover span{font-size:12px;color:var(--olive);text-transform:uppercase;font-weight:800;letter-spacing:.09em}
+.preview-cover h2{margin:12px;font:normal 48px/1 Parisienne,cursive;color:var(--rose)}
+.preview-cover b{font-size:40px;color:var(--rose)}
+.preview-cover p{margin:2px;color:var(--muted)}
+.preview-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.preview-list .mini-recipe{background:#fff}
 
-/* A4 pages for actual PDF generation */
+/* PDF sheets */
 .pdf-sheet{
   position:fixed;left:-10000px;top:0;z-index:-10;
-  width:794px;height:1123px;overflow:hidden;
-  padding:50px 56px 44px;
-  background:#fffaf1;color:#46372f;
-  border:1px solid #ead7bc;
-  font-family:"Source Sans 3",Arial,sans-serif
+  width:794px;height:1123px;
+  overflow:hidden;
+  padding:52px 58px 46px;
+  background:#fffaf2;color:#44362f;
+  font-family:"Source Sans 3",Arial,sans-serif;
 }
-.pdf-sheet:before{content:"";position:absolute;inset:18px;border:2px solid #dec5a4;border-radius:6px;pointer-events:none}
-.pdf-brand{text-align:center;font:24px "Cormorant Garamond",serif;color:#667047}
-.pdf-sheet h1{margin:10px 0 16px;text-align:center;font:55px/1 Parisienne,cursive;color:#ae4656}
-.pdf-flower{text-align:center;color:#bb6874;font-size:22px;letter-spacing:6px;position:relative}
-.pdf-flower.bottom{position:absolute;left:0;right:0;bottom:28px;font:23px Parisienne,cursive;letter-spacing:1px;color:#667047}
-.pdf-art{width:173px;height:245px;margin:0 auto 13px;border-radius:13px;border:4px solid #f2dfc6;box-shadow:none}
-.pdf-meta{display:flex;justify-content:center;gap:22px;margin:0 0 15px;color:#786557;font-size:13px}
-.pdf-columns{display:grid;grid-template-columns:1fr 1.15fr;gap:24px}
-.pdf-columns section{padding:15px 18px;background:#fffdf8;border:1px solid #e2cfb3;border-radius:12px}
-.pdf-columns h2{margin:0 0 8px;font:31px Parisienne,cursive;color:#ae4656}
-.pdf-columns ul,.pdf-columns ol{padding-left:19px;margin:0}
-.pdf-columns li{margin:4px 0;font-size:13px;line-height:1.26}
-.pdf-tip,.pdf-note{margin-top:11px;padding:10px 13px;border-radius:10px;background:#f8eadb;border-left:4px solid #bd6570;font-size:12px}
-.pdf-note{background:#edf0e1;border-left-color:#788057}
-.pdf-cover{display:flex;align-items:center;justify-content:center;padding:55px}
-.pdf-cover-inner{width:100%;height:100%;border:11px solid #e2c8a7;background:#f8eddc;display:grid;place-items:center;align-content:center;text-align:center;padding:50px}
-.pdf-cover h1{font-size:72px;max-width:620px;margin:85px auto 18px}
-.pdf-cover p{font:27px "Cormorant Garamond",serif;color:#67704a}
-.pdf-cover .cover-small{font-size:18px}
-.cover-heart{font-size:58px;color:#b44d5d}
-.cover-ornament{font-size:42px;color:#bd7b83;margin-top:70px}
+.pdf-sheet:before{
+  content:"";
+  position:absolute;inset:18px;
+  border:2px solid #ddc8a9;
+  border-radius:6px;
+}
+.pdf-brand{position:relative;text-align:center;color:var(--olive);font:700 22px "Cormorant Garamond",serif}
+.pdf-ornament{position:relative;text-align:center;margin:3px;color:var(--rose);font-size:26px}
+.pdf-ornament.big{font-size:50px;margin:18px}
+.pdf-sheet h1{position:relative;text-align:center;margin:6px 0 15px;color:var(--rose);font:normal 53px/1 Parisienne,cursive}
+.pdf-dish{position:relative;width:180px;height:135px;margin:0 auto 12px;border:5px solid #f1dfc6;box-shadow:0 8px 16px rgba(70,47,33,.1)}
+.pdf-meta{position:relative;display:flex;justify-content:center;gap:20px;margin-bottom:15px;color:var(--muted);font-size:12px}
+.pdf-columns{position:relative;display:grid;grid-template-columns:.9fr 1.15fr;gap:22px}
+.pdf-columns section{padding:15px 18px;border:1px solid #e6d4ba;border-radius:12px;background:#fffdf8}
+.pdf-columns h2{margin:0 0 8px;font:700 28px "Cormorant Garamond",serif;color:var(--rose)}
+.pdf-columns ul,.pdf-columns ol{margin:0;padding-left:19px}
+.pdf-columns li{margin:4px 0;font-size:12.5px;line-height:1.28}
+.pdf-notes{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:11px}
+.pdf-notes p{margin:0;padding:10px 12px;border-radius:10px;background:#f7eadb;font-size:11.5px}
+.pdf-notes p:last-child{background:#edf0e5}
+.pdf-notes b{display:block;margin-bottom:3px;color:var(--rose)}
+.pdf-footer{position:absolute;left:0;right:0;bottom:28px;text-align:center;color:var(--olive);font:22px Parisienne,cursive}
+.pdf-cover{padding:54px}
+.pdf-cover-inner{
+  position:relative;
+  height:100%;
+  display:grid;place-items:center;align-content:center;text-align:center;
+  padding:60px;border:11px double #d9be99;background:#f6ead7
+}
+.pdf-cover h1{font-size:72px;margin:16px 0}
+.pdf-cover p{margin:4px;color:var(--olive);font:27px "Cormorant Garamond",serif}
+.pdf-cover span{color:var(--muted);font-size:16px}
+.pdf-cover-heart{margin-top:38px;color:var(--rose);font-size:58px}
 
-/* Tablet/mobile */
-@media(max-width:900px){
-  .container{width:min(100% - 22px,1120px)}
-  .nav{height:68px;position:relative}
-  .brand{font-size:26px}
-  .brand small{font-size:16px;text-align:left}
-  .search{display:none}
-  .nav>.icon-btn:not(.mobile-menu){display:none}
-  .mobile-menu{display:block;margin-left:auto;font-size:30px}
-  .nav-links{display:none}
-  .nav-links.open{
-    display:flex;position:absolute;left:0;right:0;top:60px;z-index:100;
-    flex-direction:column;align-items:stretch;gap:0;
-    padding:10px 15px;background:#fffaf1;border:1px solid var(--line);
-    border-radius:14px;box-shadow:var(--shadow)
-  }
-  .nav-links.open a{padding:12px 4px;border-bottom:1px solid #eee0cc}
-  .nav-links.open a:last-child{border-bottom:0}
-
-  .hero-card{grid-template-columns:1fr 300px}
-  .hero-copy{padding:34px 28px}
-  .hero-copy h1{font-size:47px}
-  .hero-image{min-height:340px}
-  .categories{grid-template-columns:repeat(3,1fr)}
-  .home-grid{grid-template-columns:1fr}
-  .category-layout{grid-template-columns:1fr}.filters{position:static}
-  .detail-grid{grid-template-columns:1fr 1fr}.detail-grid>.detail-panel:last-child{grid-column:1/-1}
-  .notebook-layout{grid-template-columns:1fr}
+/* Desktop medium */
+@media(max-width:980px){
+  .header-search{display:none}
+  .hero-copy{padding:46px 38px}
+  .hero-copy h1{font-size:50px}
+  .latest-strip{grid-template-columns:repeat(3,1fr)}
+  .latest-strip .mini-recipe:nth-child(n+4){display:none}
+  .related-grid{grid-template-columns:1fr}
+  .related-grid .recipe-card{grid-template-columns:130px 1fr}
+  .notebook-layout{grid-template-columns:1fr 340px}
 }
 
-@media(max-width:640px), (pointer:coarse) and (max-width:900px){
-  body{background:#fbf3e8}
-  .container{width:calc(100% - 18px)}
-  .paper{border-radius:16px}
-  .nav{height:66px}
-  .brand{font-size:25px}.brand small{font-size:15px}
+/* Mobile */
+@media(max-width:720px){
+  .container{width:calc(100% - 24px)}
+  .section{padding:28px 0}
+  .section-head{align-items:center;margin-bottom:14px}
+  .section-head h2{font-size:30px}
+  .section-head>a{font-size:12px}
+  .section-copy{font-size:16px}
 
-  .hero{padding-top:10px}
-  .hero-card{display:block;min-height:0}
-  .hero-copy{padding:26px 22px 15px}
-  .hero-copy h1{font-size:41px}
-  .hero-copy>p:first-of-type{font-size:20px}
-  .hero-copy p{font-size:17px;line-height:1.42}
-  .hero-image{min-height:0;padding:12px 15px 24px;display:flex}
-  .hero-art{width:210px;height:168px;transform:rotate(.8deg)}
-  .hero-note{right:10px;bottom:22px;width:168px;padding:9px 10px;font-size:15px}
-
-  .section{padding:20px 0}
-  .section-title{align-items:center;margin-bottom:12px}
-  .section-title h2{font-size:34px}
-  .section-title a{font-size:13px}
-
-  .categories{
-    display:flex;gap:10px;overflow-x:auto;
-    scroll-snap-type:x proximity;padding:1px 1px 7px;scrollbar-width:none
+  .nav{height:67px}
+  .brand{font-size:27px}
+  .brand small{font-size:14px}
+  .main-nav{display:none}
+  .main-nav.open{
+    position:absolute;left:12px;right:12px;top:60px;
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    padding:10px 15px;
+    border:1px solid var(--line);border-radius:15px;
+    background:var(--paper);box-shadow:var(--shadow)
   }
-  .categories::-webkit-scrollbar{display:none}
-  .category-card{flex:0 0 128px;scroll-snap-align:start;padding:11px 8px}
-  .category-art{width:104px;height:74px}
-  .category-card strong{font-size:16px}
-  .category-card span{font-size:11px}
+  .main-nav.open a{padding:12px 4px;border-bottom:1px solid #eee2d1}
+  .main-nav.open a:last-child{border-bottom:0}
+  .header-heart{margin-left:auto}
+  .menu-btn{display:block}
 
-  .home-grid{gap:18px}
-  .daily{padding:13px}
-  .poster-art{width:160px;height:227px}
-  .recipe-grid{grid-template-columns:1fr;gap:10px}
-  .recipe-card{grid-template-columns:116px 1fr;min-height:112px}
-  .recipe-card .recipe-art.thumb{width:104px;height:82px;margin:9px}
-  .recipe-body{padding:11px 12px 11px 0}
-  .recipe-title{font-size:25px}
-  .card-desc{font-size:14px;-webkit-line-clamp:2}
-  .meta{font-size:11px;margin-top:4px}
-  .heart{width:32px;height:32px;font-size:18px}
-  .ribbon .mini{flex-basis:165px}
-  .quote-bar{font-size:21px;padding:15px}
+  .hero{padding:12px 0 3px}
+  .hero-shell{display:block;min-height:0;border-radius:20px}
+  .hero-copy{padding:29px 24px 20px}
+  .hero-copy:before{font-size:20px;margin-bottom:7px}
+  .hero-copy h1{font-size:39px;line-height:1}
+  .hero-copy h1 em{font-size:34px;margin-top:4px}
+  .hero-copy p{margin:14px 0 18px;font-size:17px;line-height:1.43}
+  .hero-copy .btn{width:100%}
+  .hero-trust{display:none}
+  .hero-visual{min-height:158px;padding:10px 12px 17px}
+  .hero-visual:before,.hero-visual:after{display:none}
+  .hero-stack{
+    width:100%;height:auto;
+    display:flex;justify-content:center;gap:7px
+  }
+  .hero-tile{
+    position:static;
+    width:30%;max-width:105px;height:auto;aspect-ratio:4/3;
+    border-width:4px;transform:none!important
+  }
+  .hero-note{display:none}
 
-  .page-hero{display:block;min-height:0;margin-top:12px}
-  .page-hero .copy{padding:20px 6px 20px 20px}
-  .page-hero h1{font-size:39px}
-  .page-hero p{font-size:16px;line-height:1.35}
-  .page-hero-art{width:210px;height:145px}
-  .category-layout{padding-top:14px}
-  .filters{padding:14px}
-  .filters h3{font-size:25px}
-  .filter-group{padding:10px 0}
+  .category-row{padding:15px 0 0}
+  .category-row .category-pills{justify-content:flex-start}
+  .category-chip{min-height:36px;padding:7px 13px;font-size:12px}
 
-  .detail-hero{display:block;padding:14px;margin-top:12px}
-  #detailImg.recipe-art{width:100%;max-width:330px;height:205px;margin:0 auto 12px}
-  .detail-copy{padding:4px 4px 4px 0}
-  .detail-copy h1{font-size:38px}
-  .detail-copy p{font-size:16px;line-height:1.35}
-  .quick{gap:6px;margin:11px 0}
-  .quick .q{padding:7px 8px;font-size:11px}
-  .action-row{gap:6px}
-  .action-row .btn{padding:9px 12px;font-size:13px;min-height:40px}
-  .detail-grid{grid-template-columns:1fr;gap:11px;padding-top:12px}
-  .detail-grid>.detail-panel:last-child{grid-column:auto}
-  .detail-panel{padding:16px}
-  .detail-panel h2{font-size:30px}
-  #posterPreview.recipe-art{width:160px;height:227px}
+  .featured{grid-template-columns:112px 1fr;gap:13px;padding:14px;border-radius:18px}
+  .featured-media{min-height:110px}
+  .featured-art{width:105px;height:79px;border-radius:11px}
+  .featured-badge{display:none}
+  .featured-copy h3{font-size:28px}
+  .featured-copy p{display:none}
+  .featured-meta{margin:6px 0 9px;gap:5px}
+  .featured-meta span{padding:4px 6px;font-size:10px}
+  .featured-copy .actions{display:block}
+  .featured-copy .btn{min-height:37px;padding:7px 12px;font-size:12px}
+  .featured-copy .btn.ghost{display:none}
 
-  .notebook-hero{margin-top:12px;padding:19px;align-items:flex-start;flex-direction:column}
-  .notebook-hero h1{font-size:41px}
-  .notebook-layout{gap:12px;margin-top:12px}
-  .fav-list{padding:14px}
-  .book-preview{grid-template-columns:1fr;padding:14px}
-  .cover-preview{min-height:330px;padding:24px}
-  .cover-preview h3{font-size:43px}
-  .thumb-stack{grid-template-columns:repeat(4,1fr)}
+  .recipe-grid,.archive-grid{grid-template-columns:1fr;gap:9px}
+  .recipe-card{
+    grid-template-columns:112px 1fr;
+    gap:11px;padding:10px;
+    border-radius:15px
+  }
+  .card-art{width:104px;height:78px;border-radius:10px}
+  .recipe-card-copy{padding:1px 27px 1px 0}
+  .recipe-card-title{font-size:21px}
+  .recipe-card-copy p{font-size:13.5px;line-height:1.25;margin:4px 0 5px}
+  .recipe-card .eyebrow{font-size:9px}
+  .recipe-card-meta{font-size:10px}
+  .heart-btn{width:31px;height:31px;right:8px;top:8px}
 
-  .footer{margin-top:24px}
-  .footer-inner{flex-direction:column;align-items:flex-start}
-  .footer-links{gap:10px}
+  .latest-strip{
+    display:flex;gap:8px;overflow:auto;
+    padding-bottom:4px;scrollbar-width:none
+  }
+  .latest-strip::-webkit-scrollbar{display:none}
+  .latest-strip .mini-recipe,.latest-strip .mini-recipe:nth-child(n+4){
+    display:flex;flex:0 0 180px
+  }
 
-  .preview-box{padding:17px}
-  .preview-cover{min-height:240px}
-  .preview-cover h2{font-size:40px}
-  .preview-grid{grid-template-columns:repeat(2,1fr)}
-  .preview-art{width:100%;height:78px}
+  .notebook-cta{grid-template-columns:1fr;border-radius:19px}
+  .notebook-cta-copy{padding:27px 23px}
+  .notebook-cta-copy h2{font-size:31px}
+  .notebook-cta-copy p{font-size:16px}
+  .notebook-cta-art{display:none}
+
+  .archive-hero{padding:25px 0 12px}
+  .archive-top{grid-template-columns:1fr;gap:15px}
+  .archive-top h1{font-size:39px}
+  .archive-searchbar{width:100%}
+  .archive-toolbar{display:block;margin:14px 0}
+  .archive-toolbar select{width:100%;margin-top:9px}
+  .archive-toolbar .category-pills{padding-bottom:3px}
+
+  .detail-main{padding:13px 0 28px}
+  .detail-top{grid-template-columns:1fr;padding:15px;gap:15px;border-radius:19px}
+  .detail-art-wrap{min-height:0;padding:14px}
+  .detail-art{width:180px;height:135px}
+  .detail-copy h1{font-size:39px}
+  .detail-copy>p{font-size:16px}
+  .detail-facts{margin:12px 0}
+  .detail-copy .actions .btn{flex:1;font-size:12px;padding:8px 10px}
+  .recipe-layout{grid-template-columns:1fr;gap:10px;margin-top:10px}
+  .recipe-panel{padding:17px;border-radius:16px}
+  .recipe-panel h2{font-size:28px}
+  .recipe-notes{grid-template-columns:1fr;gap:9px}
+  .related-section{padding-top:27px}
+  .related-grid{grid-template-columns:1fr}
+  .related-grid .recipe-card{grid-template-columns:112px 1fr}
+  .related-grid .card-art{width:104px;height:78px}
+
+  .notebook-page{padding:18px 0 30px}
+  .notebook-header{align-items:flex-start;flex-direction:column;margin-bottom:13px}
+  .notebook-header h1{font-size:39px}
+  .notebook-header p{font-size:16px}
+  .notebook-layout{grid-template-columns:1fr;gap:12px}
+  .notebook-item{grid-template-columns:86px 1fr auto;padding:9px}
+  .notebook-art{width:78px;height:59px}
+  .notebook-item strong{font-size:19px}
+  .book-builder{position:static;padding:14px}
+  .book-cover-preview{min-height:235px}
+  .book-cover-preview h2{font-size:38px}
+
+  .footer{padding:26px 0}
+  .footer-inner{grid-template-columns:1fr;gap:15px;text-align:left}
+  .footer-links{justify-content:flex-start;gap:12px}
+  .footer-note{text-align:left}
+  .preview-list{grid-template-columns:1fr}
+}
+
+@media(max-width:390px){
+  .hero-copy h1{font-size:36px}
+  .featured{grid-template-columns:96px 1fr}
+  .featured-art{width:90px;height:68px}
+  .recipe-card,.related-grid .recipe-card{grid-template-columns:99px 1fr}
+  .card-art,.related-grid .card-art{width:91px;height:68px}
 }
 
 @media print{
-  .site-header,.footer,.action-row,.heart,.btn,.toast{display:none!important}
+  .site-header,.footer,.actions,.heart-btn,.header-heart,.menu-btn,.toast{display:none!important}
   body{background:#fff}
-  .paper{box-shadow:none}
-}
-
-
-/* Robust phone layout: also catches Android browsers that report a wide desktop-like viewport */
-@media (max-width:1180px), (pointer:coarse) and (max-width:1400px){
-  .container{width:calc(100% - 20px);max-width:760px}
-  .nav{height:66px;position:relative}
-  .brand{font-size:25px}
-  .brand small{font-size:15px;text-align:left}
-  .search{display:none!important}
-  .nav>.icon-btn:not(.mobile-menu){display:none!important}
-  .mobile-menu{display:block!important;margin-left:auto;font-size:30px}
-  .nav-links{display:none!important}
-  .nav-links.open{
-    display:flex!important;position:absolute;left:0;right:0;top:60px;z-index:100;
-    flex-direction:column;align-items:stretch;gap:0;
-    padding:10px 15px;background:#fffaf1;border:1px solid var(--line);
-    border-radius:14px;box-shadow:var(--shadow)
-  }
-  .nav-links.open a{padding:12px 4px;border-bottom:1px solid #eee0cc}
-  .nav-links.open a:last-child{border-bottom:0}
-
-  .hero-card{display:block;min-height:0}
-  .hero-copy{padding:27px 22px 17px}
-  .hero-copy h1{font-size:42px}
-  .hero-copy>p:first-of-type{font-size:20px}
-  .hero-copy p{font-size:17px;line-height:1.43}
-  .hero-image{min-height:0;padding:16px 18px 25px;display:flex}
-  .hero-art{width:220px;height:180px}
-  .hero-note{right:12px;bottom:18px;width:172px;padding:9px 11px;font-size:15px}
-
-  .categories{
-    display:flex;gap:10px;overflow-x:auto;
-    scroll-snap-type:x proximity;padding:1px 1px 8px;scrollbar-width:none
-  }
-  .categories::-webkit-scrollbar{display:none}
-  .category-card{flex:0 0 138px;scroll-snap-align:start;padding:11px 9px}
-  .category-art{width:112px;height:82px}
-
-  .home-grid{grid-template-columns:1fr;gap:18px}
-  .recipe-grid{grid-template-columns:1fr;gap:10px}
-  .recipe-card{grid-template-columns:124px 1fr;min-height:118px}
-  .recipe-card .recipe-art.thumb{width:110px;height:90px;margin:9px}
-  .recipe-body{padding:10px 12px 10px 0}
-  .recipe-title{font-size:26px}
-  .card-desc{font-size:14px;-webkit-line-clamp:2}
-  .meta{font-size:11px;margin-top:4px}
-
-  .page-hero{grid-template-columns:1fr;min-height:0;margin-top:12px;padding-bottom:17px}
-  .page-hero .copy{padding:21px 22px 8px}
-  .page-hero h1{font-size:40px}
-  .page-hero p{font-size:17px}
-  .page-hero-art{width:230px;height:160px}
-  .category-layout{grid-template-columns:1fr;padding-top:14px}
-  .filters{position:static}
-
-  .detail-hero{grid-template-columns:1fr;margin-top:12px;padding:15px}
-  #detailImg.recipe-art{width:100%;max-width:360px;height:225px;margin:0 auto 12px}
-  .detail-copy{padding:4px}
-  .detail-copy h1{font-size:40px}
-  .detail-copy p{font-size:17px}
-  .detail-grid{grid-template-columns:1fr;gap:11px;padding-top:12px}
-  .detail-grid>.detail-panel:last-child{grid-column:auto}
-
-  .notebook-layout{grid-template-columns:1fr}
-  .book-preview{grid-template-columns:1fr}
-  .footer-inner{flex-direction:column;align-items:flex-start}
+  .detail-top,.recipe-panel{box-shadow:none}
 }
