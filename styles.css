@@ -183,3 +183,100 @@ button,input{font:inherit}
   .footer-inner{flex-direction:column;align-items:flex-start}
   .cover-preview{min-height:460px}.cover-preview h3{font-size:48px}
 }
+
+
+/* Generated watercolor recipe artwork */
+.recipe-art{
+  --sx:0;--sy:0;
+  background-image:url("assets/recipe-sprite.jpg");
+  background-size:500% 200%;
+  background-position:calc(var(--sx) * 25%) calc(var(--sy) * 100%);
+  background-repeat:no-repeat;
+  background-color:#f8efdf;
+}
+.hero-art{position:absolute;inset:0}
+.category-art{height:115px;width:100%;border-radius:12px}
+.recipe-card .thumb{height:190px;width:100%;border-radius:0}
+.mini-art{width:70px;height:70px;min-width:70px;border-radius:10px}
+.poster-art{width:100%;height:560px;border-radius:14px}
+.page-hero-art{width:100%;height:300px}
+.detail-art{width:100%;height:430px}
+.related-art{height:90px;width:100%;border-radius:10px;margin-bottom:6px}
+.fav-art{width:85px;height:72px;border-radius:10px}
+.book-thumb{aspect-ratio:3/4;border-radius:8px;border:2px solid #ead7bc}
+.card-desc{font:15px/1.35 "Cormorant Garamond",serif;color:#755f51;margin:7px 0 3px}
+.hero-image{overflow:hidden}
+.category-card .recipe-art{margin-bottom:8px}
+.page-hero .page-hero-art{min-height:300px}
+.detail-hero .detail-art{min-height:430px}
+#posterPreview{min-height:560px;width:min(100%,420px);border-radius:14px;margin:auto}
+
+.filter-group label{cursor:pointer}
+.filter-group input{accent-color:var(--rose)}
+
+.preview-modal{
+  position:fixed;inset:0;z-index:200;background:rgba(51,37,29,.62);
+  display:grid;place-items:center;padding:18px;backdrop-filter:blur(5px)
+}
+.preview-box{
+  width:min(860px,100%);max-height:92vh;overflow:auto;background:#fff9ee;
+  border-radius:22px;padding:28px;box-shadow:0 24px 70px rgba(0,0,0,.28);position:relative
+}
+.preview-close{position:absolute;right:14px;top:12px;border:0;background:#f5dfdc;color:var(--rose);width:38px;height:38px;border-radius:50%;font-size:27px;cursor:pointer}
+.preview-cover{min-height:260px;border:7px double #dbc19f;background:#f7ead5;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;margin-bottom:22px}
+.preview-cover h2{font:52px/1 Parisienne,cursive;color:var(--rose);margin:12px}
+.preview-cover b{font-size:34px;color:var(--rose)}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:14px 0 22px}
+.preview-grid a{background:#fff;border:1px solid var(--line);padding:8px;border-radius:13px;text-align:center}
+.preview-art{height:150px;border-radius:9px;margin-bottom:7px}
+
+/* Off-screen A4 layouts used to create actual PDF downloads */
+.pdf-sheet{
+  position:fixed;left:-10000px;top:0;width:794px;height:1123px;overflow:hidden;
+  background:#fff9ed;color:#43362e;padding:54px 58px 48px;z-index:-10;
+  font-family:"Source Sans 3",Arial,sans-serif;
+  border:1px solid #ead7bc
+}
+.pdf-sheet:before{
+  content:"";position:absolute;inset:18px;border:2px solid #dec5a4;border-radius:6px;pointer-events:none
+}
+.pdf-sheet h1{font:56px/1.05 Parisienne,cursive;color:#ae4656;text-align:center;margin:10px 0 20px}
+.pdf-brand{text-align:center;font:25px "Cormorant Garamond",serif;color:#667047}
+.pdf-flower{text-align:center;color:#bb6874;font-size:24px;letter-spacing:7px;position:relative;z-index:2}
+.pdf-flower.bottom{position:absolute;left:0;right:0;bottom:32px;font:24px Parisienne,cursive;letter-spacing:1px;color:#667047}
+.pdf-art{width:410px;height:245px;margin:0 auto 16px;border-radius:18px;border:5px solid #f2dfc6;box-shadow:0 9px 22px rgba(80,55,35,.12)}
+.pdf-meta{display:flex;justify-content:center;gap:26px;color:#786557;margin:0 0 18px;font-size:14px}
+.pdf-columns{display:grid;grid-template-columns:1fr 1.15fr;gap:28px}
+.pdf-columns section{background:#fffdf8;border:1px solid #e2cfb3;border-radius:14px;padding:18px 22px}
+.pdf-columns h2{font:34px Parisienne,cursive;color:#ae4656;margin:0 0 9px}
+.pdf-columns ul,.pdf-columns ol{padding-left:21px;margin:0}
+.pdf-columns li{margin:5px 0;font-size:14px;line-height:1.28}
+.pdf-tip,.pdf-note{margin-top:13px;padding:11px 15px;border-radius:12px;background:#f8eadb;border-left:4px solid #bd6570;font-size:13px}
+.pdf-note{background:#edf0e1;border-left-color:#788057}
+.pdf-cover{display:flex;align-items:center;justify-content:center}
+.pdf-cover-inner{text-align:center;width:100%}
+.pdf-cover h1{font-size:74px;max-width:620px;margin:95px auto 20px}
+.pdf-cover p{font:28px "Cormorant Garamond",serif;color:#67704a}
+.pdf-cover .cover-small{font-size:19px}
+.cover-heart{font-size:62px;color:#b44d5d}
+.cover-ornament{font-size:48px;color:#bd7b83;margin-top:80px}
+
+@media (max-width:980px){
+  .nav{position:relative}
+  .nav-links.open{
+    display:flex;position:absolute;left:0;right:0;top:70px;z-index:80;
+    flex-direction:column;gap:4px;background:#fffaf1;padding:16px 20px;
+    border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)
+  }
+  .nav-links.open a{padding:11px 5px}
+  .preview-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .recipe-card .thumb{height:220px}
+  .poster-art{height:520px}
+  .page-hero-art{height:260px}
+  .detail-art{height:390px}
+  .preview-grid{grid-template-columns:1fr 1fr}
+  .preview-art{height:135px}
+  .preview-cover h2{font-size:42px}
+}
