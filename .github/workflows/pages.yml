@@ -24,17 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build generated recipe artwork
-        shell: bash
-        run: |
-          mkdir -p assets
-          cat .build/recipe-sprite.part1.b64 .build/recipe-sprite.part2.b64 .build/recipe-sprite.part3.b64 | base64 -d > assets/recipe-sprite.jpg
-          test -s assets/recipe-sprite.jpg
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
