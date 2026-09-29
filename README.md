@@ -22,3 +22,6 @@ Yerelde de `index.html` açılır; ancak en sağlıklısı basit bir HTTP sunucu
 
 ## Görseller
 Bu GitHub sürümünde sayfanın hemen çalışması için yemek fotoğrafları uzaktaki görsel URL'lerinden yüklenir. Tasarım ve favori/Defterim mantığı tamamen repodadır. Üretilen özel suluboya görseller daha sonra `assets/` klasörüne taşınabilir.
+
+
+Deployment: GitHub Pages workflow enabled.
