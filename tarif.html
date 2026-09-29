@@ -19,7 +19,7 @@
 
 <main class="container">
 <section class="detail-hero paper">
- <img id="detailImg" alt="">
+ <div id="detailImg" class="recipe-art" role="img"></div>
  <div class="detail-copy"><div style="font-size:13px;color:#8a7462">Ana Sayfa › Tarifler</div><h1 id="detailTitle"></h1><p id="detailDesc"></p>
  <div class="meta"><span class="stars">★★★★★</span> <span id="detailRating"></span></div>
  <div class="quick"><div class="q">◷ <b id="detailTime"></b><br><small>Hazırlık Süresi</small></div><div class="q">🍲 <b>4–6 kişilik</b><br><small>Porsiyon</small></div><div class="q">♨ <b>Kolay</b><br><small>Zorluk</small></div></div>
@@ -31,7 +31,7 @@
  <div class="detail-panel paper steps"><h2>Yapılışı</h2><div id="steps"></div></div>
  <div class="detail-panel paper"><div class="tip"><h3>💡 Püf Noktası</h3><p id="tipText"></p></div><div class="anne-note"><h3>♡ Anne Notu</h3><p id="noteText"></p></div><h2>Benzer Tarifler</h2><div id="related" class="related"></div></div>
 </section>
-<section class="section"><div class="section-title"><h2>Yazdırılabilir Tarif Kartı</h2></div><div class="paper" style="padding:18px;display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:18px;align-items:center"><img id="posterPreview" style="border-radius:14px;max-height:560px;margin:auto" alt="Tarif kartı"><div><h3 class="script" style="font-size:38px;margin:0">Mutfakta yanında olsun ♡</h3><p>Tarif kartını yazdırabilir veya PDF olarak saklayabilirsin.</p><button class="btn primary" onclick="downloadRecipePDF()">PDF İndir</button></div></div></section>
+<section class="section"><div class="section-title"><h2>Yazdırılabilir Tarif Kartı</h2></div><div class="paper" style="padding:18px;display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:18px;align-items:center"><div id="posterPreview" class="recipe-art" role="img"></div><div><h3 class="script" style="font-size:38px;margin:0">Mutfakta yanında olsun ♡</h3><p>Tarif kartını yazdırabilir veya PDF olarak saklayabilirsin.</p><button class="btn primary" onclick="downloadRecipePDF()">PDF İndir</button></div></div></section>
 </main>
 
 <footer class="footer" id="hakkimizda">
@@ -44,6 +44,6 @@
   </div>
 </footer>
 <div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script><script src="data.js"></script><script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><script src="data.js"></script><script src="app.js"></script>
 
 </body></html>
