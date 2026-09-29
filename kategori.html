@@ -20,14 +20,24 @@
 <main class="container">
 <section class="page-hero paper">
  <div class="copy"><div style="font-size:13px;color:#8a7462">Ana Sayfa › Kategoriler › Tarifler</div><h1>Tarifler ♡</h1><p>Her lokmada anı, her tarifte biraz ev sıcaklığı… Çorbalardan tatlılara, sofrana yakışacak tarifleri burada keşfet.</p></div>
- <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=1400&q=85" alt="Tarifler">
+ <div class="recipe-art page-hero-art" data-art="mercimek-corbasi" role="img" aria-label="Tarifler"></div>
 </section>
 <section class="category-layout">
  <aside class="filters paper">
   <h3>Tarifleri Filtrele</h3>
-  <div class="filter-group"><strong>Hazırlık Süresi</strong><label><input type="checkbox"> 30 dakika ve daha az</label><label><input type="checkbox"> 31–60 dakika</label><label><input type="checkbox"> 60 dakikadan fazla</label></div>
-  <div class="filter-group"><strong>Zorluk</strong><label><input type="checkbox"> Çok Kolay</label><label><input type="checkbox"> Kolay</label><label><input type="checkbox"> Orta</label></div>
-  <div class="filter-group"><strong>Özel Seçimler</strong><label><input type="checkbox"> Vegan Tarifler</label><label><input type="checkbox"> Misafir Sofrası</label><label><input type="checkbox"> Çay Saati</label></div>
+  <div class="filter-group"><strong>Hazırlık Süresi</strong>
+   <label><input data-filter-time type="checkbox" value="30"> 30 dakika ve daha az</label>
+   <label><input data-filter-time type="checkbox" value="60"> 31–60 dakika</label>
+   <label><input data-filter-time type="checkbox" value="61"> 60 dakikadan fazla</label>
+  </div>
+  <div class="filter-group"><strong>Kategori</strong>
+   <label><input data-filter-cat type="checkbox" value="Çorbalar"> Çorbalar</label>
+   <label><input data-filter-cat type="checkbox" value="Ana Yemekler"> Ana Yemekler</label>
+   <label><input data-filter-cat type="checkbox" value="Hamur İşleri"> Hamur İşleri</label>
+   <label><input data-filter-cat type="checkbox" value="Tatlılar"> Tatlılar</label>
+   <label><input data-filter-cat type="checkbox" value="Kahvaltılık"> Kahvaltılık</label>
+  </div>
+  <div class="filter-group"><strong>Nasıl kullanılır?</strong><small>Bir veya daha fazla filtre seç. Sonuçlar anında güncellenir.</small></div>
  </aside>
  <div class="category-main">
   <div class="section-title"><h2 id="resultCount">Tarifler</h2></div>
