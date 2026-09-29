@@ -1,0 +1,70 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css"></head><body data-page="home">
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
+    <nav class="nav-links">
+      <a data-nav="home" href="index.html">Ana Sayfa</a>
+      <a data-nav="kategori" href="kategori.html">Tarifler</a>
+      <a href="kategori.html">Kategoriler</a>
+      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
+      <a href="defterim.html">PDF İndir</a>
+      <a href="#hakkimizda">Hakkımızda</a>
+    </nav>
+    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
+    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
+    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="hero"><div class="container hero-card paper">
+  <div class="hero-copy"><h1>Ev kokan tarifler,</h1><p>küçük sırlar ve yıllarca saklanacak lezzetler…</p>
+  <p style="font-size:17px">Annenizin elinden çıkmış gibi, sevgiyle hazırlanmış geleneksel tarifler. Aile sofralarından ilhamla, nesilden nesile uzanan bir lezzet defteri.</p>
+  <a class="btn primary" href="kategori.html">Tariflere Göz At →</a></div>
+  <div class="hero-image"><img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1400&q=85" alt="Krep"><div class="hero-note">“Güzel yemekler,<br>güzel insanları<br>hep bir araya getirir…” ♡</div></div>
+</div></section>
+
+<section class="section"><div class="container">
+ <div class="section-title"><h2>Kategoriler</h2><a href="kategori.html">Tüm Kategorileri Gör →</a></div>
+ <div class="categories">
+   <a class="category-card paper" href="kategori.html?cat=Çorbalar"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=82"><strong>Çorbalar</strong><span>Sıcacık başlangıçlar</span></a>
+   <a class="category-card paper" href="kategori.html?cat=Ana Yemekler"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=82"><strong>Ana Yemekler</strong><span>Ev sofralarının kalbi</span></a>
+   <a class="category-card paper" href="kategori.html?cat=Hamur İşleri"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=82"><strong>Hamur İşleri</strong><span>Fırından gelen koku</span></a>
+   <a class="category-card paper" href="kategori.html?cat=Tatlılar"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=82"><strong>Tatlılar</strong><span>Çayın yanına</span></a>
+   <a class="category-card paper" href="kategori.html?cat=Kahvaltılık"><img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=900&q=82"><strong>Kahvaltılık</strong><span>Güne güzel başla</span></a>
+   <a class="category-card paper" href="kategori.html?q=salata"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=82"><strong>Salatalar</strong><span>Ferahlık ve renk</span></a>
+ </div>
+</div></section>
+
+<section class="section"><div class="container home-grid">
+ <div>
+   <div class="section-title"><h2>Bugünün Defter Sayfası ♡</h2></div>
+   <div class="daily paper"><img class="poster" src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1000&q=85" alt="Krep tarif kartı"><div style="padding-top:12px;text-align:center"><a class="btn primary" href="tarif.html?id=krep">Tarifi Gör →</a></div></div>
+ </div>
+ <div>
+   <div class="section-title"><h2>Popüler Tarifler ♡</h2><a href="kategori.html">Tümünü Gör →</a></div>
+   <div id="popularGrid" class="recipe-grid"></div>
+ </div>
+</div></section>
+
+<section class="section"><div class="container">
+ <div class="section-title"><h2>Annemin Mutfağından En Sevilenler ♡</h2></div>
+ <div id="miniRibbon" class="ribbon"></div>
+ <div class="quote-bar paper">“Bir tarif, bazen koca bir çocukluk demektir…” ♡</div>
+</div></section>
+</main>
+
+<footer class="footer" id="hakkimizda">
+  <div class="container footer-inner">
+    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <div class="footer-links">
+      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+    </div>
+    <div class="social">◎ ◉ ▶︎ f</div>
+  </div>
+</footer>
+<div id="toast" class="toast"></div>
+<script src="data.js"></script><script src="app.js"></script>
+
+</body></html>
