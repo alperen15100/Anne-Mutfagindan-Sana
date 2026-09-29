@@ -43,8 +43,7 @@ function updateFavUI(){
 
 function setArt(el,id){
   const p=ART[id]||ART.krep;
-  el.style.setProperty("--sx",String(p[0]));
-  el.style.setProperty("--sy",String(p[1]));
+  el.style.backgroundPosition=(p[0]*25)+"% "+(p[1]*100)+"%";
   el.setAttribute("data-art",id);
 }
 function hydrateArt(root=document){$$("[data-art]",root).forEach(el=>setArt(el,el.dataset.art))}
