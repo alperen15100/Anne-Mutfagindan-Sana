@@ -1,61 +1,79 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tarifler | Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css?v=6"></head><body data-page="kategori">
-
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fbf6ed">
+  <title>Tarifler | Anne Mutfağından Sana</title>
+  <meta name="description" content="Çorbalar, zeytinyağlılar, hamur işleri, tatlılar ve kahvaltılık ev tariflerini keşfet.">
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body data-page="kategori">
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
-    <nav class="nav-links">
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
+    <nav class="main-nav" id="mainNav">
       <a data-nav="home" href="index.html">Ana Sayfa</a>
       <a data-nav="kategori" href="kategori.html">Tarifler</a>
-      <a href="kategori.html">Kategoriler</a>
-      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
-      <a href="defterim.html">PDF İndir</a>
-      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Hamur%20İşleri">Hamur İşleri</a>
+      <a data-nav="defterim" href="defterim.html">Defterim</a>
     </nav>
-    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
-    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
-    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+    <label class="header-search" aria-label="Tarif ara">
+      <input data-search placeholder="Tarif ara…">
+      <span>⌕</span>
+    </label>
+    <a class="header-heart" href="defterim.html" aria-label="Benim Defterim">♡<b data-fav-count></b></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç" aria-expanded="false">☰</button>
   </div>
 </header>
 
-<main class="container">
-<section class="page-hero paper">
- <div class="copy"><div style="font-size:13px;color:#8a7462">Ana Sayfa › Kategoriler › Tarifler</div><h1>Tarifler ♡</h1><p>Her lokmada anı, her tarifte biraz ev sıcaklığı… Çorbalardan tatlılara, sofrana yakışacak tarifleri burada keşfet.</p></div>
- <div class="recipe-art page-hero-art food-crop" data-art="mercimek-corbasi" role="img" aria-label="Tarifler"></div>
-</section>
-<section class="category-layout">
- <aside class="filters paper">
-  <h3>Tarifleri Filtrele</h3>
-  <div class="filter-group"><strong>Hazırlık Süresi</strong>
-   <label><input data-filter-time type="checkbox" value="30"> 30 dakika ve daha az</label>
-   <label><input data-filter-time type="checkbox" value="60"> 31–60 dakika</label>
-   <label><input data-filter-time type="checkbox" value="61"> 60 dakikadan fazla</label>
-  </div>
-  <div class="filter-group"><strong>Kategori</strong>
-   <label><input data-filter-cat type="checkbox" value="Çorbalar"> Çorbalar</label>
-   <label><input data-filter-cat type="checkbox" value="Ana Yemekler"> Ana Yemekler</label>
-   <label><input data-filter-cat type="checkbox" value="Hamur İşleri"> Hamur İşleri</label>
-   <label><input data-filter-cat type="checkbox" value="Tatlılar"> Tatlılar</label>
-   <label><input data-filter-cat type="checkbox" value="Kahvaltılık"> Kahvaltılık</label>
-  </div>
-  <div class="filter-group"><strong>Nasıl kullanılır?</strong><small>Bir veya daha fazla filtre seç. Sonuçlar anında güncellenir.</small></div>
- </aside>
- <div class="category-main">
-  <div class="section-title"><h2 id="resultCount">Tarifler</h2></div>
-  <div id="categoryGrid" class="recipe-grid"></div>
- </div>
-</section>
+<main>
+  <section class="archive-hero">
+    <div class="container archive-top">
+      <div>
+        <div class="eyebrow">Tarif Arşivi</div>
+        <h1 id="archiveTitle">Tüm Tarifler</h1>
+        <p id="archiveSub">Tarifler yükleniyor…</p>
+      </div>
+      <label class="archive-searchbar">
+        <input id="archiveSearch" placeholder="Örn. mercimek, börek, tatlı…">
+        <button type="button" onclick="this.previousElementSibling.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'}))">Ara</button>
+      </label>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="archive-toolbar">
+        <div id="categoryPills" class="category-pills"></div>
+        <select id="sortSelect" aria-label="Tarifleri sırala">
+          <option value="">Önerilen sıralama</option>
+          <option value="time">En kısa süre</option>
+          <option value="rating">En yüksek puan</option>
+          <option value="az">A–Z</option>
+        </select>
+      </div>
+      <div id="archiveGrid" class="archive-grid"></div>
+    </div>
+  </section>
 </main>
 
-<footer class="footer" id="hakkimizda">
+<footer class="footer">
   <div class="container footer-inner">
-    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
     <div class="footer-links">
-      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+      <a href="kategori.html">Tarifler</a>
+      <a href="defterim.html">Benim Defterim</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Çorbalar">Çorbalar</a>
     </div>
-    <div class="social">◎ ◉ ▶︎ f</div>
+    <div class="footer-note">Tarifini bul, kaydet, sonra yeniden yap.</div>
   </div>
 </footer>
-<div id="toast" class="toast"></div>
-<script src="data.js?v=6"></script><script src="app.js?v=6"></script>
 
-</body></html>
+<div id="toast" class="toast"></div>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
+</body>
+</html>
