@@ -1,0 +1,49 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tarif | Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css"></head><body data-page="tarif">
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
+    <nav class="nav-links">
+      <a data-nav="home" href="index.html">Ana Sayfa</a>
+      <a data-nav="kategori" href="kategori.html">Tarifler</a>
+      <a href="kategori.html">Kategoriler</a>
+      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
+      <a href="defterim.html">PDF İndir</a>
+      <a href="#hakkimizda">Hakkımızda</a>
+    </nav>
+    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
+    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
+    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+  </div>
+</header>
+
+<main class="container">
+<section class="detail-hero paper">
+ <img id="detailImg" alt="">
+ <div class="detail-copy"><div style="font-size:13px;color:#8a7462">Ana Sayfa › Tarifler</div><h1 id="detailTitle"></h1><p id="detailDesc"></p>
+ <div class="meta"><span class="stars">★★★★★</span> <span id="detailRating"></span></div>
+ <div class="quick"><div class="q">◷ <b id="detailTime"></b><br><small>Hazırlık Süresi</small></div><div class="q">🍲 <b>4–6 kişilik</b><br><small>Porsiyon</small></div><div class="q">♨ <b>Kolay</b><br><small>Zorluk</small></div></div>
+ <div class="action-row"><button class="btn primary" onclick="printPage()">PDF / Yazdır</button><button class="btn" onclick="printPage()">Yazdır</button><button id="detailHeart" class="btn heart-action" onclick="toggleFav(this.dataset.id)">♡ Kaydet</button></div>
+ </div>
+</section>
+<section class="detail-grid">
+ <div class="detail-panel paper ingredients"><h2>Malzemeler</h2><div id="ingredients"></div></div>
+ <div class="detail-panel paper steps"><h2>Yapılışı</h2><div id="steps"></div></div>
+ <div class="detail-panel paper"><div class="tip"><h3>💡 Püf Noktası</h3><p id="tipText"></p></div><div class="anne-note"><h3>♡ Anne Notu</h3><p id="noteText"></p></div><h2>Benzer Tarifler</h2><div id="related" class="related"></div></div>
+</section>
+<section class="section"><div class="section-title"><h2>Yazdırılabilir Tarif Kartı</h2></div><div class="paper" style="padding:18px;display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:18px;align-items:center"><img id="posterPreview" style="border-radius:14px;max-height:560px;margin:auto" alt="Tarif kartı"><div><h3 class="script" style="font-size:38px;margin:0">Mutfakta yanında olsun ♡</h3><p>Tarif kartını yazdırabilir veya PDF olarak saklayabilirsin.</p><button class="btn primary" onclick="printPage()">PDF / Yazdır</button></div></div></section>
+</main>
+
+<footer class="footer" id="hakkimizda">
+  <div class="container footer-inner">
+    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <div class="footer-links">
+      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+    </div>
+    <div class="social">◎ ◉ ▶︎ f</div>
+  </div>
+</footer>
+<div id="toast" class="toast"></div>
+<script src="data.js"></script><script src="app.js"></script>
+
+</body></html>
