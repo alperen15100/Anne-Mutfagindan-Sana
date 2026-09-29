@@ -1,43 +1,87 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Benim Defterim | Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css?v=6"></head><body data-page="defterim">
-
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fbf6ed">
+  <title>Benim Defterim | Anne Mutfağından Sana</title>
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body data-page="defterim">
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
-    <nav class="nav-links">
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
+    <nav class="main-nav" id="mainNav">
       <a data-nav="home" href="index.html">Ana Sayfa</a>
       <a data-nav="kategori" href="kategori.html">Tarifler</a>
-      <a href="kategori.html">Kategoriler</a>
-      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
-      <a href="defterim.html">PDF İndir</a>
-      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Hamur%20İşleri">Hamur İşleri</a>
+      <a data-nav="defterim" href="defterim.html">Defterim</a>
     </nav>
-    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
-    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
-    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+    <label class="header-search" aria-label="Tarif ara">
+      <input data-search placeholder="Tarif ara…">
+      <span>⌕</span>
+    </label>
+    <a class="header-heart" href="defterim.html" aria-label="Benim Defterim">♡<b data-fav-count></b></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç" aria-expanded="false">☰</button>
   </div>
 </header>
 
-<main class="container">
-<section class="notebook-hero paper"><div><h1>Benim Defterim ♡</h1><p class="serif" style="font-size:22px;margin:0">Favoriye eklediğin her tarif otomatik olarak burada birikir. Sen sadece sevdiğin tarifleri seç.</p></div><a class="btn primary" href="kategori.html">+ Tarif Ekle</a></section>
-<section class="notebook-layout">
- <aside class="fav-list paper"><h2>Defterimdeki Tarifler <span style="font-family:inherit;font-size:17px">(<span id="favCount">0</span>)</span></h2><div id="favItems"></div></aside>
- <div class="book-preview paper">
-  <div class="cover-preview"><div><div style="font-size:20px;color:#6c7450">Aile Sofra Mirası</div><h3 id="coverTitle">Annemden Bana Tarifler</h3><div style="margin-top:18px;font-family:'Cormorant Garamond',serif;font-size:22px">Anne Mutfağından Sana ♡</div></div></div>
-  <div class="book-controls"><label>Defter Adı</label><input id="bookTitle" value="Annemden Bana Tarifler"><div class="thumb-stack" id="thumbStack"></div><div class="action-row" style="margin-top:16px"><button class="btn" onclick="previewNotebook()">Önizleme</button><button class="btn primary" onclick="downloadNotebookPDF()">PDF Olarak İndir</button></div></div>
- </div>
-</section>
+<main class="notebook-page">
+  <div class="container">
+    <div class="notebook-header">
+      <div>
+        <div class="eyebrow">Kişisel Tarif Kitabın</div>
+        <h1>Benim Defterim</h1>
+        <p>Kalbe dokunduğun tarifler burada birikir. Şu an <b id="notebookCount">0</b> tarif var.</p>
+      </div>
+      <a class="btn primary" href="kategori.html">+ Tarif Ekle</a>
+    </div>
+
+    <div class="notebook-layout">
+      <section id="notebookList" class="notebook-list"></section>
+
+      <aside class="book-builder">
+        <label for="bookTitle">Defterinin adı</label>
+        <input id="bookTitle" value="Annemden Bana Tarifler" maxlength="55">
+
+        <div class="book-cover-preview">
+          <div>
+            <span>Anne Mutfağından Sana</span>
+            <h2 id="coverTitle">Annemden Bana Tarifler</h2>
+            <b>♡</b>
+            <p id="coverCount">0 seçilmiş tarif</p>
+          </div>
+        </div>
+
+        <div id="notebookPreview" class="notebook-preview"></div>
+
+        <div class="actions">
+          <button class="btn" type="button" onclick="previewNotebook()">Önizleme</button>
+          <button class="btn primary" type="button" onclick="downloadNotebookPDF()">PDF İndir</button>
+        </div>
+      </aside>
+    </div>
+  </div>
 </main>
 
-<footer class="footer" id="hakkimizda">
+<footer class="footer">
   <div class="container footer-inner">
-    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
     <div class="footer-links">
-      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+      <a href="kategori.html">Tarifler</a>
+      <a href="defterim.html">Benim Defterim</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Çorbalar">Çorbalar</a>
     </div>
-    <div class="social">◎ ◉ ▶︎ f</div>
+    <div class="footer-note">Sevdiğin tarifleri sakla, PDF kitabını oluştur.</div>
   </div>
 </footer>
-<div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script><script src="data.js?v=6"></script><script src="app.js?v=6"></script>
 
-</body></html>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
+</body>
+</html>
