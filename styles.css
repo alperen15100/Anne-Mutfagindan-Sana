@@ -96,13 +96,22 @@ button{touch-action:manipulation}
 
 /* Generated watercolor artwork sprite: each tile is a portrait recipe card */
 .recipe-art{
+  --c:0;
+  --r:0;
   display:block;
   background-image:url("assets/recipe-sprite.jpg");
   background-size:500% 200%;
+  background-position:calc(var(--c) * 25%) calc(var(--r) * 100%);
   background-repeat:no-repeat;
   background-color:#f3e7d5;
   border:1px solid rgba(198,166,126,.34);
   box-shadow:var(--shadow-sm);
+}
+.recipe-art.food-crop{
+  background-size:1000% 400%;
+  background-position:
+    calc(5.556% + (var(--c) * 22.222%))
+    calc(16.667% + (var(--r) * 66.666%));
 }
 
 /* Hero */
@@ -139,10 +148,10 @@ button{touch-action:manipulation}
 }
 .hero-art{
   position:static;
-  width:180px;
-  height:255px;
-  border-radius:14px;
-  transform:rotate(1.3deg);
+  width:240px;
+  height:240px;
+  border-radius:26px;
+  transform:rotate(1deg);
 }
 .hero-note{
   position:absolute;
@@ -179,7 +188,7 @@ button{touch-action:manipulation}
 }
 .category-card:hover{transform:translateY(-3px)}
 .category-art{
-  width:72px;height:102px;margin:0 auto 8px;border-radius:10px
+  width:92px;height:76px;margin:0 auto 9px;border-radius:13px
 }
 .category-card strong{
   display:block;
@@ -203,7 +212,7 @@ button{touch-action:manipulation}
 }
 .recipe-card:hover{transform:translateY(-2px)}
 .recipe-card .recipe-art.thumb{
-  width:92px;height:130px;margin:12px;border-radius:11px;box-shadow:none
+  width:112px;height:96px;margin:12px;border-radius:14px;box-shadow:none
 }
 .recipe-body{padding:14px 14px 14px 2px}
 .recipe-title{font:29px/1.05 Parisienne,cursive;color:var(--rose)}
@@ -229,7 +238,7 @@ button{touch-action:manipulation}
   flex:0 0 190px;
   display:flex;align-items:center;gap:9px;padding:9px
 }
-.mini-art{width:51px;height:72px;border-radius:9px;flex:0 0 51px;box-shadow:none}
+.mini-art{width:64px;height:52px;border-radius:10px;flex:0 0 64px;box-shadow:none}
 .ribbon strong{font:700 16px/1.1 "Cormorant Garamond",serif}
 .quote-bar{margin-top:18px;padding:17px 20px;text-align:center;font:italic 24px/1.25 "Cormorant Garamond",serif;color:#70594b}
 
@@ -243,7 +252,7 @@ button{touch-action:manipulation}
 .page-hero .copy{padding:30px 34px}
 .page-hero h1{margin:3px 0 5px;font:51px/1 Parisienne,cursive;color:var(--rose)}
 .page-hero p{margin:6px 0;font:20px/1.45 "Cormorant Garamond",serif}
-.page-hero-art{width:150px;height:213px;margin:auto;border-radius:12px}
+.page-hero-art{width:205px;height:165px;margin:auto;border-radius:18px}
 .category-layout{display:grid;grid-template-columns:235px 1fr;gap:20px;padding-top:22px}
 .filters{padding:17px;align-self:start;position:sticky;top:94px}
 .filters h3{margin:0 0 13px;font:28px/1 Parisienne,cursive;color:var(--rose)}
@@ -260,7 +269,7 @@ button{touch-action:manipulation}
   overflow:hidden;padding:22px
 }
 #detailImg.recipe-art{
-  width:180px;height:255px;margin:auto;border-radius:13px
+  width:240px;height:205px;margin:auto;border-radius:20px
 }
 .detail-copy{padding:12px 24px 12px 6px}
 .detail-copy h1{margin:2px 0 8px;font:52px/1 Parisienne,cursive;color:var(--rose)}
@@ -278,7 +287,7 @@ button{touch-action:manipulation}
 .tip h3,.anne-note h3{margin:0 0 5px;font:25px/1 Parisienne,cursive;color:var(--rose)}
 .related{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .related .mini-card{font-size:12px;text-align:center}
-.related-art{width:64px;height:90px;margin:0 auto 5px;border-radius:8px;box-shadow:none}
+.related-art{width:100%;height:82px;margin:0 auto 5px;border-radius:10px;box-shadow:none}
 #posterPreview.recipe-art{width:180px;height:255px;border-radius:13px;margin:auto}
 
 /* Notebook */
@@ -292,7 +301,7 @@ button{touch-action:manipulation}
 .fav-list h2{margin:0 0 12px;font:31px/1 Parisienne,cursive;color:var(--rose)}
 .empty{padding:26px 12px;text-align:center;color:var(--muted)}
 .fav-item{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
-.fav-art{width:51px;height:72px;border-radius:8px;box-shadow:none}
+.fav-art{width:58px;height:50px;border-radius:9px;box-shadow:none}
 .fav-item strong{font:700 17px/1.1 "Cormorant Garamond",serif}
 .remove{border:0;background:#f9e9e7;color:var(--rose);width:32px;height:32px;border-radius:50%;cursor:pointer}
 .book-preview{padding:20px;display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
@@ -333,7 +342,7 @@ button{touch-action:manipulation}
 .preview-cover b{font-size:42px;color:var(--rose)}
 .preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0 20px}
 .preview-grid a{padding:8px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:center}
-.preview-art{width:72px;height:102px;margin:auto;border-radius:8px;box-shadow:none}
+.preview-art{width:100%;height:84px;margin:auto;border-radius:9px;box-shadow:none}
 .preview-grid strong{display:block;padding-top:5px;font:700 15px "Cormorant Garamond",serif}
 
 /* A4 pages for actual PDF generation */
@@ -397,7 +406,7 @@ button{touch-action:manipulation}
   .notebook-layout{grid-template-columns:1fr}
 }
 
-@media(max-width:640px){
+@media(max-width:640px), (pointer:coarse) and (max-width:900px){
   body{background:#fbf3e8}
   .container{width:calc(100% - 18px)}
   .paper{border-radius:16px}
@@ -411,7 +420,7 @@ button{touch-action:manipulation}
   .hero-copy>p:first-of-type{font-size:20px}
   .hero-copy p{font-size:17px;line-height:1.42}
   .hero-image{min-height:0;padding:12px 15px 24px;display:flex}
-  .hero-art{width:160px;height:227px;transform:rotate(.8deg)}
+  .hero-art{width:210px;height:168px;transform:rotate(.8deg)}
   .hero-note{right:10px;bottom:22px;width:168px;padding:9px 10px;font-size:15px}
 
   .section{padding:20px 0}
@@ -425,7 +434,7 @@ button{touch-action:manipulation}
   }
   .categories::-webkit-scrollbar{display:none}
   .category-card{flex:0 0 128px;scroll-snap-align:start;padding:11px 8px}
-  .category-art{width:61px;height:86px}
+  .category-art{width:104px;height:74px}
   .category-card strong{font-size:16px}
   .category-card span{font-size:11px}
 
@@ -433,8 +442,8 @@ button{touch-action:manipulation}
   .daily{padding:13px}
   .poster-art{width:160px;height:227px}
   .recipe-grid{grid-template-columns:1fr;gap:10px}
-  .recipe-card{grid-template-columns:82px 1fr;min-height:122px}
-  .recipe-card .recipe-art.thumb{width:70px;height:99px;margin:10px}
+  .recipe-card{grid-template-columns:116px 1fr;min-height:112px}
+  .recipe-card .recipe-art.thumb{width:104px;height:82px;margin:9px}
   .recipe-body{padding:11px 12px 11px 0}
   .recipe-title{font-size:25px}
   .card-desc{font-size:14px;-webkit-line-clamp:2}
@@ -443,18 +452,18 @@ button{touch-action:manipulation}
   .ribbon .mini{flex-basis:165px}
   .quote-bar{font-size:21px;padding:15px}
 
-  .page-hero{display:grid;grid-template-columns:1fr 124px;min-height:190px;margin-top:12px}
+  .page-hero{display:block;min-height:0;margin-top:12px}
   .page-hero .copy{padding:20px 6px 20px 20px}
   .page-hero h1{font-size:39px}
   .page-hero p{font-size:16px;line-height:1.35}
-  .page-hero-art{width:92px;height:130px}
+  .page-hero-art{width:210px;height:145px}
   .category-layout{padding-top:14px}
   .filters{padding:14px}
   .filters h3{font-size:25px}
   .filter-group{padding:10px 0}
 
-  .detail-hero{grid-template-columns:128px 1fr;padding:14px;margin-top:12px;align-items:start}
-  #detailImg.recipe-art{width:104px;height:147px;margin-top:8px}
+  .detail-hero{display:block;padding:14px;margin-top:12px}
+  #detailImg.recipe-art{width:100%;max-width:330px;height:205px;margin:0 auto 12px}
   .detail-copy{padding:4px 4px 4px 0}
   .detail-copy h1{font-size:38px}
   .detail-copy p{font-size:16px;line-height:1.35}
@@ -485,11 +494,78 @@ button{touch-action:manipulation}
   .preview-cover{min-height:240px}
   .preview-cover h2{font-size:40px}
   .preview-grid{grid-template-columns:repeat(2,1fr)}
-  .preview-art{width:61px;height:86px}
+  .preview-art{width:100%;height:78px}
 }
 
 @media print{
   .site-header,.footer,.action-row,.heart,.btn,.toast{display:none!important}
   body{background:#fff}
   .paper{box-shadow:none}
+}
+
+
+/* Robust phone layout: also catches Android browsers that report a wide desktop-like viewport */
+@media (max-width:1180px), (pointer:coarse) and (max-width:1400px){
+  .container{width:calc(100% - 20px);max-width:760px}
+  .nav{height:66px;position:relative}
+  .brand{font-size:25px}
+  .brand small{font-size:15px;text-align:left}
+  .search{display:none!important}
+  .nav>.icon-btn:not(.mobile-menu){display:none!important}
+  .mobile-menu{display:block!important;margin-left:auto;font-size:30px}
+  .nav-links{display:none!important}
+  .nav-links.open{
+    display:flex!important;position:absolute;left:0;right:0;top:60px;z-index:100;
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:10px 15px;background:#fffaf1;border:1px solid var(--line);
+    border-radius:14px;box-shadow:var(--shadow)
+  }
+  .nav-links.open a{padding:12px 4px;border-bottom:1px solid #eee0cc}
+  .nav-links.open a:last-child{border-bottom:0}
+
+  .hero-card{display:block;min-height:0}
+  .hero-copy{padding:27px 22px 17px}
+  .hero-copy h1{font-size:42px}
+  .hero-copy>p:first-of-type{font-size:20px}
+  .hero-copy p{font-size:17px;line-height:1.43}
+  .hero-image{min-height:0;padding:16px 18px 25px;display:flex}
+  .hero-art{width:220px;height:180px}
+  .hero-note{right:12px;bottom:18px;width:172px;padding:9px 11px;font-size:15px}
+
+  .categories{
+    display:flex;gap:10px;overflow-x:auto;
+    scroll-snap-type:x proximity;padding:1px 1px 8px;scrollbar-width:none
+  }
+  .categories::-webkit-scrollbar{display:none}
+  .category-card{flex:0 0 138px;scroll-snap-align:start;padding:11px 9px}
+  .category-art{width:112px;height:82px}
+
+  .home-grid{grid-template-columns:1fr;gap:18px}
+  .recipe-grid{grid-template-columns:1fr;gap:10px}
+  .recipe-card{grid-template-columns:124px 1fr;min-height:118px}
+  .recipe-card .recipe-art.thumb{width:110px;height:90px;margin:9px}
+  .recipe-body{padding:10px 12px 10px 0}
+  .recipe-title{font-size:26px}
+  .card-desc{font-size:14px;-webkit-line-clamp:2}
+  .meta{font-size:11px;margin-top:4px}
+
+  .page-hero{grid-template-columns:1fr;min-height:0;margin-top:12px;padding-bottom:17px}
+  .page-hero .copy{padding:21px 22px 8px}
+  .page-hero h1{font-size:40px}
+  .page-hero p{font-size:17px}
+  .page-hero-art{width:230px;height:160px}
+  .category-layout{grid-template-columns:1fr;padding-top:14px}
+  .filters{position:static}
+
+  .detail-hero{grid-template-columns:1fr;margin-top:12px;padding:15px}
+  #detailImg.recipe-art{width:100%;max-width:360px;height:225px;margin:0 auto 12px}
+  .detail-copy{padding:4px}
+  .detail-copy h1{font-size:40px}
+  .detail-copy p{font-size:17px}
+  .detail-grid{grid-template-columns:1fr;gap:11px;padding-top:12px}
+  .detail-grid>.detail-panel:last-child{grid-column:auto}
+
+  .notebook-layout{grid-template-columns:1fr}
+  .book-preview{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;align-items:flex-start}
 }
