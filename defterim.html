@@ -1,0 +1,43 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Benim Defterim | Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css"></head><body data-page="defterim">
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
+    <nav class="nav-links">
+      <a data-nav="home" href="index.html">Ana Sayfa</a>
+      <a data-nav="kategori" href="kategori.html">Tarifler</a>
+      <a href="kategori.html">Kategoriler</a>
+      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
+      <a href="defterim.html">PDF İndir</a>
+      <a href="#hakkimizda">Hakkımızda</a>
+    </nav>
+    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
+    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
+    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+  </div>
+</header>
+
+<main class="container">
+<section class="notebook-hero paper"><div><h1>Benim Defterim ♡</h1><p class="serif" style="font-size:22px;margin:0">Favoriye eklediğin her tarif otomatik olarak burada birikir. Sen sadece sevdiğin tarifleri seç.</p></div><a class="btn primary" href="kategori.html">+ Tarif Ekle</a></section>
+<section class="notebook-layout">
+ <aside class="fav-list paper"><h2>Defterimdeki Tarifler <span style="font-family:inherit;font-size:17px">(<span id="favCount">0</span>)</span></h2><div id="favItems"></div></aside>
+ <div class="book-preview paper">
+  <div class="cover-preview"><div><div style="font-size:20px;color:#6c7450">Aile Sofra Mirası</div><h3 id="coverTitle">Annemden Bana Tarifler</h3><div style="margin-top:18px;font-family:'Cormorant Garamond',serif;font-size:22px">Anne Mutfağından Sana ♡</div></div></div>
+  <div class="book-controls"><label>Defter Adı</label><input id="bookTitle" value="Annemden Bana Tarifler"><div class="thumb-stack" id="thumbStack"></div><div class="action-row" style="margin-top:16px"><button class="btn">Önizleme</button><button class="btn primary" onclick="printPage()">PDF Olarak İndir</button></div></div>
+ </div>
+</section>
+</main>
+
+<footer class="footer" id="hakkimizda">
+  <div class="container footer-inner">
+    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <div class="footer-links">
+      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+    </div>
+    <div class="social">◎ ◉ ▶︎ f</div>
+  </div>
+</footer>
+<div id="toast" class="toast"></div>
+<script src="data.js"></script><script src="app.js"></script>
+
+</body></html>
