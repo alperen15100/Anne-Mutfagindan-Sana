@@ -1,49 +1,110 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tarif | Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css?v=6"></head><body data-page="tarif">
-
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fbf6ed">
+  <title>Tarif | Anne Mutfağından Sana</title>
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body data-page="tarif">
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
-    <nav class="nav-links">
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
+    <nav class="main-nav" id="mainNav">
       <a data-nav="home" href="index.html">Ana Sayfa</a>
       <a data-nav="kategori" href="kategori.html">Tarifler</a>
-      <a href="kategori.html">Kategoriler</a>
-      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
-      <a href="defterim.html">PDF İndir</a>
-      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Hamur%20İşleri">Hamur İşleri</a>
+      <a data-nav="defterim" href="defterim.html">Defterim</a>
     </nav>
-    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
-    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
-    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+    <label class="header-search" aria-label="Tarif ara">
+      <input data-search placeholder="Tarif ara…">
+      <span>⌕</span>
+    </label>
+    <a class="header-heart" href="defterim.html" aria-label="Benim Defterim">♡<b data-fav-count></b></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç" aria-expanded="false">☰</button>
   </div>
 </header>
 
-<main class="container">
-<section class="detail-hero paper">
- <div id="detailImg" class="recipe-art" role="img"></div>
- <div class="detail-copy"><div style="font-size:13px;color:#8a7462">Ana Sayfa › Tarifler</div><h1 id="detailTitle"></h1><p id="detailDesc"></p>
- <div class="meta"><span class="stars">★★★★★</span> <span id="detailRating"></span></div>
- <div class="quick"><div class="q">◷ <b id="detailTime"></b><br><small>Hazırlık Süresi</small></div><div class="q">🍲 <b>4–6 kişilik</b><br><small>Porsiyon</small></div><div class="q">♨ <b>Kolay</b><br><small>Zorluk</small></div></div>
- <div class="action-row"><button class="btn primary" onclick="downloadRecipePDF()">PDF İndir</button><button class="btn" onclick="printPage()">Yazdır</button><button id="detailHeart" class="btn heart-action" onclick="toggleFav(this.dataset.id)">♡ Kaydet</button></div>
- </div>
-</section>
-<section class="detail-grid">
- <div class="detail-panel paper ingredients"><h2>Malzemeler</h2><div id="ingredients"></div></div>
- <div class="detail-panel paper steps"><h2>Yapılışı</h2><div id="steps"></div></div>
- <div class="detail-panel paper"><div class="tip"><h3>💡 Püf Noktası</h3><p id="tipText"></p></div><div class="anne-note"><h3>♡ Anne Notu</h3><p id="noteText"></p></div><h2>Benzer Tarifler</h2><div id="related" class="related"></div></div>
-</section>
-<section class="section"><div class="section-title"><h2>Yazdırılabilir Tarif Kartı</h2></div><div class="paper" style="padding:18px;display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:18px;align-items:center"><div id="posterPreview" class="recipe-art" role="img"></div><div><h3 class="script" style="font-size:38px;margin:0">Mutfakta yanında olsun ♡</h3><p>Tarif kartını yazdırabilir veya PDF olarak saklayabilirsin.</p><button class="btn primary" onclick="downloadRecipePDF()">PDF İndir</button></div></div></section>
+<main class="detail-main">
+  <div class="container">
+    <section class="detail-top">
+      <div class="detail-art-wrap">
+        <div id="detailArt" class="dish-art detail-art" role="img"></div>
+      </div>
+
+      <div class="detail-copy">
+        <div id="detailCategory" class="eyebrow"></div>
+        <h1 id="detailTitle"></h1>
+        <p id="detailDesc"></p>
+        <div class="detail-rating"><b>★★★★★</b><span id="detailRating"></span></div>
+        <div class="detail-facts">
+          <span>◷ <b id="detailTime"></b></span>
+          <span>🍽 <b id="detailServings"></b></span>
+          <span>✦ <b id="detailDifficulty"></b></span>
+        </div>
+        <div class="actions">
+          <button id="detailHeart" class="btn ghost detail-heart" type="button" onclick="toggleFav(this.dataset.id)">♡ Defterime Ekle</button>
+          <button class="btn primary" type="button" onclick="downloadRecipePDF()">PDF İndir</button>
+          <button class="btn" type="button" onclick="printPage()">Yazdır</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="recipe-layout">
+      <div class="recipe-panel">
+        <h2>Malzemeler</h2>
+        <div id="ingredients"></div>
+      </div>
+
+      <div class="recipe-panel">
+        <h2>Yapılışı</h2>
+        <div id="steps"></div>
+      </div>
+
+      <div class="recipe-notes">
+        <div class="note-card">
+          <strong>💡 Püf Noktası</strong>
+          <p id="tipText"></p>
+        </div>
+        <div class="note-card anne">
+          <strong>♡ Anne Notu</strong>
+          <p id="noteText"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="related-section">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Bunu sevdiysen</p>
+          <h2>Benzer tarifler</h2>
+        </div>
+        <a href="kategori.html">Tüm tarifler →</a>
+      </div>
+      <div id="relatedGrid" class="related-grid"></div>
+    </section>
+  </div>
 </main>
 
-<footer class="footer" id="hakkimizda">
+<footer class="footer">
   <div class="container footer-inner">
-    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
     <div class="footer-links">
-      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+      <a href="kategori.html">Tarifler</a>
+      <a href="defterim.html">Benim Defterim</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Çorbalar">Çorbalar</a>
     </div>
-    <div class="social">◎ ◉ ▶︎ f</div>
+    <div class="footer-note">Denendi, sevildi, deftere girdi.</div>
   </div>
 </footer>
-<div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script><script src="data.js?v=6"></script><script src="app.js?v=6"></script>
 
-</body></html>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
+</body>
+</html>
