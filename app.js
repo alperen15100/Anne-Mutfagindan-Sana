@@ -1,120 +1,200 @@
+
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const favoritesKey="ams_favorites_v1";
-const titleKey="ams_book_title_v1";
+const FAV_KEY="ams_favorites_v1";
+const TITLE_KEY="ams_book_title_v1";
 
 const ART={
-  "krep":[0,0],
-  "mercimek-corbasi":[1,0],
+  "mercimek-corbasi":[0,0],
+  "ezogelin":[1,0],
   "menemen":[2,0],
   "yaprak-sarma":[3,0],
   "pogaca":[4,0],
   "revani":[0,1],
   "sutlac":[1,1],
-  "ezogelin":[2,1],
+  "krep":[2,1],
   "firin-makarna":[3,1],
-  "imam-bayildi":[4,1]
+  "imam-bayildi":[4,1],
+  "patates-salatasi":[0,2],
+  "pirinc-pilavi":[1,2],
+  "havuc-tarator":[2,2],
+  "elmali-kurabiye":[3,2],
+  "su-boregi":[4,2]
 };
 
-function getFavs(){try{return JSON.parse(localStorage.getItem(favoritesKey)||"[]")}catch{return []}}
-function setFavs(v){localStorage.setItem(favoritesKey,JSON.stringify(v));updateFavUI()}
+function recipeById(id){return (window.RECIPES||[]).find(r=>r.id===id)}
+function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function slugify(s=""){return s.toLocaleLowerCase("tr-TR").replaceAll("ı","i").replaceAll("ğ","g").replaceAll("ü","u").replaceAll("ş","s").replaceAll("ö","o").replaceAll("ç","c").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}
+
+function getFavs(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||"[]")}catch{return []}}
 function isFav(id){return getFavs().includes(id)}
+function setFavs(v){localStorage.setItem(FAV_KEY,JSON.stringify(v));updateFavUI()}
 function toggleFav(id){
   let favs=getFavs();
-  if(favs.includes(id)){favs=favs.filter(x=>x!==id);toast("Tarif defterinden çıkarıldı.")}
-  else{favs.unshift(id);toast("Tarif Benim Defterim'e eklendi. ♥")}
+  if(favs.includes(id)){favs=favs.filter(x=>x!==id);toast("Defterden çıkarıldı")}
+  else{favs.unshift(id);toast("Benim Defterim'e eklendi ♥")}
   setFavs(favs);
-  if(document.body.dataset.page==="defterim")renderDefterim();
+  if(document.body.dataset.page==="defterim") renderNotebook();
 }
 function toast(msg){
   let t=$("#toast");
   if(!t){t=document.createElement("div");t.id="toast";t.className="toast";document.body.appendChild(t)}
-  t.textContent=msg;t.classList.add("show");clearTimeout(window.__toastTimer);
-  window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1900);
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(window.__toast);
+  window.__toast=setTimeout(()=>t.classList.remove("show"),1800);
 }
 function updateFavUI(){
-  $$(".heart[data-id]").forEach(b=>{
-    const a=isFav(b.dataset.id);b.classList.toggle("active",a);b.textContent=a?"♥":"♡";
+  const favs=getFavs();
+  $$("[data-fav-count]").forEach(x=>x.textContent=favs.length?String(favs.length):"");
+  $$("[data-heart]").forEach(b=>{
+    const on=isFav(b.dataset.heart);
+    b.classList.toggle("active",on);
+    b.setAttribute("aria-pressed",on?"true":"false");
+    b.innerHTML=on?"♥":"♡";
   });
-  const hb=$("#detailHeart");
-  if(hb&&hb.dataset.id){const a=isFav(hb.dataset.id);hb.textContent=a?"♥ Kaydedildi":"♡ Kaydet";hb.classList.toggle("primary",a)}
-  $$("[data-fav-count]").forEach(x=>x.textContent=getFavs().length||"");
+  const detail=$("#detailHeart");
+  if(detail&&detail.dataset.id){
+    const on=isFav(detail.dataset.id);
+    detail.classList.toggle("active",on);
+    detail.innerHTML=on?"♥ Defterimde":"♡ Defterime Ekle";
+  }
 }
 
 function setArt(el,id){
-  const p=ART[id]||ART.krep;
+  if(!el)return;
+  const p=ART[id]||ART["mercimek-corbasi"];
   el.style.setProperty("--c",p[0]);
   el.style.setProperty("--r",p[1]);
-  el.setAttribute("data-art",id);
+  el.dataset.art=id;
+}
+function art(id,cls=""){
+  const r=recipeById(id);
+  return '<div class="dish-art '+cls+'" data-art="'+escapeHtml(id)+'" role="img" aria-label="'+escapeHtml(r?.title||"Tarif görseli")+'"></div>';
 }
 function hydrateArt(root=document){$$("[data-art]",root).forEach(el=>setArt(el,el.dataset.art))}
-function art(id,cls=""){return '<div class="recipe-art '+cls+'" data-art="'+id+'" role="img" aria-label="'+escapeHtml(recipeById(id)?.title||"Tarif görseli")+'"></div>'}
-function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function recipeById(id){return (window.RECIPES||[]).find(r=>r.id===id)}
 
-function card(r){
-  return '<article class="recipe-card paper">'+
-    '<button class="heart '+(isFav(r.id)?"active":"")+'" data-id="'+r.id+'" aria-label="Favoriye ekle">'+(isFav(r.id)?"♥":"♡")+'</button>'+
-    '<a href="tarif.html?id='+encodeURIComponent(r.id)+'">'+art(r.id,"thumb food-crop")+'</a>'+
-    '<div class="recipe-body"><a class="recipe-title" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+escapeHtml(r.title)+'</a>'+
-    '<p class="card-desc">'+escapeHtml(r.desc)+'</p>'+
-    '<div class="meta"><span class="stars">★★★★★</span><span>'+escapeHtml(r.rating)+'</span></div>'+
-    '<div class="meta"><span>◷ '+escapeHtml(r.time)+'</span><span>'+escapeHtml(r.category)+'</span></div></div></article>';
+function compactCard(r){
+  return '<article class="recipe-card">'+
+    '<a class="recipe-card-media" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+art(r.id,"card-art")+'</a>'+
+    '<div class="recipe-card-copy">'+
+      '<div class="eyebrow">'+escapeHtml(r.category)+'</div>'+
+      '<a class="recipe-card-title" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+escapeHtml(r.title)+'</a>'+
+      '<p>'+escapeHtml(r.desc)+'</p>'+
+      '<div class="recipe-card-meta"><span>◷ '+escapeHtml(r.time)+'</span><span>•</span><span>'+escapeHtml(r.difficulty||"Kolay")+'</span></div>'+
+    '</div>'+
+    '<button class="heart-btn '+(isFav(r.id)?"active":"")+'" data-heart="'+escapeHtml(r.id)+'" aria-label="Favoriye ekle" aria-pressed="'+(isFav(r.id)?"true":"false")+'">'+(isFav(r.id)?"♥":"♡")+'</button>'+
+  '</article>';
 }
-function bindHearts(){
+
+function miniCard(r){
+  return '<a class="mini-recipe" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+
+    art(r.id,"mini-dish")+
+    '<div><strong>'+escapeHtml(r.title)+'</strong><span>'+escapeHtml(r.time)+' · '+escapeHtml(r.category)+'</span></div>'+
+  '</a>';
+}
+
+function bindGlobal(){
   document.addEventListener("click",e=>{
-    const b=e.target.closest(".heart[data-id]");
-    if(b){e.preventDefault();toggleFav(b.dataset.id)}
+    const heart=e.target.closest("[data-heart]");
+    if(heart){e.preventDefault();toggleFav(heart.dataset.heart);return}
+    const remove=e.target.closest("[data-remove]");
+    if(remove){e.preventDefault();toggleFav(remove.dataset.remove);return}
   });
-}
-function navActive(){
-  const p=document.body.dataset.page;
-  $$("[data-nav]").forEach(a=>a.classList.toggle("active",a.dataset.nav===p));
-}
-function globalSearch(){
-  const s=$("#globalSearch");if(!s)return;
-  s.addEventListener("keydown",e=>{if(e.key==="Enter"&&s.value.trim())location.href="kategori.html?q="+encodeURIComponent(s.value.trim())});
-}
-function bindMobileMenu(){
-  const b=$(".mobile-menu"),n=$(".nav-links");if(!b||!n)return;
-  b.addEventListener("click",()=>n.classList.toggle("open"));
-  document.addEventListener("click",e=>{if(!e.target.closest(".nav")&&n.classList.contains("open"))n.classList.remove("open")});
+
+  const menu=$("#menuBtn"),nav=$("#mainNav");
+  if(menu&&nav){
+    menu.addEventListener("click",()=>{nav.classList.toggle("open");menu.setAttribute("aria-expanded",nav.classList.contains("open")?"true":"false")});
+    nav.addEventListener("click",e=>{if(e.target.closest("a"))nav.classList.remove("open")});
+  }
+
+  $$("[data-search]").forEach(input=>{
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"&&input.value.trim()) location.href="kategori.html?q="+encodeURIComponent(input.value.trim());
+    });
+  });
+
+  const page=document.body.dataset.page;
+  $$("[data-nav]").forEach(a=>a.classList.toggle("active",a.dataset.nav===page));
+  hydrateArt();updateFavUI();
 }
 
 function renderHome(){
-  const popular=window.RECIPES.slice(0,8);
-  $("#popularGrid").innerHTML=popular.slice(0,4).map(card).join("");
-  $("#miniRibbon").innerHTML=popular.slice(4,8).map(r=>
-    '<a class="mini paper" href="tarif.html?id='+r.id+'">'+art(r.id,"mini-art food-crop")+
-    '<div><strong>'+escapeHtml(r.title)+'</strong><div class="stars">★★★★★</div><small>'+escapeHtml(r.time)+'</small></div></a>'
-  ).join("");
-  hydrateArt();
+  const featured=recipeById("krep")||window.RECIPES[0];
+  const f=$("#featuredRecipe");
+  if(f){
+    f.innerHTML=
+      '<div class="featured-media">'+art(featured.id,"featured-art")+'<span class="featured-badge">Bugünün tarifi</span></div>'+
+      '<div class="featured-copy"><div class="eyebrow">'+escapeHtml(featured.category)+'</div><h3>'+escapeHtml(featured.title)+'</h3>'+
+      '<p>'+escapeHtml(featured.desc)+'</p>'+
+      '<div class="featured-meta"><span>◷ '+escapeHtml(featured.time)+'</span><span>'+escapeHtml(featured.servings||"4 kişilik")+'</span><span>'+escapeHtml(featured.difficulty||"Kolay")+'</span></div>'+
+      '<div class="actions"><a class="btn primary" href="tarif.html?id='+featured.id+'">Tarifi Aç</a><button class="btn ghost" data-heart="'+featured.id+'">'+(isFav(featured.id)?"♥ Defterimde":"♡ Defterime Ekle")+'</button></div></div>';
+  }
+
+  const popular=["mercimek-corbasi","yaprak-sarma","pogaca","revani","menemen","firin-makarna"]
+    .map(recipeById).filter(Boolean);
+  const pg=$("#popularGrid");
+  if(pg) pg.innerHTML=popular.map(compactCard).join("");
+
+  const latest=(window.RECIPES||[]).slice(-5).reverse();
+  const lg=$("#latestStrip");
+  if(lg) lg.innerHTML=latest.map(miniCard).join("");
+
+  hydrateArt();updateFavUI();
+}
+
+function categories(){
+  return [...new Set((window.RECIPES||[]).map(r=>r.category))];
+}
+function renderCategoryPills(root,active=""){
+  if(!root)return;
+  root.innerHTML=
+    '<a class="filter-pill '+(!active?"active":"")+'" href="kategori.html">Tümü</a>'+
+    categories().map(c=>'<a class="filter-pill '+(c===active?"active":"")+'" href="kategori.html?cat='+encodeURIComponent(c)+'">'+escapeHtml(c)+'</a>').join("");
 }
 
 function renderCategory(){
   const params=new URLSearchParams(location.search);
-  const q=(params.get("q")||"").trim().toLocaleLowerCase("tr-TR");
+  const q=(params.get("q")||"").trim();
   const cat=params.get("cat")||"";
-  const base=window.RECIPES.filter(r=>{
-    if(cat&&!r.category.toLocaleLowerCase("tr-TR").includes(cat.toLocaleLowerCase("tr-TR")))return false;
-    if(q&&!(r.title+" "+r.category+" "+r.desc).toLocaleLowerCase("tr-TR").includes(q))return false;
-    return true;
-  });
-  const draw=()=>{
-    let list=[...base];
-    const cats=$$("[data-filter-cat]:checked").map(x=>x.value);
-    const times=$$("[data-filter-time]:checked").map(x=>x.value);
-    if(cats.length)list=list.filter(r=>cats.includes(r.category));
-    if(times.length)list=list.filter(r=>{
-      const n=parseInt(r.time)||0;
-      return times.some(t=>(t==="30"&&n<=30)||(t==="60"&&n>30&&n<=60)||(t==="61"&&n>60));
+  const qLower=q.toLocaleLowerCase("tr-TR");
+  let list=[...(window.RECIPES||[])];
+
+  if(cat) list=list.filter(r=>r.category===cat);
+  if(qLower) list=list.filter(r=>(r.title+" "+r.category+" "+r.desc+" "+r.ingredients.join(" ")).toLocaleLowerCase("tr-TR").includes(qLower));
+
+  const title=$("#archiveTitle"),sub=$("#archiveSub");
+  if(title) title.textContent=q?("“"+q+"” için tarifler"):(cat||"Tüm Tarifler");
+  if(sub) sub.textContent=list.length+" tarif bulundu";
+  renderCategoryPills($("#categoryPills"),cat);
+
+  const grid=$("#archiveGrid");
+  if(grid) grid.innerHTML=list.length?list.map(compactCard).join(""):'<div class="empty-state"><span>♡</span><h3>Tarif bulunamadı</h3><p>Başka bir arama deneyebilirsin.</p></div>';
+
+  const sort=$("#sortSelect");
+  if(sort){
+    sort.onchange=()=>{
+      const v=sort.value;
+      const sorted=[...list];
+      if(v==="time") sorted.sort((a,b)=>(parseInt(a.time)||99)-(parseInt(b.time)||99));
+      if(v==="rating") sorted.sort((a,b)=>Number(b.rating)-Number(a.rating));
+      if(v==="az") sorted.sort((a,b)=>a.title.localeCompare(b.title,"tr"));
+      grid.innerHTML=sorted.map(compactCard).join("");
+      hydrateArt();updateFavUI();
+    };
+  }
+
+  const archiveSearch=$("#archiveSearch");
+  if(archiveSearch){
+    archiveSearch.value=q;
+    archiveSearch.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){
+        const val=archiveSearch.value.trim();
+        location.href=val?"kategori.html?q="+encodeURIComponent(val):"kategori.html";
+      }
     });
-    $("#resultCount").textContent=(q?'“'+params.get("q")+'” · ':"")+list.length+" tarif";
-    $("#categoryGrid").innerHTML=list.length?list.map(card).join(""):'<div class="paper empty">Bu filtrelere uygun tarif bulunamadı.</div>';
-    hydrateArt();updateFavUI();
-  };
-  $$("[data-filter-cat],[data-filter-time]").forEach(x=>x.addEventListener("change",draw));
-  draw();
+  }
+
+  hydrateArt();updateFavUI();
 }
 
 function getRecipe(){
@@ -122,115 +202,132 @@ function getRecipe(){
   return recipeById(id)||window.RECIPES[0];
 }
 function renderDetail(){
-  const r=getRecipe();document.title=r.title+" | Anne Mutfağından Sana";
-  const d=$("#detailImg");d.classList.add("food-crop");setArt(d,r.id);d.setAttribute("aria-label",r.title);
-  $("#detailTitle").textContent=r.title;$("#detailDesc").textContent=r.desc;
-  $("#detailTime").textContent=r.time;$("#detailRating").textContent=r.rating;
+  const r=getRecipe();
+  document.title=r.title+" | Anne Mutfağından Sana";
+  setArt($("#detailArt"),r.id);
+  $("#detailCategory").textContent=r.category;
+  $("#detailTitle").textContent=r.title;
+  $("#detailDesc").textContent=r.desc;
+  $("#detailTime").textContent=r.time;
+  $("#detailServings").textContent=r.servings||"4–6 kişilik";
+  $("#detailDifficulty").textContent=r.difficulty||"Kolay";
+  $("#detailRating").textContent=r.rating;
   const hb=$("#detailHeart");hb.dataset.id=r.id;
-  $("#ingredients").innerHTML=r.ingredients.map(x=>'<label><input type="checkbox"> <span>'+escapeHtml(x)+'</span></label>').join("");
-  $("#steps").innerHTML=r.steps.map((x,i)=>'<div class="step"><div class="num">'+(i+1)+'</div><div>'+escapeHtml(x)+'</div></div>').join("");
-  $("#tipText").textContent=r.tip;$("#noteText").textContent=r.note;
-  const related=window.RECIPES.filter(x=>x.id!==r.id&&x.category===r.category).slice(0,4);
-  const rel=related.length?related:window.RECIPES.filter(x=>x.id!==r.id).slice(0,4);
-  $("#related").innerHTML=rel.map(x=>'<a class="mini-card" href="tarif.html?id='+x.id+'">'+art(x.id,"related-art food-crop")+'<strong>'+escapeHtml(x.title)+'</strong></a>').join("");
-  const pp=$("#posterPreview");setArt(pp,r.id);pp.setAttribute("aria-label",r.title+" tarif kartı");
+  $("#ingredients").innerHTML=r.ingredients.map(x=>'<label class="ingredient"><input type="checkbox"><span>'+escapeHtml(x)+'</span></label>').join("");
+  $("#steps").innerHTML=r.steps.map((x,i)=>'<div class="step-row"><div class="step-no">'+(i+1)+'</div><p>'+escapeHtml(x)+'</p></div>').join("");
+  $("#tipText").textContent=r.tip;
+  $("#noteText").textContent=r.note;
+
+  const rel=(window.RECIPES||[]).filter(x=>x.id!==r.id&&x.category===r.category).slice(0,3);
+  const related=rel.length?rel:(window.RECIPES||[]).filter(x=>x.id!==r.id).slice(0,3);
+  $("#relatedGrid").innerHTML=related.map(compactCard).join("");
+
   hydrateArt();updateFavUI();
 }
 
-function renderDefterim(){
-  const list=getFavs().map(recipeById).filter(Boolean),wrap=$("#favItems");
-  if(!list.length)wrap.innerHTML='<div class="empty">Henüz favori tarifin yok.<br><br>Tariflerdeki <b>♡</b> simgesine dokunduğunda otomatik olarak buraya gelir.<br><br><a class="btn primary" href="kategori.html">Tariflere Göz At</a></div>';
-  else wrap.innerHTML=list.map(r=>
-    '<div class="fav-item"><a href="tarif.html?id='+r.id+'">'+art(r.id,"fav-art food-crop")+'</a>'+
-    '<div><strong>'+escapeHtml(r.title)+'</strong><div class="meta">'+escapeHtml(r.category)+' · '+escapeHtml(r.time)+'</div></div>'+
-    '<button class="remove" data-remove="'+r.id+'" aria-label="Kaldır">×</button></div>'
-  ).join("");
-  $("#favCount").textContent=list.length;
-  const t=$("#bookTitle"),saved=localStorage.getItem(titleKey)||"Annemden Bana Tarifler";
-  t.value=saved;$("#coverTitle").textContent=saved;
-  $("#thumbStack").innerHTML=list.length?list.slice(0,6).map(r=>art(r.id,"book-thumb")).join(""):'<div class="empty">Tarif ekledikçe sayfalar burada görünecek.</div>';
+function renderNotebook(){
+  const favs=getFavs();
+  const list=favs.map(recipeById).filter(Boolean);
+  $("#notebookCount").textContent=list.length;
+  const root=$("#notebookList");
+  if(root){
+    root.innerHTML=list.length?list.map(r=>
+      '<article class="notebook-item">'+
+        art(r.id,"notebook-art")+
+        '<div><div class="eyebrow">'+escapeHtml(r.category)+'</div><a href="tarif.html?id='+r.id+'"><strong>'+escapeHtml(r.title)+'</strong></a><span>'+escapeHtml(r.time)+' · '+escapeHtml(r.difficulty||"Kolay")+'</span></div>'+
+        '<button class="remove-btn" data-remove="'+r.id+'" aria-label="Defterden çıkar">×</button>'+
+      '</article>'
+    ).join(""):'<div class="empty-state"><span>♡</span><h3>Defterin henüz boş</h3><p>Sevdiğin tariflerdeki kalbe dokun; burada biriksin.</p><a class="btn primary" href="kategori.html">Tarifleri Keşfet</a></div>';
+  }
+
+  const title=$("#bookTitle");
+  const saved=localStorage.getItem(TITLE_KEY)||"Annemden Bana Tarifler";
+  if(title){title.value=saved;title.oninput=()=>{localStorage.setItem(TITLE_KEY,title.value);$("#coverTitle").textContent=title.value||"Benim Tarif Defterim"}}
+  $("#coverTitle").textContent=saved;
+  $("#coverCount").textContent=list.length+" seçilmiş tarif";
+
+  const preview=$("#notebookPreview");
+  if(preview) preview.innerHTML=list.slice(0,4).map(r=>art(r.id,"preview-tile")).join("");
+
   hydrateArt();updateFavUI();
 }
-function defterimEvents(){
-  document.addEventListener("click",e=>{const r=e.target.closest("[data-remove]");if(r)toggleFav(r.dataset.remove)});
-  const t=$("#bookTitle");if(t)t.addEventListener("input",()=>{localStorage.setItem(titleKey,t.value);$("#coverTitle").textContent=t.value||"Benim Tarif Defterim"});
-}
 
-function slugify(s){return s.toLocaleLowerCase("tr-TR").replaceAll("ı","i").replaceAll("ğ","g").replaceAll("ü","u").replaceAll("ş","s").replaceAll("ö","o").replaceAll("ç","c").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}
 function printPage(){window.print()}
 
-function pdfRecipeHTML(r){
-  return '<div class="pdf-flower top">✿ ❧ ✿</div><div class="pdf-brand">Anne Mutfağından Sana ♡</div>'+
-  '<h1>'+escapeHtml(r.title)+'</h1>'+art(r.id,"pdf-art")+
-  '<div class="pdf-meta"><span>◷ '+escapeHtml(r.time)+'</span><span>'+escapeHtml(r.category)+'</span><span>★ '+escapeHtml(r.rating)+'</span></div>'+
-  '<div class="pdf-columns"><section><h2>Malzemeler</h2><ul>'+r.ingredients.map(x=>'<li>'+escapeHtml(x)+'</li>').join("")+'</ul></section>'+
-  '<section><h2>Yapılışı</h2><ol>'+r.steps.map(x=>'<li>'+escapeHtml(x)+'</li>').join("")+'</ol></section></div>'+
-  '<div class="pdf-tip"><b>Püf noktası:</b> '+escapeHtml(r.tip)+'</div>'+
-  '<div class="pdf-note"><b>Anne Notu ♡</b> '+escapeHtml(r.note)+'</div>'+
-  '<div class="pdf-flower bottom">❧ Afiyet olsun ❧</div>';
+function recipeSheetHTML(r){
+  return '<div class="pdf-brand">Anne Mutfağından Sana</div>'+
+    '<div class="pdf-ornament">❦</div>'+
+    '<h1>'+escapeHtml(r.title)+'</h1>'+
+    art(r.id,"pdf-dish")+
+    '<div class="pdf-meta"><span>'+escapeHtml(r.category)+'</span><span>◷ '+escapeHtml(r.time)+'</span><span>'+escapeHtml(r.servings||"")+'</span></div>'+
+    '<div class="pdf-columns"><section><h2>Malzemeler</h2><ul>'+r.ingredients.map(x=>'<li>'+escapeHtml(x)+'</li>').join("")+'</ul></section>'+
+    '<section><h2>Yapılışı</h2><ol>'+r.steps.map(x=>'<li>'+escapeHtml(x)+'</li>').join("")+'</ol></section></div>'+
+    '<div class="pdf-notes"><p><b>Püf Noktası</b> '+escapeHtml(r.tip)+'</p><p><b>Anne Notu</b> '+escapeHtml(r.note)+'</p></div>'+
+    '<div class="pdf-footer">♡ Afiyet olsun ♡</div>';
 }
-function makeSheet(html,extra=""){
-  const el=document.createElement("div");el.className="pdf-sheet "+extra;el.innerHTML=html;document.body.appendChild(el);hydrateArt(el);return el;
+function coverSheetHTML(title,count){
+  return '<div class="pdf-cover-inner"><div class="pdf-brand">Anne Mutfağından Sana</div><div class="pdf-ornament big">❦</div>'+
+    '<h1>'+escapeHtml(title)+'</h1><p>Ailemizin Sofra Mirası</p><span>'+count+' seçilmiş tarif</span><div class="pdf-cover-heart">♡</div></div>';
+}
+function makeSheet(html,cls=""){
+  const el=document.createElement("div");
+  el.className="pdf-sheet "+cls;el.innerHTML=html;document.body.appendChild(el);hydrateArt(el);return el;
 }
 async function sheetCanvas(el){
-  if(!window.html2canvas)throw new Error("PDF görüntü motoru yüklenemedi");
+  if(!window.html2canvas)throw new Error("html2canvas yok");
   if(document.fonts?.ready)await document.fonts.ready;
   await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-  return await html2canvas(el,{scale:1.55,backgroundColor:"#fffaf1",useCORS:true,logging:false});
+  return html2canvas(el,{scale:1.45,backgroundColor:"#fffaf2",logging:false,useCORS:true});
 }
 async function downloadRecipePDF(){
+  const r=getRecipe();
   try{
-    const r=getRecipe();toast("PDF hazırlanıyor…");
-    const sheet=makeSheet(pdfRecipeHTML(r));
+    toast("PDF hazırlanıyor…");
+    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error("jsPDF yok");
+    const sheet=makeSheet(recipeSheetHTML(r));
     const canvas=await sheetCanvas(sheet);sheet.remove();
-    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error("PDF kütüphanesi yüklenemedi");
     const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4",compress:true});
-    pdf.addImage(canvas.toDataURL("image/jpeg",.86),"JPEG",0,0,210,297,undefined,"FAST");
-    pdf.save(slugify(r.title)+"-tarifi.pdf");toast("PDF indirildi.");
-  }catch(e){console.error(e);toast("PDF hazırlanamadı. Sayfayı yenileyip tekrar dene.")}
-}
-function coverHTML(title,count){
-  return '<div class="pdf-cover-inner"><div class="pdf-flower top">✿ ❧ ✿</div><div class="pdf-brand">Anne Mutfağından Sana ♡</div>'+
-  '<h1>'+escapeHtml(title)+'</h1><div class="cover-heart">♡</div><p>Ailemizin Sofra Mirası</p><p class="cover-small">'+count+' seçilmiş aile tarifi</p>'+
-  '<div class="cover-ornament">❦ ✿ ❦</div><div class="pdf-flower bottom">Sevgiyle saklanan tarifler</div></div>';
+    pdf.addImage(canvas.toDataURL("image/jpeg",.88),"JPEG",0,0,210,297,undefined,"FAST");
+    pdf.save(slugify(r.title)+"-tarifi.pdf");
+    toast("PDF indirildi");
+  }catch(e){console.error(e);toast("PDF hazırlanamadı")}
 }
 async function downloadNotebookPDF(){
   const list=getFavs().map(recipeById).filter(Boolean);
-  if(!list.length){toast("Önce birkaç tarifi favoriye ekle.");return}
+  if(!list.length){toast("Önce birkaç tarifi defterine ekle");return}
   try{
-    toast("Tarif defterin hazırlanıyor…");
-    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error("PDF kütüphanesi yüklenemedi");
-    const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4",compress:true});
+    toast("Defter hazırlanıyor…");
+    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error("jsPDF yok");
     const title=$("#bookTitle")?.value.trim()||"Annemden Bana Tarifler";
-    const pages=[{html:coverHTML(title,list.length),cls:"pdf-cover"},...list.map(r=>({html:pdfRecipeHTML(r),cls:""}))];
+    const pages=[{html:coverSheetHTML(title,list.length),cls:"pdf-cover"},...list.map(r=>({html:recipeSheetHTML(r),cls:""}))];
+    const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4",compress:true});
     for(let i=0;i<pages.length;i++){
-      const sheet=makeSheet(pages[i].html,pages[i].cls),canvas=await sheetCanvas(sheet);sheet.remove();
-      if(i>0)pdf.addPage();
-      pdf.addImage(canvas.toDataURL("image/jpeg",.84),"JPEG",0,0,210,297,undefined,"FAST");
+      const sheet=makeSheet(pages[i].html,pages[i].cls);
+      const canvas=await sheetCanvas(sheet);sheet.remove();
+      if(i)pdf.addPage();
+      pdf.addImage(canvas.toDataURL("image/jpeg",.86),"JPEG",0,0,210,297,undefined,"FAST");
     }
-    pdf.save(slugify(title||"tarif-defterim")+".pdf");toast("Tarif defterin indirildi. ♥");
-  }catch(e){console.error(e);toast("PDF hazırlanamadı. Sayfayı yenileyip tekrar dene.")}
+    pdf.save(slugify(title)+".pdf");toast("Tarif defteri indirildi");
+  }catch(e){console.error(e);toast("PDF hazırlanamadı")}
 }
 function previewNotebook(){
   const list=getFavs().map(recipeById).filter(Boolean);
-  if(!list.length){toast("Önce birkaç tarifi favoriye ekle.");return}
+  if(!list.length){toast("Önce tarif ekle");return}
   $(".preview-modal")?.remove();
   const title=$("#bookTitle")?.value.trim()||"Annemden Bana Tarifler";
   const modal=document.createElement("div");modal.className="preview-modal";
-  modal.innerHTML='<div class="preview-box"><button class="preview-close" aria-label="Kapat">×</button><div class="preview-cover"><span>Aile Sofra Mirası</span><h2>'+escapeHtml(title)+'</h2><b>♡</b><p>'+list.length+' tarif</p></div>'+
-    '<h3>Defterindeki Tarifler</h3><div class="preview-grid">'+list.map(r=>'<a href="tarif.html?id='+r.id+'">'+art(r.id,"preview-art food-crop")+'<strong>'+escapeHtml(r.title)+'</strong></a>').join("")+'</div>'+
-    '<button class="btn primary preview-pdf">PDF Olarak İndir</button></div>';
+  modal.innerHTML='<div class="preview-dialog"><button class="modal-close">×</button><div class="preview-cover"><span>Anne Mutfağından Sana</span><h2>'+escapeHtml(title)+'</h2><b>♡</b><p>'+list.length+' tarif</p></div><div class="preview-list">'+list.map(miniCard).join("")+'</div><button class="btn primary modal-pdf">PDF Olarak İndir</button></div>';
   document.body.appendChild(modal);hydrateArt(modal);
-  $(".preview-close",modal).onclick=()=>modal.remove();
-  $(".preview-pdf",modal).onclick=()=>{modal.remove();downloadNotebookPDF()};
-  modal.addEventListener("click",e=>{if(e.target===modal)modal.remove()});
+  $(".modal-close",modal).onclick=()=>modal.remove();
+  $(".modal-pdf",modal).onclick=()=>{modal.remove();downloadNotebookPDF()};
+  modal.onclick=e=>{if(e.target===modal)modal.remove()};
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-  navActive();bindHearts();globalSearch();bindMobileMenu();hydrateArt();updateFavUI();
+  bindGlobal();
   const p=document.body.dataset.page;
   if(p==="home")renderHome();
   if(p==="kategori")renderCategory();
   if(p==="tarif")renderDetail();
-  if(p==="defterim"){renderDefterim();defterimEvents()}
+  if(p==="defterim")renderNotebook();
 });
