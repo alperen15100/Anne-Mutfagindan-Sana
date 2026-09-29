@@ -1,70 +1,143 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anne Mutfağından Sana</title><link rel="stylesheet" href="styles.css?v=6"></head><body data-page="home">
-
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fbf6ed">
+  <title>Anne Mutfağından Sana | Ev Usulü Tarifler</title>
+  <meta name="description" content="Ev kokan, denenmiş ve aile sofralarından ilham alan Türk mutfağı tarifleri. Favorilerini defterine ekle ve kendi tarif kitabını PDF olarak indir.">
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body data-page="home">
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="index.html">Anne <span>♡</span><small>Mutfağından Sana</small></a>
-    <nav class="nav-links">
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
+
+    <nav class="main-nav" id="mainNav">
       <a data-nav="home" href="index.html">Ana Sayfa</a>
       <a data-nav="kategori" href="kategori.html">Tarifler</a>
-      <a href="kategori.html">Kategoriler</a>
-      <a data-nav="defterim" href="defterim.html">Defterim <span data-fav-count></span></a>
-      <a href="defterim.html">PDF İndir</a>
-      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Hamur%20İşleri">Hamur İşleri</a>
+      <a data-nav="defterim" href="defterim.html">Defterim</a>
     </nav>
-    <div class="search"><input id="globalSearch" placeholder="Bugün ne pişirelim?"><span>⌕</span></div>
-    <a class="icon-btn" href="defterim.html" aria-label="Favoriler">♡</a>
-    <button class="icon-btn mobile-menu" aria-label="Menü">☰</button>
+
+    <label class="header-search" aria-label="Tarif ara">
+      <input data-search placeholder="Tarif ara…">
+      <span>⌕</span>
+    </label>
+
+    <a class="header-heart" href="defterim.html" aria-label="Benim Defterim">♡<b data-fav-count></b></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç" aria-expanded="false">☰</button>
   </div>
 </header>
 
 <main>
-<section class="hero"><div class="container hero-card paper">
-  <div class="hero-copy"><h1>Ev kokan tarifler,</h1><p>küçük sırlar ve yıllarca saklanacak lezzetler…</p>
-  <p style="font-size:17px">Annenizin elinden çıkmış gibi, sevgiyle hazırlanmış geleneksel tarifler. Aile sofralarından ilhamla, nesilden nesile uzanan bir lezzet defteri.</p>
-  <a class="btn primary" href="kategori.html">Tariflere Göz At →</a></div>
-  <div class="hero-image"><div class="recipe-art hero-art food-crop" data-art="krep" role="img" aria-label="Krep"></div><div class="hero-note">“Güzel yemekler,<br>güzel insanları<br>hep bir araya getirir…” ♡</div></div>
-</div></section>
+  <section class="hero">
+    <div class="container hero-shell">
+      <div class="hero-copy">
+        <h1>Evde gerçekten yapılan <em>güzel tarifler</em></h1>
+        <p>Az laf, net ölçü, işe yarayan püf noktaları. Kahvaltıdan çorbaya, börekten tatlıya kadar sofrada karşılığı olan tarifleri bir araya getirdik.</p>
+        <div class="actions">
+          <a class="btn primary" href="kategori.html">Tarifleri Keşfet →</a>
+        </div>
+        <div class="hero-trust">
+          <span>15 seçilmiş tarif</span>
+          <span>Favori defteri</span>
+          <span>PDF tarif kitabı</span>
+        </div>
+      </div>
 
-<section class="section"><div class="container">
- <div class="section-title"><h2>Kategoriler</h2><a href="kategori.html">Tüm Kategorileri Gör →</a></div>
- <div class="categories">
-   <a class="category-card paper" href="kategori.html?cat=Çorbalar"><div class="recipe-art category-art food-crop" data-art="mercimek-corbasi"></div><strong>Çorbalar</strong><span>Sıcacık başlangıçlar</span></a>
-   <a class="category-card paper" href="kategori.html?cat=Ana Yemekler"><div class="recipe-art category-art food-crop" data-art="imam-bayildi"></div><strong>Ana Yemekler</strong><span>Ev sofralarının kalbi</span></a>
-   <a class="category-card paper" href="kategori.html?cat=Hamur İşleri"><div class="recipe-art category-art food-crop" data-art="pogaca"></div><strong>Hamur İşleri</strong><span>Fırından gelen koku</span></a>
-   <a class="category-card paper" href="kategori.html?cat=Tatlılar"><div class="recipe-art category-art food-crop" data-art="revani"></div><strong>Tatlılar</strong><span>Çayın yanına</span></a>
-   <a class="category-card paper" href="kategori.html?cat=Kahvaltılık"><div class="recipe-art category-art food-crop" data-art="menemen"></div><strong>Kahvaltılık</strong><span>Güne güzel başla</span></a>
-   <a class="category-card paper" href="kategori.html?q=Zeytinyağlı"><div class="recipe-art category-art food-crop" data-art="yaprak-sarma"></div><strong>Zeytinyağlılar</strong><span>Sofranın klasik lezzetleri</span></a>
- </div>
-</div></section>
+      <div class="hero-visual" aria-label="Öne çıkan tarifler">
+        <div class="hero-stack">
+          <div class="dish-art hero-tile one" data-art="krep"></div>
+          <div class="dish-art hero-tile two" data-art="mercimek-corbasi"></div>
+          <div class="dish-art hero-tile three" data-art="pogaca"></div>
+        </div>
+        <div class="hero-note">“Bir tarif, bazen koca bir çocukluk demektir.”</div>
+      </div>
+    </div>
+  </section>
 
-<section class="section"><div class="container home-grid">
- <div>
-   <div class="section-title"><h2>Bugünün Defter Sayfası ♡</h2></div>
-   <div class="daily paper"><div class="recipe-art poster-art" data-art="krep" role="img" aria-label="Krep tarif kartı"></div><div style="padding-top:12px;text-align:center"><a class="btn primary" href="tarif.html?id=krep">Tarifi Gör →</a></div></div>
- </div>
- <div>
-   <div class="section-title"><h2>Popüler Tarifler ♡</h2><a href="kategori.html">Tümünü Gör →</a></div>
-   <div id="popularGrid" class="recipe-grid"></div>
- </div>
-</div></section>
+  <section class="category-row">
+    <div class="container category-pills">
+      <a class="category-chip" href="kategori.html?cat=Çorbalar">Çorbalar</a>
+      <a class="category-chip" href="kategori.html?cat=Ana%20Yemekler">Ana Yemekler</a>
+      <a class="category-chip" href="kategori.html?cat=Zeytinyağlılar">Zeytinyağlılar</a>
+      <a class="category-chip" href="kategori.html?cat=Hamur%20İşleri">Hamur İşleri</a>
+      <a class="category-chip" href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a class="category-chip" href="kategori.html?cat=Kahvaltılık">Kahvaltılık</a>
+      <a class="category-chip" href="kategori.html?cat=Salatalar">Salatalar</a>
+    </div>
+  </section>
 
-<section class="section"><div class="container">
- <div class="section-title"><h2>Annemin Mutfağından En Sevilenler ♡</h2></div>
- <div id="miniRibbon" class="ribbon"></div>
- <div class="quote-bar paper">“Bir tarif, bazen koca bir çocukluk demektir…” ♡</div>
-</div></section>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Bugün ne pişirsek?</p>
+          <h2>Defterden bir tarif</h2>
+        </div>
+        <a href="kategori.html">Tüm tarifler →</a>
+      </div>
+      <div id="featuredRecipe" class="featured"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="kicker">En çok sevilenler</p>
+          <h2>Sofranın garantili tarifleri</h2>
+        </div>
+        <a href="kategori.html">Hepsini gör →</a>
+      </div>
+      <div id="popularGrid" class="recipe-grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container notebook-cta">
+      <div class="notebook-cta-copy">
+        <span>Benim Defterim</span>
+        <h2>Sevdiklerini tek yerde biriktir</h2>
+        <p>Kalbe dokunduğun tarifler otomatik olarak defterine eklenir. Sonra defterine isim verip kapaklı PDF tarif kitabı olarak indirebilirsin.</p>
+        <a class="btn" href="defterim.html">Defterimi Aç →</a>
+      </div>
+      <div class="notebook-cta-art">
+        <div class="notebook-cover">Annemden<br>Bana<br>Tarifler ♡</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Yeni eklenenler</p>
+          <h2>Bir sonraki sofraya fikir</h2>
+        </div>
+      </div>
+      <div id="latestStrip" class="latest-strip"></div>
+    </div>
+  </section>
 </main>
 
-<footer class="footer" id="hakkimizda">
+<footer class="footer">
   <div class="container footer-inner">
-    <div class="brand">Anne ♡<small>Mutfağından Sana</small></div>
+    <a class="brand" href="index.html">Anne ♡<small>Mutfağından Sana</small></a>
     <div class="footer-links">
-      <a href="index.html">Ana Sayfa</a><a href="kategori.html">Tarifler</a><a href="defterim.html">Defterim</a><a href="#">Hakkımızda</a><a href="#">İletişim</a>
+      <a href="kategori.html">Tarifler</a>
+      <a href="defterim.html">Benim Defterim</a>
+      <a href="kategori.html?cat=Tatlılar">Tatlılar</a>
+      <a href="kategori.html?cat=Çorbalar">Çorbalar</a>
     </div>
-    <div class="social">◎ ◉ ▶︎ f</div>
+    <div class="footer-note">Ev kokan tarifler, saklanacak anılar.</div>
   </div>
 </footer>
-<div id="toast" class="toast"></div>
-<script src="data.js?v=6"></script><script src="app.js?v=6"></script>
 
-</body></html>
+<div id="toast" class="toast"></div>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
+</body>
+</html>
