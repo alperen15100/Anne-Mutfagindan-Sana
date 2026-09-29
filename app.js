@@ -267,21 +267,21 @@ async function pdfRecipe(pdf,r){
     pdf.setFontSize(size);pdf.setTextColor(...color);
     const lines=pdf.splitTextToSize(String(value),168);
     for(const line of lines){if(y+gap>269){pdf.addPage();pdfBase(pdf);y=38;}pdf.text(line,21,y);y+=gap;}
-    y+=3;
+    y+=1;
   };
   text(r.title,23,[163,79,67],10);
   text(r.category+"  ·  "+r.time+"  ·  "+r.servings,9,[117,110,100],5);
   try{
     const im=new Image();im.src="assets/recipes/"+r.id+".jpg";await im.decode();
-    const canvas=document.createElement("canvas");canvas.width=900;canvas.height=350;
-    const ctx=canvas.getContext("2d");const scale=Math.max(900/im.width,350/im.height);
-    ctx.drawImage(im,(900-im.width*scale)/2,(350-im.height*scale)/2,im.width*scale,im.height*scale);
-    pdf.addImage(canvas.toDataURL("image/jpeg",.85),"JPEG",21,y,168,65);y+=75;
+    const canvas=document.createElement("canvas");canvas.width=900;canvas.height=300;
+    const ctx=canvas.getContext("2d");const scale=Math.max(900/im.width,300/im.height);
+    ctx.drawImage(im,(900-im.width*scale)/2,(300-im.height*scale)/2,im.width*scale,im.height*scale);
+    pdf.addImage(canvas.toDataURL("image/jpeg",.85),"JPEG",21,y,168,56);y+=64;
   }catch{ /* The recipe remains downloadable if its image fails. */ }
   text("Malzemeler",15,[89,105,76],7);
-  r.ingredients.forEach(x=>text("• "+x,10,[48,44,38],5));y+=3;
+  r.ingredients.forEach(x=>text("• "+x,10,[48,44,38],4.8));y+=3;
   text("Yapılışı",15,[89,105,76],7);
-  r.steps.forEach((x,i)=>text((i+1)+". "+x,10,[48,44,38],5));y+=3;
+  r.steps.forEach((x,i)=>text((i+1)+". "+x,10,[48,44,38],4.8));y+=3;
   text("Püf noktası",13,[163,79,67],6);text(r.tip,10,[48,44,38],5);
   text("Sofra notu",13,[163,79,67],6);text(r.note,10,[48,44,38],5);
 }

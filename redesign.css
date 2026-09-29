@@ -30,3 +30,5 @@ body{background:var(--cream);font-family:'Source Sans 3',system-ui,sans-serif}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 
 .measure-note{font-size:12px;color:var(--muted);margin:-5px 0 15px}
+
+.header-heart b:empty{display:none}
