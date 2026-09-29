@@ -18,3 +18,7 @@ Bu sürüm tamamen statik HTML/CSS/JS'dir ve API gerektirmez.
 
 ## Çalıştırma
 Dosyaları Netlify / GitHub Pages gibi statik hostinge yükleyebilirsin.
+Yerelde de `index.html` açılır; ancak en sağlıklısı basit bir HTTP sunucusudur.
+
+## Görseller
+Bu GitHub sürümünde sayfanın hemen çalışması için yemek fotoğrafları uzaktaki görsel URL'lerinden yüklenir. Tasarım ve favori/Defterim mantığı tamamen repodadır. Üretilen özel suluboya görseller daha sonra `assets/` klasörüne taşınabilir.
