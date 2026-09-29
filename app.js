@@ -43,7 +43,8 @@ function updateFavUI(){
 
 function setArt(el,id){
   const p=ART[id]||ART.krep;
-  el.style.backgroundPosition=(p[0]*25)+"% "+(p[1]*100)+"%";
+  el.style.setProperty("--c",p[0]);
+  el.style.setProperty("--r",p[1]);
   el.setAttribute("data-art",id);
 }
 function hydrateArt(root=document){$$("[data-art]",root).forEach(el=>setArt(el,el.dataset.art))}
@@ -54,7 +55,7 @@ function recipeById(id){return (window.RECIPES||[]).find(r=>r.id===id)}
 function card(r){
   return '<article class="recipe-card paper">'+
     '<button class="heart '+(isFav(r.id)?"active":"")+'" data-id="'+r.id+'" aria-label="Favoriye ekle">'+(isFav(r.id)?"♥":"♡")+'</button>'+
-    '<a href="tarif.html?id='+encodeURIComponent(r.id)+'">'+art(r.id,"thumb")+'</a>'+
+    '<a href="tarif.html?id='+encodeURIComponent(r.id)+'">'+art(r.id,"thumb food-crop")+'</a>'+
     '<div class="recipe-body"><a class="recipe-title" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+escapeHtml(r.title)+'</a>'+
     '<p class="card-desc">'+escapeHtml(r.desc)+'</p>'+
     '<div class="meta"><span class="stars">★★★★★</span><span>'+escapeHtml(r.rating)+'</span></div>'+
@@ -84,7 +85,7 @@ function renderHome(){
   const popular=window.RECIPES.slice(0,8);
   $("#popularGrid").innerHTML=popular.slice(0,4).map(card).join("");
   $("#miniRibbon").innerHTML=popular.slice(4,8).map(r=>
-    '<a class="mini paper" href="tarif.html?id='+r.id+'">'+art(r.id,"mini-art")+
+    '<a class="mini paper" href="tarif.html?id='+r.id+'">'+art(r.id,"mini-art food-crop")+
     '<div><strong>'+escapeHtml(r.title)+'</strong><div class="stars">★★★★★</div><small>'+escapeHtml(r.time)+'</small></div></a>'
   ).join("");
   hydrateArt();
@@ -122,7 +123,7 @@ function getRecipe(){
 }
 function renderDetail(){
   const r=getRecipe();document.title=r.title+" | Anne Mutfağından Sana";
-  const d=$("#detailImg");setArt(d,r.id);d.setAttribute("aria-label",r.title);
+  const d=$("#detailImg");d.classList.add("food-crop");setArt(d,r.id);d.setAttribute("aria-label",r.title);
   $("#detailTitle").textContent=r.title;$("#detailDesc").textContent=r.desc;
   $("#detailTime").textContent=r.time;$("#detailRating").textContent=r.rating;
   const hb=$("#detailHeart");hb.dataset.id=r.id;
@@ -131,7 +132,7 @@ function renderDetail(){
   $("#tipText").textContent=r.tip;$("#noteText").textContent=r.note;
   const related=window.RECIPES.filter(x=>x.id!==r.id&&x.category===r.category).slice(0,4);
   const rel=related.length?related:window.RECIPES.filter(x=>x.id!==r.id).slice(0,4);
-  $("#related").innerHTML=rel.map(x=>'<a class="mini-card" href="tarif.html?id='+x.id+'">'+art(x.id,"related-art")+'<strong>'+escapeHtml(x.title)+'</strong></a>').join("");
+  $("#related").innerHTML=rel.map(x=>'<a class="mini-card" href="tarif.html?id='+x.id+'">'+art(x.id,"related-art food-crop")+'<strong>'+escapeHtml(x.title)+'</strong></a>').join("");
   const pp=$("#posterPreview");setArt(pp,r.id);pp.setAttribute("aria-label",r.title+" tarif kartı");
   hydrateArt();updateFavUI();
 }
@@ -140,7 +141,7 @@ function renderDefterim(){
   const list=getFavs().map(recipeById).filter(Boolean),wrap=$("#favItems");
   if(!list.length)wrap.innerHTML='<div class="empty">Henüz favori tarifin yok.<br><br>Tariflerdeki <b>♡</b> simgesine dokunduğunda otomatik olarak buraya gelir.<br><br><a class="btn primary" href="kategori.html">Tariflere Göz At</a></div>';
   else wrap.innerHTML=list.map(r=>
-    '<div class="fav-item"><a href="tarif.html?id='+r.id+'">'+art(r.id,"fav-art")+'</a>'+
+    '<div class="fav-item"><a href="tarif.html?id='+r.id+'">'+art(r.id,"fav-art food-crop")+'</a>'+
     '<div><strong>'+escapeHtml(r.title)+'</strong><div class="meta">'+escapeHtml(r.category)+' · '+escapeHtml(r.time)+'</div></div>'+
     '<button class="remove" data-remove="'+r.id+'" aria-label="Kaldır">×</button></div>'
   ).join("");
@@ -217,7 +218,7 @@ function previewNotebook(){
   const title=$("#bookTitle")?.value.trim()||"Annemden Bana Tarifler";
   const modal=document.createElement("div");modal.className="preview-modal";
   modal.innerHTML='<div class="preview-box"><button class="preview-close" aria-label="Kapat">×</button><div class="preview-cover"><span>Aile Sofra Mirası</span><h2>'+escapeHtml(title)+'</h2><b>♡</b><p>'+list.length+' tarif</p></div>'+
-    '<h3>Defterindeki Tarifler</h3><div class="preview-grid">'+list.map(r=>'<a href="tarif.html?id='+r.id+'">'+art(r.id,"preview-art")+'<strong>'+escapeHtml(r.title)+'</strong></a>').join("")+'</div>'+
+    '<h3>Defterindeki Tarifler</h3><div class="preview-grid">'+list.map(r=>'<a href="tarif.html?id='+r.id+'">'+art(r.id,"preview-art food-crop")+'<strong>'+escapeHtml(r.title)+'</strong></a>').join("")+'</div>'+
     '<button class="btn primary preview-pdf">PDF Olarak İndir</button></div>';
   document.body.appendChild(modal);hydrateArt(modal);
   $(".preview-close",modal).onclick=()=>modal.remove();
