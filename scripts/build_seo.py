@@ -38,6 +38,8 @@ def head(doc,path,title,desc,image='assets/recipes/mercimek-corbasi.jpg',schema=
     return doc.replace('</head>',block+'<!-- SEO:END -->\n</head>')
 def common(doc):
     doc=doc.replace('?v=10','?v=11')
+    from urllib.parse import unquote
+    doc=re.sub(r'kategori\.html\?cat=([^"<>]+)',lambda m:curl(unquote(m[1])) if unquote(m[1]) in cats else m[0],doc)
     for c in cats:
         doc=doc.replace('kategori.html?cat='+c,curl(c)).replace('kategori.html?cat='+__import__('urllib.parse',fromlist=['quote']).quote(c),curl(c))
     doc=re.sub(r'<div class="footer-note">.*?</div>','<div class="footer-note">Ev kokan tarifler, saklanacak anılar.</div>',doc)
