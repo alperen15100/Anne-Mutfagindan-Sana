@@ -1,5 +1,6 @@
 """Check generated public URLs, local links, anchors and schema before deployment."""
 from pathlib import Path
+import html
 from html.parser import HTMLParser
 import re,json,xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1]
@@ -24,6 +25,9 @@ for name,(text,page) in pages.items():
   data=json.loads(raw)
   for item in data.get('@graph',[data]):
    if item.get('@type')=='Recipe':
+    if not item.get('author'):errors.append(name+': missing recipe content attribution')
+    for ingredient in item['recipeIngredient']:
+     if ingredient not in html.unescape(text):errors.append(name+': ingredient schema differs from visible content')
     for step in item['recipeInstructions']:
      anchor=step['url'].split('#')[-1]
      if anchor not in page.ids:errors.append(name+': invalid recipe step '+anchor)
@@ -36,6 +40,8 @@ for url in urls:
  title=re.search(r'<title>(.*?)</title>',text,re.S)[1]
  if title in titles:errors.append(name+': duplicate public title')
  titles.add(title)
+ if len(re.findall(r'<h1\b',text))!=1:errors.append(name+': expected one main heading')
+ if not re.search(r'<meta name="description" content="[^"]+">',text):errors.append(name+': missing description')
  if '<link rel="canonical" href="'+url+'">' not in text:errors.append(name+': canonical mismatch')
 assert not errors,'\n'.join(errors)
 print(f'Checked {len(urls)} public pages: links, anchors, canonicals and JSON-LD passed.')

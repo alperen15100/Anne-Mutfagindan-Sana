@@ -120,12 +120,13 @@ article('hakkimizda.html','Hakkımızda ve İçerik Yaklaşımımız','Anne Mutf
 article('gizlilik.html','Gizlilik ve Favori Verileri','Favori tariflerin ve defter başlığın kullandığın tarayıcıda saklanır. Bu özellik için hesap açman gerekmez.','<h2>Tarayıcıda saklanan bilgiler</h2><p>Favoriler ams_favorites_v1, defter başlığı ams_book_title_v1 anahtarlarıyla yerel depolamada tutulur. Defter özelliği bu bilgileri sunucuya göndermez.</p><h2>Verileri kaldırma</h2><p>Tarifleri kalbe tekrar dokunarak defterinden çıkarabilirsin. Tarayıcının site verilerini temizlemek favori listesini ve kayıtlı başlığı kaldırır.</p><h2>Barındırma ve dış kaynaklar</h2><p>Site GitHub Pages üzerinde barındırılır. Barındırma sağlayıcısı ve harici yazı tipi sağlayıcıları, istekleri kendi uygulamalarına göre işleyebilir. Ayrıntılar için <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub gizlilik açıklamasına</a> ve <a href="https://policies.google.com/privacy">Google gizlilik açıklamasına</a> bakabilirsin.</p><h2>PDF ve bağlantılar</h2><p>PDF dosyaları tarayıcında hazırlanır. Dış bağlantılar ilgili hizmetin kendi koşullarına tabidir. Reklam veya analitik eklendiğinde kullanılan hizmetler bu sayfada ayrıca açıklanmalıdır.</p>')
 import runpy
 runpy.run_path(str(ROOT/'scripts/build_kitchen.py'),init_globals=globals())
+runpy.run_path(str(ROOT/'scripts/build_discovery.py'),init_globals=globals())
 ns='http://www.sitemaps.org/schemas/sitemap/0.9'; ins='http://www.google.com/schemas/sitemap-image/1.1'
 ET.register_namespace('',ns);ET.register_namespace('image',ins)
 root=ET.Element('{'+ns+'}urlset')
 for path in pages:
     el=ET.SubElement(root,'{'+ns+'}url');ET.SubElement(el,'{'+ns+'}loc').text=BASE+path
-    if path.startswith('tarif-') and path!='tarif-defteri-rehberi.html':
+    if path in {rurl(r) for r in recipes}:
         im=ET.SubElement(el,'{'+ins+'}image');ET.SubElement(im,'{'+ins+'}loc').text=BASE+'assets/recipes/'+path[6:-5]+'.jpg'
 ET.ElementTree(root).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
 (ROOT/'llms.txt').write_text('# '+NAME+'\n\n> Türkçe ev usulü yemek tarifleri. Görseller yapay zekâ ile üretilmiş sunum örnekleridir.\n\n## Tarifler\n'+''.join(f'- [{r["title"]}]({BASE+rurl(r)}): {r["desc"]}\n' for r in recipes)+'\n## Site bilgileri\n- [Mutfak Rehberi]('+BASE+'rehberler.html)\n- [İçerik yaklaşımı]('+BASE+'hakkimizda.html)\n- [Site haritası]('+BASE+'sitemap.xml)\n')
