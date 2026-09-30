@@ -22,10 +22,10 @@ function scaledRecipe(r,target=recipeTarget(r)){
   return {...r,ingredients:r.ingredients.map(x=>scaleIngredient(x,factor)),servings:'Yaklaşık '+formatAmount(target)+' '+info.unit,tip:r.tip+' Ölçekleme: '+formatAmount(factor)+' kat. Pişirme süresini aynı oranla artırma; kıvamı kontrol et.'};
 }
 function recipeFoods(r){
-  const text=' '+normalizeFood(r.ingredients.join(' '))+' ';
+  const text=' '+normalizeFood(r.ingredients.join(' ')).replaceAll('domates salcasi','salca').replaceAll('biber salcasi','salca')+' ';
   return pantryItems.filter(item=>{
     let keys=[normalizeFood(item)];
-    if(item==='Mercimek')keys=['mercimek'];if(item==='Kuru fasulye')keys=['fasulye'];if(item==='Tavuk')keys=['tavuk'];if(item==='Peynir')keys=['peynir','peyniri'];if(item==='Salça')keys=['salca','salcasi'];
+    if(item==='Mercimek')keys=['mercimek'];if(item==='Kuru fasulye')keys=['fasulye'];if(item==='Tavuk')keys=['tavuk'];if(item==='Peynir')keys=['peynir','peyniri','kasar'];if(item==='Salça')keys=['salca','salcasi'];
     return keys.some(k=>new RegExp('(^| )'+k+'( |$)').test(text));
   });
 }
@@ -56,7 +56,7 @@ function initPortions(){
   panel.innerHTML='<div><strong>Miktarı ayarla</strong><span>Özgün tarif: '+escapeHtml(r.servings)+'</span></div><label for="portionInput">'+(info.unit==='kişi'?'Kişi sayısı':'Adet / dilim')+'</label><div class="portion-input"><button type="button" id="portionMinus" aria-label="Miktarı azalt">−</button><input id="portionInput" type="number" min="1" max="40" step="1" value="'+info.base+'"><button type="button" id="portionPlus" aria-label="Miktarı artır">+</button></div><button class="btn" id="portionReset" type="button">Özgün ölçü</button><p id="portionStatus" role="status"></p>'+(info.range?'<p class="content-note">Tarif aralık verdiği için hesap '+info.base+' '+info.unit+' üzerinden yaklaşık yapılır.</p>':'');
   $('#ingredients').before(panel);
   const set=n=>{if(!Number.isFinite(n)||n<1||n>40){toast('1 ile 40 arasında miktar seç.');return}const all=readKitchen(PORTION_KEY,{});all[r.id]=n;if(writeKitchen(PORTION_KEY,all))updatePortions(r)};
-  $('#portionInput').onchange=e=>set(Number(e.target.value));$('#portionMinus').onclick=()=>set(Math.max(1,recipeTarget(r)-1));$('#portionPlus').onclick=()=>set(Math.min(40,recipeTarget(r)+1));$('#portionReset').onclick=()=>set(info.base);
+  $('#portionInput').oninput=e=>{const n=Number(e.target.value);if(e.target.value&&Number.isFinite(n)&&n>=1&&n<=40)set(n)};$('#portionInput').onchange=e=>{const n=Number(e.target.value);if(!e.target.value||n<1||n>40){updatePortions(r);toast('1 ile 40 arasında miktar seç.');return}set(n)};$('#portionMinus').onclick=()=>set(Math.max(1,recipeTarget(r)-1));$('#portionPlus').onclick=()=>set(Math.min(40,recipeTarget(r)+1));$('#portionReset').onclick=()=>set(info.base);
   const actions=$('.detail-copy .actions');actions.insertAdjacentHTML('beforeend','<button class="btn" id="addShopping" type="button">Alışverişe Ekle</button><button class="btn" id="startCooking" type="button">Pişirmeye Başla</button>');
   $('#addShopping').onclick=()=>addShopping([r.id]);$('#startCooking').onclick=()=>startCooking(r);updatePortions(r);
 }
@@ -80,14 +80,14 @@ function shoppingRows(){
 function renderShopping(){
   if(!$('#shoppingList'))return;
   const recipes=getShopping(),rows=shoppingRows();$('#shoppingRecipes').innerHTML=recipes.map(x=>{const r=recipeById(x.id);return '<div class="shopping-recipe"><a href="'+recipeURL(x.id)+'">'+escapeHtml(r.title)+'</a><span>'+formatAmount(x.target)+' '+yieldInfo(r).unit+'</span><button type="button" class="btn" data-shop-remove="'+x.id+'" aria-label="'+escapeHtml(r.title)+' listesinden çıkar">Çıkar</button></div>'}).join('');
-  $('#shoppingList').innerHTML=rows.length?rows.map(x=>'<label class="shopping-item"><input type="checkbox"><span><strong>'+escapeHtml(x.text)+'</strong><small>'+escapeHtml([...x.sources].join(' · '))+'</small></span></label>').join(''):'<div class="empty-state"><h2>Listen henüz boş</h2><p>Tarif sayfasından, defterinden veya bir menüden tarif ekle.</p><a class="btn" href="menuler.html">Menülere Bak</a></div>';
+  $('#shoppingList').innerHTML=rows.length?rows.map((x,i)=>'<label class="shopping-item"><input type="checkbox" data-shop-index="'+i+'"><span><strong>'+escapeHtml(x.text)+'</strong><small>'+escapeHtml([...x.sources].join(' · '))+'</small></span></label>').join(''):'<div class="empty-state"><h2>Listen henüz boş</h2><p>Tarif sayfasından, defterinden veya bir menüden tarif ekle.</p><a class="btn" href="menuler.html">Menülere Bak</a></div>';
   $('#shoppingStatus').textContent=recipes.length+' tarif · '+rows.length+' malzeme satırı';
   $$('[data-shop-remove]').forEach(b=>b.onclick=()=>{writeKitchen(SHOP_KEY,getShopping().filter(x=>x.id!==b.dataset.shopRemove));renderShopping()});
   $('#shoppingClear').onclick=()=>{writeKitchen(SHOP_KEY,[]);renderShopping()};
   $('#shoppingCopy').onclick=async()=>{const text=shoppingText();if(!rows.length){toast('Önce bir tarif ekle.');return}try{await navigator.clipboard.writeText(text);toast('Liste kopyalandı.')}catch{downloadShoppingText()}};
   $('#shoppingDownload').onclick=downloadShoppingText;
 }
-function shoppingText(){return 'Alışveriş Listem\n\n'+shoppingRows().map(x=>'□ '+x.text).join('\n')+'\n\nAynı malzeme ve birimler toplanır. Aralıklar, soslar ve isteğe bağlı malzemeler ayrıca kontrol edilmelidir.'}
+function shoppingText(){return 'Alışveriş Listem\n\n'+shoppingRows().filter((x,i)=>!document.querySelector('[data-shop-index="'+i+'"]')?.checked).map(x=>'□ '+x.text).join('\n')+'\n\nAynı malzeme ve birimler toplanır. Aralıklar, soslar ve isteğe bağlı malzemeler ayrıca kontrol edilmelidir.'}
 function downloadShoppingText(){if(!shoppingRows().length){toast('Önce bir tarif ekle.');return}const url=URL.createObjectURL(new Blob([shoppingText()],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='alisveris-listem.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 let cookingDialog=null,wakeLock=null;
 function startCooking(r){
