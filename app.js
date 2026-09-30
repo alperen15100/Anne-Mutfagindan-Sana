@@ -4,6 +4,8 @@ const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const FAV_KEY="ams_favorites_v1";
 const TITLE_KEY="ams_book_title_v1";
 
+function recipeURL(id){return "tarif-"+id+".html"}
+function categoryURL(c){return "kategori-"+slugify(c)+".html"}
 function recipeById(id){return (window.RECIPES||[]).find(r=>r.id===id)}
 function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function slugify(s=""){return s.toLocaleLowerCase("tr-TR").replaceAll("ı","i").replaceAll("ğ","g").replaceAll("ü","u").replaceAll("ş","s").replaceAll("ö","o").replaceAll("ç","c").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}
@@ -55,16 +57,16 @@ function setArt(el,id){
 }
 function art(id,cls=""){
   const r=recipeById(id);
-  return '<div class="dish-art '+cls+'" data-art="'+escapeHtml(id)+'" role="img" aria-label="'+escapeHtml(r?.title||"Tarif görseli")+'"></div>';
+  return '<img class="dish-art '+cls+'" data-art="'+escapeHtml(id)+'" src="assets/recipes/'+escapeHtml(id)+'.jpg" alt="'+escapeHtml(r?.title||"Tarif görseli")+'" width="900" height="700" loading="lazy" decoding="async">';
 }
 function hydrateArt(root=document){$$("[data-art]",root).forEach(el=>setArt(el,el.dataset.art))}
 
 function compactCard(r){
   return '<article class="recipe-card">'+
-    '<a class="recipe-card-media" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+art(r.id,"card-art")+'</a>'+
+    '<a class="recipe-card-media" href="'+recipeURL(r.id)+'">'+art(r.id,"card-art")+'</a>'+
     '<div class="recipe-card-copy">'+
       '<div class="eyebrow">'+escapeHtml(r.category)+'</div>'+
-      '<a class="recipe-card-title" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+escapeHtml(r.title)+'</a>'+
+      '<a class="recipe-card-title" href="'+recipeURL(r.id)+'">'+escapeHtml(r.title)+'</a>'+
       '<p>'+escapeHtml(r.desc)+'</p>'+
       '<div class="recipe-card-meta"><span>◷ '+escapeHtml(r.time)+'</span><span>•</span><span>'+escapeHtml(r.difficulty||"Kolay")+'</span></div>'+
     '</div>'+
@@ -73,7 +75,7 @@ function compactCard(r){
 }
 
 function miniCard(r){
-  return '<a class="mini-recipe" href="tarif.html?id='+encodeURIComponent(r.id)+'">'+
+  return '<a class="mini-recipe" href="'+recipeURL(r.id)+'">'+
     art(r.id,"mini-dish")+
     '<div><strong>'+escapeHtml(r.title)+'</strong><span>'+escapeHtml(r.time)+' · '+escapeHtml(r.category)+'</span></div>'+
   '</a>';
@@ -113,7 +115,7 @@ function renderHome(){
       '<div class="featured-copy"><div class="eyebrow">'+escapeHtml(featured.category)+'</div><h3>'+escapeHtml(featured.title)+'</h3>'+
       '<p>'+escapeHtml(featured.desc)+'</p>'+
       '<div class="featured-meta"><span>◷ '+escapeHtml(featured.time)+'</span><span>'+escapeHtml(featured.servings||"4 kişilik")+'</span><span>'+escapeHtml(featured.difficulty||"Kolay")+'</span></div>'+
-      '<div class="actions"><a class="btn primary" href="tarif.html?id='+featured.id+'">Tarifi Aç</a><button class="btn ghost" data-heart="'+featured.id+'">'+(isFav(featured.id)?"♥ Defterimde":"♡ Defterime Ekle")+'</button></div></div>';
+      '<div class="actions"><a class="btn primary" href="'+recipeURL(featured.id)+'">Tarifi Aç</a><button class="btn ghost" data-heart="'+featured.id+'">'+(isFav(featured.id)?"♥ Defterimde":"♡ Defterime Ekle")+'</button></div></div>';
   }
 
   const popular=["mercimek-corbasi","yaprak-sarma","pogaca","revani","menemen","firin-makarna"]
@@ -140,13 +142,13 @@ function renderCategoryPills(root,active=""){
   if(!root)return;
   root.innerHTML=
     '<a class="filter-pill '+(!active?"active":"")+'" href="kategori.html">Tümü</a>'+
-    categories().map(c=>'<a class="filter-pill '+(c===active?"active":"")+'" href="kategori.html?cat='+encodeURIComponent(c)+'">'+escapeHtml(c)+'</a>').join("");
+    categories().map(c=>'<a class="filter-pill '+(c===active?"active":"")+'" href="'+categoryURL(c)+'">'+escapeHtml(c)+'</a>').join("");
 }
 
 function renderCategory(){
   const params=new URLSearchParams(location.search);
   const q=(params.get("q")||"").trim();
-  const cat=params.get("cat")||"";
+  const cat=params.get("cat")||document.body.dataset.category||"";
   const qLower=q.toLocaleLowerCase("tr-TR");
   let list=[...(window.RECIPES||[])];
 
@@ -189,12 +191,12 @@ function renderCategory(){
 }
 
 function getRecipe(){
-  const id=new URLSearchParams(location.search).get("id")||"mercimek-corbasi";
+  const id=document.body.dataset.recipe||new URLSearchParams(location.search).get("id")||"mercimek-corbasi";
   return recipeById(id)||window.RECIPES[0];
 }
 function renderDetail(){
   const r=getRecipe();
-  document.title=r.title+" | Anne Mutfağından Sana";
+  document.title=r.title+" Tarifi: Malzemeler ve Yapılışı | Anne Mutfağından Sana";
   setArt($("#detailArt"),r.id);
   $("#detailCategory").textContent=r.category;
   $("#detailTitle").textContent=r.title;
@@ -225,7 +227,7 @@ function renderNotebook(){
     root.innerHTML=list.length?list.map(r=>
       '<article class="notebook-item">'+
         art(r.id,"notebook-art")+
-        '<div><div class="eyebrow">'+escapeHtml(r.category)+'</div><a href="tarif.html?id='+r.id+'"><strong>'+escapeHtml(r.title)+'</strong></a><span>'+escapeHtml(r.time)+' · '+escapeHtml(r.difficulty||"Kolay")+'</span></div>'+
+        '<div><div class="eyebrow">'+escapeHtml(r.category)+'</div><a href="'+recipeURL(r.id)+'"><strong>'+escapeHtml(r.title)+'</strong></a><span>'+escapeHtml(r.time)+' · '+escapeHtml(r.difficulty||"Kolay")+'</span></div>'+
         '<button class="remove-btn" data-remove="'+r.id+'" aria-label="Defterden çıkar">×</button>'+
       '</article>'
     ).join(""):'<div class="empty-state"><span>♡</span><h3>Defterin henüz boş</h3><p>Sevdiğin tariflerdeki kalbe dokun; burada biriksin.</p><a class="btn primary" href="kategori.html">Tarifleri Keşfet</a></div>';
@@ -327,6 +329,10 @@ function previewNotebook(){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
+  const legacy=new URLSearchParams(location.search);
+  if(location.pathname.endsWith("/tarif.html")&&recipeById(legacy.get("id"))){location.replace(recipeURL(legacy.get("id")));return;}
+  if(location.pathname.endsWith("/kategori.html")&&categories().includes(legacy.get("cat"))&&!legacy.has("q")){location.replace(categoryURL(legacy.get("cat")));return;}
+  if(legacy.has("q")){const meta=document.createElement("meta");meta.name="robots";meta.content="noindex,follow";document.head.appendChild(meta);}
   bindGlobal();
   const p=document.body.dataset.page;
   if(p==="home")renderHome();

@@ -1,0 +1,40 @@
+# Anne Mutfağından Sana
+
+> Türkçe ev usulü yemek tarifleri. Görseller yapay zekâ ile üretilmiş sunum örnekleridir.
+
+## Tarifler
+- [Mercimek Çorbası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-mercimek-corbasi.html): Sıcacık, pürüzsüz ve tam kıvamında anne usulü kırmızı mercimek çorbası.
+- [Ezogelin Çorbası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-ezogelin.html): Mercimek, pirinç ve bulgurun nane kokusuyla buluştuğu doyurucu klasik.
+- [Menemen](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-menemen.html): Domates, biber ve yumurtayla hızlı hazırlanan kahvaltı klasiği.
+- [Zeytinyağlı Yaprak Sarma](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-yaprak-sarma.html): İncecik sarılmış, limon kokulu ve zeytinyağlı klasik sarma.
+- [Anne Poğaçası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-pogaca.html): Yumuşacık hamurlu, peynirli ve mis kokulu ev poğaçası.
+- [Revani](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-revani.html): İrmikli, şerbetli ve yumuşacık klasik ev tatlısı.
+- [Fırın Sütlaç](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-sutlac.html): Üzeri hafif kızarmış, içi kremamsı ve pirinçli fırın sütlaç.
+- [Krep](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-krep.html): İncecik, yumuşak ve meyvelerle servis edilen kahvaltılık krep.
+- [Fırın Makarna](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-firin-makarna.html): Beşamel sos ve kaşarla fırında kızarmış doyurucu makarna.
+- [İmam Bayıldı](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-imam-bayildi.html): Zeytinyağlı, bol soğanlı ve domatesli patlıcan klasiği.
+- [Patates Salatası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-patates-salatasi.html): Bol yeşillikli, limonlu ve ev usulü patates salatası.
+- [Şehriyeli Pirinç Pilavı](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-pirinc-pilavi.html): Tane tane, tereyağlı ve şehriyeli klasik pirinç pilavı.
+- [Havuç Tarator](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-havuc-tarator.html): Sarımsaklı yoğurt ve kavrulmuş havuçla hazırlanan ferah meze.
+- [Elmalı Kurabiye](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-elmali-kurabiye.html): Tarçınlı elma dolgulu, ağızda dağılan nostaljik kurabiye.
+- [Su Böreği](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-su-boregi.html): Kat kat, peynirli ve tereyağlı geleneksel su böreği.
+- [Ev Usulü Kuru Fasulye](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-kuru-fasulye.html): Salçalı suyuna ekmek banılan, tane tane ve yumuşacık klasik kuru fasulye.
+- [Salçalı Nohut Yemeği](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-nohut-yemegi.html): Az malzemeyle hazırlanan, pilavın yanına çok yakışan ev usulü nohut.
+- [Sebzeli Tavuk Sote](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-tavuk-sote.html): Biber ve domatesle renklenen, tek tavada hazırlanan pratik tavuk yemeği.
+- [Fırında Köfte ve Patates](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-firinda-kofte-patates.html): Salçalı sosla pişen köfte ve patatesin aynı tepside buluştuğu doyurucu yemek.
+- [Fırında Karnıyarık](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-karniyarik.html): Kıymalı iç harcı ve domatesli sosuyla geleneksel patlıcan yemeği.
+- [Yayla Çorbası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-yayla-corbasi.html): Yoğurt, pirinç ve naneli tereyağıyla hazırlanan yumuşak içimli çorba.
+- [Ev Usulü Tarhana Çorbası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-tarhana-corbasi.html): Kuru tarhanayla yapılan, nane kokulu ve sıcak bir başlangıç.
+- [Bol Yeşillikli Kısır](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-kisir.html): Limonlu, nar ekşili ve bol yeşillikli klasik ince bulgur salatası.
+- [Kabak Mücveri](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-kabak-mucveri.html): İçi yumuşak, dışı hafif çıtır; dereotlu ve tavada pişen kabak mücveri.
+- [Patatesli Rulo Börek](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-patatesli-borek.html): Hazır yufkayla hazırlanan, dışı çıtır ve içi bol patatesli fırın böreği.
+- [Yumuşacık Pankek](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-pankek.html): Kahvaltıya meyve ve balla eşlik eden, pofuduk küçük pankekler.
+- [Ferah Ev Cacığı](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-cacik.html): Salatalık, yoğurt ve naneyle hazırlanan serinletici sofra eşlikçisi.
+- [Tane Tane İrmik Helvası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-irmik-helvasi.html): Tereyağı kokulu, sütlü şerbetle yumuşayan klasik irmik helvası.
+- [Bisküvili Mozaik Pasta](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-mozaik-pasta.html): Fırın kullanmadan yapılan, dilimlerinde bisküvi parçaları görünen çikolatalı pasta.
+- [Fırında Sütlü Patates](https://alperen15100.github.io/Anne-Mutfagindan-Sana/tarif-firinda-sutlu-patates.html): İnce patates dilimlerinin sütle yumuşayıp kaşarla kızardığı sıcak bir eşlikçi.
+
+## Site bilgileri
+- [Mutfak Rehberi](https://alperen15100.github.io/Anne-Mutfagindan-Sana/rehberler.html)
+- [İçerik yaklaşımı](https://alperen15100.github.io/Anne-Mutfagindan-Sana/hakkimizda.html)
+- [Site haritası](https://alperen15100.github.io/Anne-Mutfagindan-Sana/sitemap.xml)
