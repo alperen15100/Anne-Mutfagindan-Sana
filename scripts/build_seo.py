@@ -1,10 +1,10 @@
 """Regenerate crawlable recipe/category pages after editing data.js. No dependencies."""
 from pathlib import Path
-import re, json, html, unicodedata
+import re, json, html, unicodedata, os
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = 'https://alperen15100.github.io/Anne-Mutfagindan-Sana/'
+BASE = os.environ.get('SITE_URL', 'https://alperen15100.github.io/Anne-Mutfagindan-Sana/').rstrip('/')+'/'
 NAME = 'Anne Mutfağından Sana'
 recipes = json.loads((ROOT/'data.js').read_text().split('=',1)[1].strip().rstrip(';'))
 esc = lambda s: html.escape(str(s), quote=True)
@@ -34,10 +34,11 @@ def head(doc,path,title,desc,image='assets/recipes/mercimek-corbasi.jpg',schema=
     for prop,val in [('og:type','article' if path.startswith('tarif-') else 'website'),('og:locale','tr_TR'),('og:site_name',NAME),('og:title',title),('og:description',desc),('og:url',BASE+path),('og:image',BASE+image),('og:image:alt',title)]:
         block+=f'<meta property="{prop}" content="{esc(val)}">\n'
     block+='<meta name="twitter:card" content="summary_large_image">\n'
+    for key,value in [('twitter:title',title),('twitter:description',desc),('twitter:image',BASE+image)]: block+=f'<meta name="{key}" content="{esc(value)}">\n'
     if schema: block+=structured(schema)+'\n'
     return doc.replace('</head>',block+'<!-- SEO:END -->\n</head>')
 def common(doc):
-    doc=doc.replace('?v=10','?v=12').replace('?v=11','?v=12').replace('?v=12','?v=13')
+    doc=doc.replace('?v=10','?v=12').replace('?v=11','?v=12').replace('?v=12','?v=13').replace('?v=13','?v=14')
     doc=doc.replace('kategori-hamur-i-sleri.html','kategori-hamur-isleri.html')
     from urllib.parse import unquote
     doc=re.sub(r'kategori\.html\?cat=([^"<>]+)',lambda m:curl(unquote(m[1])) if unquote(m[1]) in cats else m[0],doc)
@@ -50,8 +51,10 @@ def common(doc):
         doc=doc.replace('<a data-nav="defterim"', '<a href="mutfakta-ne-var.html">Ne Pişirsem?</a><a href="menuler.html">Menüler</a><a data-nav="defterim"')
     if 'href="alisveris-listem.html"' not in doc:
         doc=doc.replace('<div class="footer-links">','<div class="footer-links"><a href="alisveris-listem.html">Alışveriş Listem</a><a href="koleksiyonlar.html">Koleksiyonlar</a>')
+    if 'href="site-haritasi.html"' not in doc:
+        doc=doc.replace('<div class="footer-links">','<div class="footer-links"><a href="site-haritasi.html">Site Haritası</a>')
     if 'src="kitchen.js' not in doc:
-        doc=doc.replace('</body>','<script src="kitchen.js?v=13"></script>\n</body>')
+        doc=doc.replace('</body>','<script src="kitchen.js?v=14"></script>\n</body>')
     return doc
 def card(r):
     return f'<article class="recipe-card"><a class="recipe-card-media" href="{rurl(r)}"><img class="dish-art card-art" src="assets/recipes/{r["id"]}.jpg" alt="{esc(r["title"])}" width="900" height="700" loading="lazy" decoding="async"></a><div class="recipe-card-copy"><div class="eyebrow">{esc(r["category"])}</div><a class="recipe-card-title" href="{rurl(r)}">{esc(r["title"])}</a><p>{esc(r["desc"])}</p><div class="recipe-card-meta"><span>{esc(r["time"])}</span><span>{esc(r["difficulty"])}</span></div></div><button class="heart-btn" data-heart="{r["id"]}" aria-label="Defterime ekle" aria-pressed="false">♡</button></article>'
@@ -67,18 +70,19 @@ for r in recipes:
     for id,key in [('detailTitle','title'),('detailCategory','category'),('detailDesc','desc'),('detailTime','time'),('detailServings','servings'),('detailDifficulty','difficulty'),('tipText','tip'),('noteText','note')]: doc=fill(doc,id,esc(r[key]))
     doc=fill(doc,'detailArt',f'<img class="detail-photo" src="assets/recipes/{r["id"]}.jpg" alt="{esc(r["title"])}" width="900" height="700" fetchpriority="high">')
     doc=fill(doc,'ingredients',''.join('<label class="ingredient"><input type="checkbox"><span>'+esc(i)+'</span></label>' for i in r['ingredients']))
-    doc=fill(doc,'steps',''.join(f'<div class="step-row"><div class="step-no">{i+1}</div><p>{esc(x)}</p></div>' for i,x in enumerate(r['steps'])))
+    doc=fill(doc,'steps',''.join(f'<div class="step-row" id="adim-{i+1}"><div class="step-no">{i+1}</div><p>{esc(x)}</p></div>' for i,x in enumerate(r['steps'])))
     related=[x for x in recipes if x['id']!=r['id'] and x['category']==r['category']][:3]
     doc=fill(doc,'relatedGrid',''.join(card(x) for x in (related or recipes[:3])))
     items=[('Ana Sayfa','index.html'),(r['category'],curl(r['category'])),(r['title'],path)]
-    doc=doc.replace('<section class="detail-top">',trail(items)+'<section class="detail-top">')
+    doc=doc.replace('<section class="detail-top">',trail(items)+'<nav class="recipe-jumps" aria-label="Tarif bölümleri"><a href="#malzemeler">Malzemeler</a><a href="#yapilis">Yapılışı</a><a href="#sorular">Kısa cevaplar</a></nav><section class="detail-top">')
+    doc=doc.replace('<h2>Malzemeler</h2>','<h2 id="malzemeler">Malzemeler</h2>')
     doc=doc.replace('<h2>Yapılışı</h2>','<h2 id="yapilis">Yapılışı</h2>')
     doc=doc.replace('<div class="actions">','<div class="actions"><a class="btn" href="#yapilis">Yapılışa Geç ↓</a>',1)
     faq=[(r['title']+' kaç kişilik?',r['servings']+' olarak hazırlanır. Malzemeler bu miktara göre listelenmiştir.'),(r['title']+' ne kadar sürer?','Tarifte belirtilen yaklaşık süre '+r['time']+'. Süre, hazırlık hızına ve kullanılan ekipmana göre değişebilir.'),(r['title']+' için püf noktası nedir?',r['tip'])]
-    answers='<section class="recipe-panel recipe-faq"><h2>Tarifle ilgili kısa cevaplar</h2>'+''.join('<details><summary>'+esc(q)+'</summary><p>'+esc(a)+'</p></details>' for q,a in faq)+'<p class="content-note">Görsel yapay zekâ ile oluşturulmuş bir sunum örneğidir. Kendi yemeğinizin görünümü farklı olabilir.</p></section>'
+    answers='<section class="recipe-panel recipe-faq" id="sorular"><h2>Tarifle ilgili kısa cevaplar</h2>'+''.join('<details><summary>'+esc(q)+'</summary><p>'+esc(a)+'</p></details>' for q,a in faq)+'<p class="content-note">Görsel yapay zekâ ile oluşturulmuş bir sunum örneğidir. Kendi yemeğinizin görünümü farklı olabilir.</p></section>'
     doc=doc.replace('<section class="related-section">',answers+'<section class="related-section">')
     minutes=sum(int(n)*(60 if unit=='saat' else 1) for n,unit in re.findall(r'(\d+)\s*(dk|saat)',r['time']))
-    schema={'@context':'https://schema.org','@graph':[{'@type':'Recipe','@id':BASE+path+'#recipe','url':BASE+path,'name':r['title'],'description':r['desc'],'image':[BASE+'assets/recipes/'+r['id']+'.jpg'],'totalTime':'PT'+str(minutes)+'M','recipeYield':r['servings'],'recipeCategory':r['category'],'recipeCuisine':'Türk mutfağı','recipeIngredient':r['ingredients'],'recipeInstructions':[{'@type':'HowToStep','position':i+1,'text':x,'url':BASE+path+'#yapilis'} for i,x in enumerate(r['steps'])],'inLanguage':'tr-TR'},crumbs(items)]}
+    schema={'@context':'https://schema.org','@graph':[{'@type':'Recipe','@id':BASE+path+'#recipe','url':BASE+path,'name':r['title'],'description':r['desc'],'image':[BASE+'assets/recipes/'+r['id']+'.jpg'],'totalTime':'PT'+str(minutes)+'M','recipeYield':r['servings'],'recipeCategory':r['category'],'recipeCuisine':'Türk mutfağı','recipeIngredient':r['ingredients'],'recipeInstructions':[{'@type':'HowToStep','position':i+1,'text':x,'url':BASE+path+'#adim-'+str(i+1)} for i,x in enumerate(r['steps'])],'inLanguage':'tr-TR'},crumbs(items)]}
     doc=head(doc,path,r['title']+' Tarifi: Malzemeler ve Yapılışı | '+NAME,r['desc']+' '+r['time']+' · '+r['servings']+'. Ölçüler, adım adım yapılış, püf noktası ve PDF tarifi.','assets/recipes/'+r['id']+'.jpg',schema)
     (ROOT/path).write_text(doc);pages.append(path)
 for c in [None]+cats:

@@ -45,3 +45,36 @@ if 'data-shopping-favorites' not in doc:doc=doc.replace('<div class="actions">',
 notebook.write_text(doc)
 guide=ROOT/'rehberler.html';doc=guide.read_text().replace('<div class="guide-links">','<div class="guide-links"><a href="mutfakta-ne-var.html"><h2>Evde ne varsa</h2><p>Malzemelerini seç ve tarif bul.</p></a><a href="menuler.html"><h2>Yedi günlük menü</h2><p>Tarifleri defterine ve alışveriş listene ekle.</p></a><a href="koleksiyonlar.html"><h2>Tarif koleksiyonları</h2><p>Vaktine ve malzemene göre seç.</p></a>');guide.write_text(doc)
 privacy=ROOT/'gizlilik.html';doc=privacy.read_text().replace('<h2>Verileri kaldırma</h2>','<h2>Yeni mutfak araçları</h2><p>Alışveriş tarifleri ams_shopping_v1, seçilen miktarlar ams_portions_v1 anahtarlarıyla bu tarayıcıda saklanır. Malzeme araması yerel olarak yapılır. Pişirme modu destekleyen cihazlarda ekranı açık tutma özelliğini kullanır.</p><h2>Verileri kaldırma</h2>');privacy.write_text(doc)
+# Contextual discovery from each recipe back to its actual collections.
+side_dishes={
+ 'kuru-fasulye':['pirinc-pilavi','cacik'], 'nohut-yemegi':['pirinc-pilavi','havuc-tarator'],
+ 'tavuk-sote':['pirinc-pilavi','cacik'], 'firinda-kofte-patates':['yayla-corbasi','havuc-tarator'],
+ 'karniyarik':['pirinc-pilavi','cacik'], 'imam-bayildi':['pirinc-pilavi','yayla-corbasi'],
+ 'patatesli-borek':['kisir','mozaik-pasta'], 'yaprak-sarma':['cacik','mercimek-corbasi']}
+for r in recipes:
+    p=ROOT/rurl(r);doc=p.read_text();members=[(key,title) for key,title,ids,*rest in collections if r['id'] in ids]
+    links=''.join(f'<a class="btn" href="koleksiyon-{key}.html">{esc(title)}</a>' for key,title in members)
+    extras='<section class="recipe-panel discovery-panel"><h2>Bu tarifle sofranı tamamla</h2>'
+    if r['id'] in side_dishes:
+        extras+='<p>Yanına ne gider? '+', '.join(f'<a href="{rurl(next(x for x in recipes if x["id"]==id))}">{esc(next(x for x in recipes if x["id"]==id)["title"])}</a>' for id in side_dishes[r['id']])+'. Seçtiğin tariflerin miktarlarını aynı sofraya göre ayarla.</p>'
+    extras+='<div class="actions">'+links+'<a class="btn" href="menuler.html">Hazır sofra menüleri</a><a class="btn" href="olcu-rehberi.html">Bardak ve ölçü rehberi</a></div></section>'
+    doc=doc.replace('<section class="related-section">',extras+'<section class="related-section">');p.write_text(doc)
+category_notes={
+ 'Çorbalar':'Mercimek, tarhana veya yoğurtla sıcak bir başlangıç hazırla. Kıvam için suyu kontrollü ekle; yoğurtlu çorbalarda terbiyeyi ılıtma adımını izle.',
+ 'Ana Yemekler':'Bakliyat, tavuk ve fırın yemekleri arasından sofrana uygun olanı seç. Fasulye ve nohut için belirtilen ıslatma süresini toplam planına dahil et.',
+ 'Hamur İşleri':'Börek ve poğaçada yalnızca fırın süresini değil hazırlık ve mayalanmayı da düşün. Tarifin verdiği adet bilgisini kullanarak miktarı ayarlayabilirsin.',
+ 'Tatlılar':'Şerbetli, sütlü veya fırınsız bir tatlı seç. Dinlenme ve soğutma süreleri hazırlık kadar önemlidir; servisten önce gereken süreyi ayır.',
+ 'Kahvaltılık':'Kısa sürede hazırlanan sıcak kahvaltı fikirlerini karşılaştır. Krep ve pankek adetle, menemen kişi aralığıyla verilir; miktar hesabı bu bilgiye göre yapılır.',
+ 'Salatalar':'Kısır ve patates salatasını ana yemeğin yanına veya çay sofrasına ekle. Tariflerin yeşillik ve sos ölçülerini birlikte kontrol et.',
+ 'Mezeler':'Yoğurtlu tamamlayıcıları sofraya yakın hazırla. Cacığın su miktarını kıvamına göre ayarlayabilir, havuç taratoru ana yemeğin yanına ekleyebilirsin.',
+ 'Yan Yemekler':'Pilav ve fırında patatesle ana yemeğin yanını tamamla. Tencere veya tepsi boyutu değiştiğinde süreyi katlamak yerine pişme belirtilerini izle.',
+ 'Zeytinyağlılar':'Yaprak sarma ve imam bayıldı gibi sebze ağırlıklı ev yemeklerini keşfet. Hazırlık adımlarını önceden planlayarak sofranın kalanına vakit ayır.'}
+for category in [None]+cats:
+    p=ROOT/(curl(category) if category else 'kategori.html');doc=p.read_text();doc=re.sub(r'<section class="category-note">.*?</section>','',doc,flags=re.S)
+    text=category_notes.get(category,'Önce ana malzemene veya ayırabildiğin zamana göre bir tarif seç. Her sayfada malzemeler, yapılış, yaklaşık süre ve miktar bilgisi bulunur; seçtiklerini PDF defterinde saklayabilirsin.')
+    block='<section class="category-note"><div class="container"><h2>'+esc((category or 'Ev yemekleri')+' nasıl seçilir?')+'</h2><p>'+esc(text)+'</p><p><a href="mutfakta-ne-var.html">Evdeki malzemelerle tarif bul</a> · <a href="koleksiyon-30-dakikada-yemekler.html">30 dakikalık tarifler</a> · <a href="menuler.html">Bir haftalık sofra fikirleri</a></p></div></section>'
+    doc=doc.replace('</main>',block+'</main>');p.write_text(doc)
+home=ROOT/'index.html';doc=home.read_text();r=recipes[0]
+featured=f'<div class="featured-media"><img class="dish-art featured-art" src="assets/recipes/{r["id"]}.jpg" alt="{esc(r["title"])}" width="900" height="700" loading="lazy"><span class="featured-badge">Bugünün tarifi</span></div><div class="featured-copy"><div class="eyebrow">{esc(r["category"])}</div><h3>{esc(r["title"])}</h3><p>{esc(r["desc"])}</p><div class="featured-meta"><span>{esc(r["time"])}</span><span>{esc(r["servings"])}</span><span>{esc(r["difficulty"])}</span></div><div class="actions"><a class="btn primary" href="{rurl(r)}">Tarifi Aç</a><button class="btn ghost" data-heart="{r["id"]}">♡ Defterime Ekle</button></div></div>'
+doc=fill(doc,'featuredRecipe',featured);home.write_text(doc)
+article('site-haritasi.html','Tarifler ve Mutfak Araçları: Site Haritası','Tarif kategorilerini, koleksiyonları ve yemek planlamanı kolaylaştıran araçları tek sayfadan keşfet.','<h2>Mutfak araçları</h2><ul><li><a href="mutfakta-ne-var.html">Malzemeye göre tarif bul</a></li><li><a href="menuler.html">Yedi günlük yemek menüsü</a></li><li><a href="koleksiyonlar.html">Tarif koleksiyonları</a></li><li><a href="rehberler.html">Mutfak rehberleri</a></li></ul>'+''.join('<h2>'+esc(c)+'</h2><p><a href="'+curl(c)+'">'+esc(c)+' kategorisini aç</a></p><ul>'+''.join('<li><a href="'+rurl(r)+'">'+esc(r['title'])+' tarifi</a></li>' for r in recipes if r['category']==c)+'</ul>' for c in cats))

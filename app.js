@@ -207,7 +207,7 @@ function renderDetail(){
   $("#detailRating").textContent=r.rating;
   const hb=$("#detailHeart");hb.dataset.id=r.id;
   $("#ingredients").innerHTML=r.ingredients.map(x=>'<label class="ingredient"><input type="checkbox"><span>'+escapeHtml(x)+'</span></label>').join("");
-  $("#steps").innerHTML=r.steps.map((x,i)=>'<div class="step-row"><div class="step-no">'+(i+1)+'</div><p>'+escapeHtml(x)+'</p></div>').join("");
+  $("#steps").innerHTML=r.steps.map((x,i)=>'<div class="step-row" id="adim-'+(i+1)+'"><div class="step-no">'+(i+1)+'</div><p>'+escapeHtml(x)+'</p></div>').join("");
   $("#tipText").textContent=r.tip;
   $("#noteText").textContent=r.note;
 
