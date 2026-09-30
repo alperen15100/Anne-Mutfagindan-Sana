@@ -37,7 +37,7 @@ def head(doc,path,title,desc,image='assets/recipes/mercimek-corbasi.jpg',schema=
     if schema: block+=structured(schema)+'\n'
     return doc.replace('</head>',block+'<!-- SEO:END -->\n</head>')
 def common(doc):
-    doc=doc.replace('?v=10','?v=12').replace('?v=11','?v=12')
+    doc=doc.replace('?v=10','?v=12').replace('?v=11','?v=12').replace('?v=12','?v=13')
     doc=doc.replace('kategori-hamur-i-sleri.html','kategori-hamur-isleri.html')
     from urllib.parse import unquote
     doc=re.sub(r'kategori\.html\?cat=([^"<>]+)',lambda m:curl(unquote(m[1])) if unquote(m[1]) in cats else m[0],doc)
@@ -51,7 +51,7 @@ def common(doc):
     if 'href="alisveris-listem.html"' not in doc:
         doc=doc.replace('<div class="footer-links">','<div class="footer-links"><a href="alisveris-listem.html">Alışveriş Listem</a><a href="koleksiyonlar.html">Koleksiyonlar</a>')
     if 'src="kitchen.js' not in doc:
-        doc=doc.replace('</body>','<script src="kitchen.js?v=12"></script>\n</body>')
+        doc=doc.replace('</body>','<script src="kitchen.js?v=13"></script>\n</body>')
     return doc
 def card(r):
     return f'<article class="recipe-card"><a class="recipe-card-media" href="{rurl(r)}"><img class="dish-art card-art" src="assets/recipes/{r["id"]}.jpg" alt="{esc(r["title"])}" width="900" height="700" loading="lazy" decoding="async"></a><div class="recipe-card-copy"><div class="eyebrow">{esc(r["category"])}</div><a class="recipe-card-title" href="{rurl(r)}">{esc(r["title"])}</a><p>{esc(r["desc"])}</p><div class="recipe-card-meta"><span>{esc(r["time"])}</span><span>{esc(r["difficulty"])}</span></div></div><button class="heart-btn" data-heart="{r["id"]}" aria-label="Defterime ekle" aria-pressed="false">♡</button></article>'
