@@ -9,7 +9,7 @@ NAME = 'Anne Mutfağından Sana'
 recipes = json.loads((ROOT/'data.js').read_text().split('=',1)[1].strip().rstrip(';'))
 esc = lambda s: html.escape(str(s), quote=True)
 def slug(s):
-    s=s.lower().translate(str.maketrans('ığüşıöç','igus ioc'.replace(' ','')))
+    s=s.replace('İ','i').replace('I','ı').lower().translate(str.maketrans('ığüşıöç','igus ioc'.replace(' ','')))
     return re.sub(r'[^a-z0-9]+','-',s).strip('-')
 def rurl(r): return 'tarif-'+r['id']+'.html'
 def curl(c): return 'kategori-'+slug(c)+'.html'
@@ -38,6 +38,7 @@ def head(doc,path,title,desc,image='assets/recipes/mercimek-corbasi.jpg',schema=
     return doc.replace('</head>',block+'<!-- SEO:END -->\n</head>')
 def common(doc):
     doc=doc.replace('?v=10','?v=11')
+    doc=doc.replace('kategori-hamur-i-sleri.html','kategori-hamur-isleri.html')
     from urllib.parse import unquote
     doc=re.sub(r'kategori\.html\?cat=([^"<>]+)',lambda m:curl(unquote(m[1])) if unquote(m[1]) in cats else m[0],doc)
     for c in cats:
