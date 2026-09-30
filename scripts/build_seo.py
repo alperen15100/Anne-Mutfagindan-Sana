@@ -29,7 +29,7 @@ def structured(data):
 def head(doc,path,title,desc,image='assets/recipes/mercimek-corbasi.jpg',schema=None,noindex=False):
     doc=re.sub(r'<title>.*?</title>','<title>'+esc(title)+'</title>',doc,flags=re.S)
     doc=re.sub(r'\s*<meta name="description"[^>]*>','',doc)
-    doc=re.sub(r'\n<!-- SEO:START -->.*?<!-- SEO:END -->','',doc,flags=re.S)
+    doc=re.sub(r'\s*<!-- SEO:START -->.*?<!-- SEO:END -->\s*','',doc,flags=re.S)
     block='\n<!-- SEO:START -->\n'+f'<meta name="description" content="{esc(desc)}">\n<link rel="canonical" href="{BASE+path}">\n<meta name="robots" content="'+('noindex,follow' if noindex else 'index,follow,max-image-preview:large')+'">\n'
     for prop,val in [('og:type','article' if path.startswith('tarif-') else 'website'),('og:locale','tr_TR'),('og:site_name',NAME),('og:title',title),('og:description',desc),('og:url',BASE+path),('og:image',BASE+image),('og:image:alt',title)]:
         block+=f'<meta property="{prop}" content="{esc(val)}">\n'
@@ -89,8 +89,8 @@ home=common((ROOT/'index.html').read_text())
 home=fill(home,'popularGrid',''.join(card(r) for r in recipes[:6]))
 home=fill(home,'newRecipesGrid',''.join(card(r) for r in recipes[15:21]))
 home=home.replace('Ev kokan, denenmiş ve aile sofralarından ilham alan Türk mutfağı tarifleri.','Ev usulü Türk mutfağı tarifleri, açık ölçüler ve adım adım yapılış.')
-if 'class="guide-discovery"' not in home:
-    home=home.replace('</main>','<section class="section guide-discovery"><div class="container notebook-cta-copy"><p class="kicker">Mutfakta işini kolaylaştır</p><h2>Ölçülerden sofra planına</h2><p>Bardak ölçülerini öğren, birbiriyle uyumlu tarifleri seç ve kendi PDF defterini hazırla.</p><a class="btn primary" href="rehberler.html">Mutfak Rehberini Aç →</a></div></section></main>')
+home=re.sub(r'<section class="section guide-discovery">.*?</section>','',home,flags=re.S)
+home=home.replace('</main>','<section class="section guide-discovery"><div class="container notebook-cta-copy"><p class="kicker">Mutfakta işini kolaylaştır</p><h2>Ölçülerden sofra planına</h2><p>Bardak ölçülerini öğren, birbiriyle uyumlu tarifleri seç ve kendi PDF defterini hazırla.</p><a class="btn primary" href="rehberler.html">Mutfak Rehberini Aç →</a></div></section></main>')
 home=head(home,'index.html',NAME+' | Ev Usulü Yemek Tarifleri ve PDF Defteri','30 ev usulü yemek tarifi: malzemeler, adım adım yapılış ve püf noktaları. Favorilerini sakla, kişisel tarif defterini PDF indir.',schema={'@context':'https://schema.org','@type':'WebSite','@id':BASE+'#website','name':NAME,'url':BASE+'index.html','inLanguage':'tr-TR'})
 (ROOT/'index.html').write_text(home);pages.append('index.html')
 notebook=common((ROOT/'defterim.html').read_text())
