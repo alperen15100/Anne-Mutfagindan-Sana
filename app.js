@@ -312,8 +312,8 @@ async function saveRecipeBook(list,title,cover){
   }catch(e){console.error(e);toast("PDF hazırlanamadı. Sayfayı yenileyip tekrar dene.");}
   finally{pdfBusy=false;buttons.forEach(b=>b.disabled=false);}
 }
-function downloadRecipePDF(){const r=getRecipe();return saveRecipeBook([r],r.title+" Tarifi",false);}
-function downloadNotebookPDF(){return saveRecipeBook(getFavs().map(recipeById).filter(Boolean),$("#bookTitle")?.value.trim()||"Benim Tarif Defterim",true);}
+function downloadRecipePDF(){const r=typeof scaledRecipe==="function"?scaledRecipe(getRecipe()):getRecipe();return saveRecipeBook([r],r.title+" Tarifi",false);}
+function downloadNotebookPDF(){return saveRecipeBook(getFavs().map(recipeById).filter(Boolean).map(r=>typeof scaledRecipe==="function"?scaledRecipe(r):r),$("#bookTitle")?.value.trim()||"Benim Tarif Defterim",true);}
 function previewNotebook(){
   const list=getFavs().map(recipeById).filter(Boolean);
   if(!list.length){toast("Önce tarif ekle");return}

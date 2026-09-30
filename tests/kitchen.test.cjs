@@ -1,0 +1,18 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const memory=new Map();const c={window:{addEventListener(){}},document:{addEventListener(){}},localStorage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)},console,navigator:{},setTimeout,toast(){},URL,Blob};vm.createContext(c);vm.runInContext(fs.readFileSync('data.js','utf8'),c);vm.runInContext(fs.readFileSync('app.js','utf8'),c);vm.runInContext(fs.readFileSync('kitchen.js','utf8'),c);
+assert.equal(c.scaleIngredient('Yarım–1 su bardağı soğuk su',2),'1–2 su bardağı soğuk su');
+assert.equal(c.scaleIngredient('Yaklaşık 3,5–4 su bardağı un',2),'Yaklaşık 7–8 su bardağı un');
+assert.equal(c.scaleIngredient('1 paket instant maya (10 g)',2),'2 paket instant maya (10 g)');
+assert.equal(c.scaleIngredient('Sos: yarım su bardağı süt + yarım çay bardağı sıvı yağ',2),'Sos: 1 su bardağı süt + 1 çay bardağı sıvı yağ');
+assert.equal(c.scaleIngredient('1 kase yoğurt',2),'2 kase yoğurt');
+assert.equal(c.scaleIngredient('Tuz, karabiber',2),'Tuz, karabiber');
+assert.equal(c.sumRecipeMinutes(c.recipeById('mozaik-pasta')),260);
+assert.equal(c.sumRecipeMinutes(c.recipeById('kuru-fasulye')),565);
+assert(c.recipeFoods(c.recipeById('menemen')).includes('Yumurta'));
+assert(c.recipeFoods(c.recipeById('menemen')).includes('Domates'));
+assert(!c.recipeFoods(c.recipeById('menemen')).includes('Un'));
+const original=JSON.stringify(c.recipeById('tavuk-sote'));const scaled=c.scaledRecipe(c.recipeById('tavuk-sote'),8);assert.equal(scaled.ingredients[0],'1200 g tavuk göğsü');assert.equal(original,JSON.stringify(c.recipeById('tavuk-sote')));
+c.writeKitchen('ams_shopping_v1',[{id:'tavuk-sote',target:4},{id:'karniyarik',target:4}]);let rows=c.shoppingRows();assert(rows.some(x=>x.text==='2 adet soğan'));assert(rows.some(x=>x.text==='4 adet domates'));assert(rows.some(x=>x.text==='7 yemek kaşığı zeytinyağı'));
+const salt=rows.filter(x=>x.name==='tuz');assert(salt.some(x=>x.text==='2 çay kaşığı tuz'));
+c.writeKitchen('ams_shopping_v1',[{id:'mercimek-corbasi',target:5},{id:'ezogelin',target:5}]);rows=c.shoppingRows();assert(rows.filter(x=>x.amount===null&&x.text.startsWith('Tuz')).length===2);
+console.log('Portions, ranges, package sizes, pantry matching and shopping aggregation passed.');
