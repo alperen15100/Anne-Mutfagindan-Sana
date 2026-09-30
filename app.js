@@ -121,6 +121,11 @@ function renderHome(){
   const pg=$("#popularGrid");
   if(pg) pg.innerHTML=popular.map(compactCard).join("");
 
+  const newRecipes=["kuru-fasulye","tavuk-sote","yayla-corbasi","patatesli-borek","kisir","mozaik-pasta"].map(recipeById).filter(Boolean);
+  const newGrid=$("#newRecipesGrid");
+  if(newGrid)newGrid.innerHTML=newRecipes.map(compactCard).join("");
+  $$("[data-recipe-count]").forEach(el=>el.textContent=(window.RECIPES||[]).length);
+
   const latest=(window.RECIPES||[]).slice(-5).reverse();
   const lg=$("#latestStrip");
   if(lg) lg.innerHTML=latest.map(miniCard).join("");
